@@ -3,53 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Avtomatik Canlı Cədvəl</title>
+    <title>FutbolAz - Canlı Nəticələr və Xəbərlər</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0b0f19; color: white; text-align: center; }
-        header { background-color: #161d2f; padding: 20px; border-bottom: 3px solid #d4af37; }
-        .logo { max-width: 80px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 10px; }
+        :root { --bg: #f8f9fa; --card: #ffffff; --text: #333; --accent: #d4af37; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+        header { background: #161d2f; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); }
+        .logo-box { display: flex; align-items: center; gap: 10px; font-weight: bold; }
         .container { max-width: 600px; margin: auto; padding: 15px; }
-        .league-title { background: #1f2937; color: #d4af37; padding: 10px; border-radius: 8px 8px 0 0; font-weight: bold; font-size: 1rem; border: 1px solid #374151; border-bottom: none; margin-top: 20px; }
-        .widget-container { background: #ffffff; border-radius: 0 0 8px 8px; overflow: hidden; height: 400px; margin-bottom: 10px; border: 1px solid #374151; }
+        
+        /* Axtarış və Günün Oyunları */
+        .search-bar { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; box-sizing: border-box; }
+        .date-header { border-bottom: 2px solid var(--accent); display: flex; align-items: center; gap: 10px; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold; }
+
+        /* Kart Dizaynı (Xəbərlər və Transferlər) */
+        .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 20px 0 10px; }
+        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #eee; transition: 0.3s; }
+        .card:hover { border-left-color: var(--accent); }
+        .transfer-item { display: flex; justify-content: space-between; font-weight: 500; }
+        .price { color: #25d366; font-weight: bold; }
+
+        /* Turnir Cədvəli Videti */
+        .table-box { background: white; border-radius: 12px; overflow: hidden; height: 450px; border: 1px solid #ddd; margin-top: 10px; }
         iframe { width: 100%; height: 100%; border: none; }
-        .wa-btn { display: block; background: #25d366; color: white; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 25px; }
+        
+        .contact-btn { display: block; background: #161d2f; color: white; padding: 15px; border-radius: 10px; text-decoration: none; text-align: center; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="logo.jpg" class="logo" alt="Logo" onerror="this.style.display='none'">
-    <div style="font-weight: bold; letter-spacing: 1px; color: #d4af37;">EVERYWHERE FUTBOL</div>
+    <div class="logo-box">⚽ FUTBOLAZ</div>
+    <div style="cursor:pointer">🌙</div>
 </header>
 
 <div class="container">
-    <p style="font-size: 0.8rem; color: #9ca3af;">Məlumatlar hər saniyə avtomatik yenilənir</p>
+    <input type="text" class="search-bar" placeholder="Komanda və ya liqa axtar...">
 
-    <div class="league-title">🇹🇷 TRENDYOL SÜPER LİG</div>
-    <div class="widget-container">
+    <div class="date-header">📅 Günün Oyunları (10.02.2026)</div>
+    
+    <div class="section-title">📰 Xəbərlər</div>
+    <div class="card">Real Madrid La Liga lideridir</div>
+    <div class="card">Barcelona yeni transfer axtarışında</div>
+    <div class="card">Fenerbahçe qələbə seriyasını davam etdirir</div>
+
+    <div class="section-title">🔴 Canlı Hesablar</div>
+    <div class="card" style="text-align:center; color:#999;">Yüklənir...</div>
+
+    <div class="section-title">💰 Transferlər</div>
+    <div class="card">
+        <div class="transfer-item">Semenyo → Man City <span class="price">(72m€)</span></div>
+    </div>
+    <div class="card">
+        <div class="transfer-item">Paquetá → Flamengo <span class="price">(42m€)</span></div>
+    </div>
+
+    <div class="section-title">🏆 Turnir Cədvəli (2025-2026)</div>
+    <div class="table-box">
         <iframe src="https://www.scoreaxis.com/widget/standings-widget/52?autoHeight=0&font=Segoe%20UI&links=0"></iframe>
     </div>
 
-    <div class="league-title">🏴󠁧󠁢󠁥󠁮󠁧󠁿 PREMIER LEAGUE</div>
-    <div class="widget-container">
-        <iframe src="https://www.scoreaxis.com/widget/standings-widget/8?autoHeight=0&font=Segoe%20UI&links=0"></iframe>
-    </div>
-
-    <div class="league-title">🇪🇸 LA LIGA</div>
-    <div class="widget-container">
-        <iframe src="https://www.scoreaxis.com/widget/standings-widget/7?autoHeight=0&font=Segoe%20UI&links=0"></iframe>
-    </div>
-
-    <div class="league-title">🇩🇪 BUNDESLIGA</div>
-    <div class="widget-container">
-        <iframe src="https://www.scoreaxis.com/widget/standings-widget/9?autoHeight=0&font=Segoe%20UI&links=0"></iframe>
-    </div>
-
-    <a href="https://wa.me/994558430505" class="wa-btn">📞 WHATSAPP İLƏ ƏLAQƏ</a>
+    <a href="https://wa.me/994558430505" class="contact-btn">📞 ƏLAQƏ: +994 55 843 05 05</a>
 </div>
 
-<footer style="padding: 20px; font-size: 0.7rem; color: #6b7280;">
-    &copy; 2026 Everywhere Futbol. Data by Scoreaxis.
+<footer style="text-align:center; padding: 20px; font-size: 0.8rem; color: #888;">
+    &copy; 2026 FutbolAz. Bütün haqlar qorunur.
 </footer>
 
 </body>
