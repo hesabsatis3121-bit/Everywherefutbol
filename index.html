@@ -5,37 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Everywhere Futbol - Professional Portal</title>
     <style>
+        /* Light Mode (Ağ fon, Mavi yazılar) */
         :root { 
-            --bg: #0f172a; 
-            --card: #1e293b; 
-            --text: #f8fafc; 
+            --bg: #ffffff; 
+            --header-bg: #f1f5f9;
+            --card: #f8fafc; 
+            --text: #1e3a8a; /* Mavi yazılar */
             --accent: #d4af37; 
             --whatsapp: #25d366;
+            --border: #e2e8f0;
         }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-        header { background: #161d2f; color: var(--accent); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; }
-        .logo-box { font-size: 1.2rem; font-weight: bold; letter-spacing: 1px; }
+
+        /* Dark Mode (Mavi fon, Ağ yazılar) */
+        [data-theme="dark"] {
+            --bg: #0f172a; 
+            --header-bg: #161d2f;
+            --card: #1e293b; 
+            --text: #f8fafc; /* Ağ yazılar */
+            --border: #334155;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; }
+        header { background: var(--header-bg); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
+        .logo-box { font-size: 1.2rem; font-weight: bold; letter-spacing: 1px; color: var(--text); }
+        
+        /* Rejim keçid düyməsi */
+        .theme-toggle { cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .theme-toggle img { width: 100%; border-radius: 50%; }
+
         .container { max-width: 600px; margin: auto; padding: 15px; }
         
-        /* Axtarış Paneli */
-        .search-container { position: relative; margin-bottom: 20px; }
-        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #334155; background: var(--card); color: white; box-sizing: border-box; }
+        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; margin-bottom: 20px; }
 
-        /* Kartlar */
         .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
-        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border-left: 4px solid #334155; transition: 0.3s; }
-        .card:hover { border-left-color: var(--accent); transform: translateY(-2px); }
+        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 4px solid var(--border); transition: 0.3s; }
         
-        /* Proqnoz Bölməsi */
-        .prediction { border-left: 4px solid var(--accent); background: linear-gradient(90deg, #1e293b, #0f172a); }
         .live-dot { height: 8px; width: 8px; background-color: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 5px; }
 
-        /* Turnir Cədvəli */
-        .table-box { background: white; border-radius: 12px; overflow: hidden; height: 480px; border: 1px solid #334155; margin-top: 10px; }
+        .table-box { background: white; border-radius: 12px; overflow: hidden; height: 480px; border: 1px solid var(--border); margin-top: 10px; }
         iframe { width: 100%; height: 100%; border: none; }
         
-        /* Düymələr */
-        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; font-size: 1.1rem; }
         
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
     </style>
@@ -44,52 +54,50 @@
 
 <header>
     <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
-    <div style="font-size: 1.2rem;">🌙</div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <img id="theme-img" src="logo.jpg" alt="Toggle Theme">
+    </div>
 </header>
 
 <div class="container">
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Komanda, liqa və ya xəbər axtar...">
-    </div>
+    <input type="text" class="search-bar" placeholder="Axtarış...">
 
     <div class="section-title">📅 GÜNÜN OYUNLARI</div>
-    <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="card" style="display: flex; justify-content: space-between;">
         <span>Real Madrid - Barcelona</span>
         <span style="color: var(--accent); font-weight: bold;">22:00</span>
     </div>
 
     <div class="section-title">📰 SON XƏBƏRLƏR</div>
     <div class="card">🔥 <b>Nərman MLS liqasına getdi!</b> Transfer rəsmən təsdiqləndi.</div>
-    <div class="card">🏆 Galatasaray Super Kupa hazırlıqlarına başladı.</div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">
-        🚀 WHATSAPP KANALA KEÇİD ET
-    </a>
+    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA KEÇİD ET</a>
 
     <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU</div>
-    <div class="card prediction">
-        <b>Real Madrid - Barcelona</b><br>
-        <span style="color: #94a3b8; font-size: 0.8rem;">Məsləhət:</span> <span style="color: var(--accent);">Hər iki komanda qol vuracaq (Q/Q)</span>
-    </div>
-
-    <div class="section-title">💰 SON TRANSFERLƏR</div>
-    <div class="card">
-        <div style="display:flex; justify-content:space-between;">
-            <span>Semenyo → Man City</span>
-            <span style="color: var(--whatsapp); font-weight: bold;">72m€</span>
-        </div>
-    </div>
+    <div class="card"><b>Məsləhət:</b> <span style="color: var(--accent);">Hər iki komanda qol vuracaq (Q/Q)</span></div>
 
     <div class="section-title">🏆 TURNİR CƏDVƏLİ (CANLI)</div>
     <div class="table-box">
         <iframe src="https://www.scoreaxis.com/widget/standings-widget/52?autoHeight=0&font=Segoe%20UI&links=0"></iframe>
     </div>
-
 </div>
 
-<footer style="text-align:center; padding: 30px; font-size: 0.8rem; color: #64748b; background: #0b0f19; margin-top: 20px;">
-    &copy; 2026 Everywhere Futbol. <br> Bütün futbol dünyası burada.
-</footer>
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const img = document.getElementById('theme-img');
+        
+        if (body.hasAttribute('data-theme')) {
+            // Light Mode-a keç
+            body.removeAttribute('data-theme');
+            img.src = 'logo.jpg'; // 1-ci qara loqo
+        } else {
+            // Dark Mode-a keç (Mavi fon)
+            body.setAttribute('data-theme', 'dark');
+            img.src = 'logo_white.jpg'; // 3-cü ağ loqo (Burada fayl adını GitHub-dakı ilə eyni et)
+        }
+    }
+</script>
 
 </body>
 </html>
