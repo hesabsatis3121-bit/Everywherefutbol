@@ -6,6 +6,133 @@
     <title>Everywhere Futbol - Canlı Nəticələr</title>
     <style>
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: white;
+        }
+        header {
+            background-color: #1e293b;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #d4af37;
+        }
+        .logo-container img {
+            max-width: 120px;
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            margin-bottom: 10px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+        .section {
+            background: #1e293b;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #d4af37;
+        }
+        h2 {
+            color: #d4af37;
+            font-size: 1.2rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        .league-card {
+            background: #334155;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .live-dot {
+            height: 10px;
+            width: 10px;
+            background-color: #ff4d4d;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; }
+        }
+        .contact-btn {
+            display: block;
+            text-align: center;
+            background-color: #25d366;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <img src="logo.jpg" alt="Logo" onerror="this.style.display='none'">
+    </div>
+    <div style="font-size: 1.5rem; font-weight: bold; color: #d4af37;">EVERYWHERE FUTBOL</div>
+</header>
+
+<div class="container">
+    <div class="section">
+        <h2><span class="live-dot"></span> CANLI HESABLAR</h2>
+        
+        <div class="league-card">
+            <span>🇦🇿 Misli Premyer Liqası</span>
+            <span style="color: #25d366; font-weight: bold;">Canlı</span>
+        </div>
+
+        <div class="league-card">
+            <span>🇹🇷 Trendyol Süper Lig</span>
+            <span style="color: #94a3b8;">Tezliklə</span>
+        </div>
+
+        <div class="league-card">
+            <span>🏴󠁧󠁢󠁥󠁮󠁧󠁿 İngiltərə Premyer Liqası</span>
+            <span style="color: #94a3b8;">Tezliklə</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📞 ƏLAQƏ</h2>
+        <p>Hər hansı sualınız üçün bizimlə əlaqə saxlayın:</p>
+        <a href="https://wa.me/994558430505" class="contact-btn">WhatsApp: +994 55 843 05 05</a>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 Everywhere Futbol. Bütün hüquqlar qorunur.
+</footer>
+
+</body>
+</html>
+!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everywhere Futbol - Canlı Nəticələr</title>
+    <style>
+        body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
