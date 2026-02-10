@@ -3,175 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Canlı Turnir Cədvəli</title>
+    <title>Everywhere Futbol - Canlı Cədvəllər</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0f172a; color: white; text-align: center; }
-        header { background-color: #1e293b; padding: 15px; border-bottom: 3px solid #d4af37; }
-        .logo { max-width: 80px; border-radius: 50%; border: 2px solid #d4af37; }
-        .container { max-width: 600px; margin: auto; padding: 10px; }
-        .section { background: #1e293b; margin-top: 15px; border-radius: 10px; padding: 10px; border: 1px solid #334155; }
-        h2 { color: #d4af37; font-size: 1.1rem; margin-bottom: 10px; }
-        .widget-box { background: white; border-radius: 8px; overflow: hidden; height: 450px; }
-        .contact-btn { display: block; background: #25d366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+        header { background-color: #1e293b; padding: 20px; border-bottom: 4px solid #d4af37; }
+        .logo { max-width: 90px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 10px; }
+        .container { max-width: 600px; margin: auto; padding: 15px; }
+        .section-title { background: #1e293b; color: #d4af37; padding: 12px; border-radius: 10px; font-weight: bold; margin-bottom: 20px; display: inline-block; width: 100%; box-sizing: border-box; }
+        .league-card { background: #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 25px; border-left: 5px solid #d4af37; text-align: left; }
+        h2 { font-size: 1.1rem; margin-top: 0; display: flex; align-items: center; color: #fff; }
+        .table-wrapper { background: white; border-radius: 8px; overflow: hidden; height: 400px; margin-top: 10px; }
+        iframe { width: 100%; height: 100%; border: none; }
+        .wa-btn { display: block; background: #25d366; color: white; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
     <img src="logo.jpg" class="logo" alt="Logo" onerror="this.style.display='none'">
-    <div style="font-weight: bold; color: #d4af37; margin-top: 5px;">EVERYWHERE FUTBOL</div>
+    <div style="font-size: 1.3rem; font-weight: bold; letter-spacing: 1px;">EVERYWHERE FUTBOL</div>
 </header>
 
 <div class="container">
-    <div class="section">
-        <h2>🇹🇷 TRENDYOL SÜPER LİG (İLK 4)</h2>
-        <div class="widget-box">
-            <iframe src="https://www.scoreboard.com/az/futbol/turkiye/super-lig/cedvel/" width="100%" height="450" frameborder="0" scrolling="yes"></iframe>
-        </div>
-    </div>
+    <div class="section-title">🏆 LİQALAR VƏ TURNİR CƏDVƏLİ (2025-2026)</div>
 
-    <div class="section">
+    <div class="league-card">
         <h2>🇦🇿 MİSLİ PREMYER LİQASI</h2>
-        <div class="widget-box">
-            <iframe src="https://www.scoreboard.com/az/futbol/azerbaycan/premyer-liqasi/cedvel/" width="100%" height="450" frameborder="0" scrolling="yes"></iframe>
+        <div class="table-wrapper">
+            <iframe src="https://www.scoreboard.com/az/futbol/azerbaycan/premyer-liqasi/cedvel/"></iframe>
         </div>
     </div>
 
-    <div class="section">
+    <div class="league-card">
+        <h2>🇹🇷 TRENDYOL SÜPER LİG</h2>
+        <div class="table-wrapper">
+            <iframe src="https://www.scoreboard.com/az/futbol/turkiye/super-lig/cedvel/"></iframe>
+        </div>
+    </div>
+
+    <div class="league-card">
         <h2>🏴󠁧󠁢󠁥󠁮󠁧󠁿 PREMIER LEAGUE</h2>
-        <div class="widget-box">
-            <iframe src="https://www.scoreboard.com/az/futbol/ingiltere/premier-league/cedvel/" width="100%" height="450" frameborder="0" scrolling="yes"></iframe>
+        <div class="table-wrapper">
+            <iframe src="https://www.scoreboard.com/az/futbol/ingiltere/premier-league/cedvel/"></iframe>
         </div>
     </div>
 
-    <a href="https://wa.me/994558430505" class="contact-btn">📞 WHATSAPP: +994 55 843 05 05</a>
+    <div class="league-card">
+        <h2>🇪🇸 LA LIGA</h2>
+        <div class="table-wrapper">
+            <iframe src="https://www.scoreboard.com/az/futbol/ispanya/laliga/cedvel/"></iframe>
+        </div>
+    </div>
+
+    <div class="league-card">
+        <h2>🇩🇪 BUNDESLIGA</h2>
+        <div class="table-wrapper">
+            <iframe src="https://www.scoreboard.com/az/futbol/almanya/bundesliga/cedvel/"></iframe>
+        </div>
+    </div>
+
+    <div class="league-card">
+        <h2>🇫🇷 LIGUE 1</h2>
+        <div class="table-wrapper">
+            <iframe src="https://www.scoreboard.com/az/futbol/fransa/ligue-1/cedvel/"></iframe>
+        </div>
+    </div>
+
+    <a href="https://wa.me/994558430505" class="wa-btn">📞 WHATSAPP İLƏ ƏLAQƏ</a>
 </div>
 
-<footer style="padding: 20px; font-size: 0.7rem; color: #94a3b8;">
+<footer style="padding: 20px; font-size: 0.8rem; color: #94a3b8;">
     &copy; 2026 Everywhere Futbol. Məlumatlar avtomatik güncəllənir.
 </footer>
 
-</body>
-</html>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🏴󠁧󠁢󠁥󠁮󠁧󠁿 PREMİER LEAGUE</h2>
-        <div class="table-container">
-            <iframe src="https://www.scoreboard.com/az/futbol/ingiltere/premier-league/cedvel/" width="100%" height="500" frameborder="0"></iframe>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>📞 ƏLAQƏ (WhatsApp)</h2>
-        <a href="https://wa.me/994558430505" class="wa-btn">BİZİMLƏ ƏLAQƏ: +994 55 843 05 05</a>
-    </div>
-</div>
-
-<footer>
-    <p style="font-size: 0.8rem; color: #94a3b8; padding: 20px;">&copy; 2026 Everywhere Futbol. Bütün məlumatlar avtomatik yenilənir.</p>
-</footer>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="az">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Canlı və Cədvəllər</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0f172a; color: white; text-align: center; }
-        header { background-color: #1e293b; padding: 20px; border-bottom: 4px solid #d4af37; }
-        .logo { max-width: 100px; border-radius: 50%; border: 2px solid #d4af37; margin-bottom: 10px; }
-        .container { max-width: 500px; margin: auto; padding: 15px; }
-        .section { background: #1e293b; margin-bottom: 20px; padding: 15px; border-radius: 12px; border-left: 5px solid #d4af37; text-align: left; }
-        h2 { color: #d4af37; font-size: 1.1rem; border-bottom: 1px solid #334155; padding-bottom: 10px; }
-        .league-item { display: flex; justify-content: space-between; align-items: center; background: #334155; padding: 10px; border-radius: 8px; margin-bottom: 8px; }
-        .table-btn { background: #d4af37; color: #0f172a; padding: 5px 10px; border-radius: 5px; text-decoration: none; font-size: 0.8rem; font-weight: bold; }
-        .wa-btn { display: block; background: #25d366; color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; text-align: center; }
-        .live-dot { height: 8px; width: 8px; background: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 5px; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
-    </style>
-</head>
-<body>
-
-<header>
-    <img src="logo.jpg" class="logo" alt="Logo" onerror="this.style.display='none'">
-    <div style="font-weight: bold; letter-spacing: 1px;">EVERYWHERE FUTBOL</div>
-</header>
-
-<div class="container">
-    <div class="section">
-        <h2><span class="live-dot"></span> CANLI NƏTİCƏLƏR</h2>
-        <div class="league-item">
-            <span>Hazırda canlı oyun yoxdur</span>
-            <span style="color: #94a3b8;">--:--</span>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>🏆 LİQALAR (Puan Cədvəli)</h2>
-        
-        <div class="league-item">
-            <span>🇦🇿 Misli Premyer Liqası</span>
-            <a href="https://www.sofascore.com/tournament/football/azerbaijan/misli-premyer-liqasi/986" target="_blank" class="table-btn">Cədvəl</a>
-        </div>
-
-        <div class="league-item">
-            <span>🇹🇷 Trendyol Süper Lig</span>
-            <a href="https://www.sofascore.com/tournament/football/turkey/trendyol-super-lig/52" target="_blank" class="table-btn">Cədvəl</a>
-        </div>
-
-        <div class="league-item">
-            <span>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</span>
-            <a href="https://www.sofascore.com/tournament/football/england/premier-league/17" target="_blank" class="table-btn">Cədvəl</a>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>📞 ƏLAQƏ</h2>
-        <a href="https://wa.me/994558430505" class="wa-btn">WhatsApp: +994 55 843 05 05</a>
-    </div>
-</div>
-
-<footer>
-    <p style="font-size: 0.7rem; color: #94a3b8;">&copy; 2026 Everywhere Futbol. Məlumatlar Sofascore tərəfindən təmin edilir.</p>
-</footer>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="az">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol</title>
-    <style>
-        body { font-family: sans-serif; margin: 0; background-color: #0f172a; color: white; text-align: center; }
-        header { background-color: #1e293b; padding: 20px; border-bottom: 4px solid #d4af37; }
-        .logo { max-width: 120px; border-radius: 50%; border: 2px solid #d4af37; }
-        .section { background: #1e293b; margin: 20px; padding: 15px; border-radius: 10px; border-left: 5px solid #d4af37; }
-        .btn { display: inline-block; background: #25d366; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
-        .live-dot { height: 10px; width: 10px; background: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
-    </style>
-</head>
-<body>
-    <header>
-        <img src="logo.jpg" class="logo" alt="Logo" onerror="this.style.display='none'">
-        <h1>EVERYWHERE FUTBOL</h1>
-    </header>
-    <div class="section">
-        <h2><span class="live-dot"></span> CANLI OYUNLAR</h2>
-        <p>🇦🇿 Misli Premyer Liqası - Canlı</p>
-        <p>🇹🇷 Trendyol Süper Lig - Tezliklə</p>
-        <p>🏴󠁧󠁢󠁥󠁮󠁧󠁿 İngiltərə Premyer Liqası - Tezliklə</p>
-    </div>
-    <div class="section">
-        <h2>📞 ƏLAQƏ</h2>
-        <a href="https://wa.me/994558430505" class="btn">WhatsApp: +994 55 843 05 05</a>
-    </div>
 </body>
 </html>
