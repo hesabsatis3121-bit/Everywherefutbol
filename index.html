@@ -28,19 +28,34 @@
         }
 
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; }
-        header { background: var(--header-bg); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
-        .logo-box { font-size: 1.2rem; font-weight: bold; letter-spacing: 1px; }
+        header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
+        .logo-box { font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; }
         
-        /* Yenilənmiş Sağ Loqo Düyməsi */
-        .theme-toggle { cursor: pointer; width: 50px; height: 50px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); background: #0f172a; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .theme-toggle img { width: 90%; height: 90%; object-fit: contain; }
-        .theme-toggle:hover { transform: scale(1.1); }
+        .theme-toggle { 
+            cursor: pointer; 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            border: 2px solid var(--accent); 
+            background: #fff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+        }
 
         .container { max-width: 600px; margin: auto; padding: 15px; }
         .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; margin-bottom: 20px; }
 
         .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
-        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 4px solid var(--border); transition: 0.3s; }
+        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 4px solid var(--border); transition: 0.3s; }
         
         .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; margin-top: 10px; border: 1px solid var(--border); }
         .custom-table th { background: var(--table-head); color: white; padding: 12px; text-align: left; font-size: 0.8rem; }
@@ -58,7 +73,7 @@
 <header>
     <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
     <div class="theme-toggle" onclick="toggleTheme()">
-        <img id="theme-img" src="logo.jpg" alt="Logo">
+        <img id="theme-img" src="https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg" alt="Logo">
     </div>
 </header>
 
@@ -76,56 +91,4 @@
 
     <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA KEÇİD ET</a>
 
-    <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU</div>
-    <div class="card"><b>Məsləhət:</b> <span style="color: var(--accent);">Hər iki komanda qol vuracaq (Q/Q)</span></div>
-
-    <div class="section-title">🏆 TURNİR CƏDVƏLİ (CANLI)</div>
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>KOMANDA</th>
-                <th>O</th>
-                <th>X</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="pos">1</td>
-                <td>Barcelona</td>
-                <td>22</td>
-                <td class="pts">58</td>
-            </tr>
-            <tr>
-                <td class="pos">2</td>
-                <td>Real Madrid</td>
-                <td>22</td>
-                <td class="pts">55</td>
-            </tr>
-            <tr>
-                <td class="pos">3</td>
-                <td>Atletico Madrid</td>
-                <td>22</td>
-                <td class="pts">48</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<script>
-    function toggleTheme() {
-        const body = document.getElementById('mainBody');
-        const img = document.getElementById('theme-img');
-        
-        if (body.hasAttribute('data-theme')) {
-            body.removeAttribute('data-theme');
-            img.src = 'logo.jpg'; // Light mode-da 1-ci loqo
-        } else {
-            body.setAttribute('data-theme', 'dark');
-            img.src = 'logo_white.jpg'; // Dark mode-da ağ loqo (3-cü loqo)
-        }
-    }
-</script>
-
-</body>
-</html>
+    <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU
