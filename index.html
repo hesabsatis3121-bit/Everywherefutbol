@@ -73,7 +73,7 @@
 <header>
     <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
     <div class="theme-toggle" onclick="toggleTheme()">
-        <img id="theme-img" src="https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg" alt="Logo">
+        <img id="theme-img" src="https://via.placeholder.com/100/000000/FFFFFF?text=LOGO1" alt="Logo">
     </div>
 </header>
 
@@ -91,4 +91,45 @@
 
     <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA KEÇİD ET</a>
 
-    <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU
+    <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU</div>
+    <div class="card"><b>Məsləhət:</b> <span style="color: var(--accent);">Hər iki komanda qol vuracaq (Q/Q)</span></div>
+
+    <div class="section-title">🏆 TURNİR CƏDVƏLİ (CANLI)</div>
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>KOMANDA</th>
+                <th>O</th>
+                <th>X</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td class="pos">1</td><td>Barcelona</td><td>22</td><td class="pts">58</td></tr>
+            <tr><td class="pos">2</td><td>Real Madrid</td><td>22</td><td class="pts">55</td></tr>
+            <tr><td class="pos">3</td><td>Atletico Madrid</td><td>22</td><td class="pts">48</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function toggleTheme() {
+        const body = document.getElementById('mainBody');
+        const img = document.getElementById('theme-img');
+        
+        // Şəkil linklərini bura əlavə et
+        const logo1 = "https://via.placeholder.com/100/000000/FFFFFF?text=LOGO1"; // Light mode loqosu
+        const logo2 = "https://via.placeholder.com/100/FFFFFF/000000?text=LOGO2"; // Dark mode loqosu
+
+        if (body.hasAttribute('data-theme')) {
+            body.removeAttribute('data-theme');
+            img.src = logo1; 
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            img.src = logo2; 
+        }
+    }
+</script>
+
+</body>
+</html>
