@@ -31,25 +31,22 @@
         header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
         .logo-box { font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; }
         
+        /* Sağ yuxarıdakı yeni ikon düyməsi */
         .theme-toggle { 
             cursor: pointer; 
             width: 45px; 
             height: 45px; 
             border-radius: 50%; 
             border: 2px solid var(--accent); 
-            background: #fff; 
+            background: var(--card); 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            overflow: hidden;
+            font-size: 1.5rem;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
         }
-        
-        .theme-toggle img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-        }
+        .theme-toggle:hover { transform: scale(1.1); }
 
         .container { max-width: 600px; margin: auto; padding: 15px; }
         .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; margin-bottom: 20px; }
@@ -73,28 +70,32 @@
 <header>
     <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
     <div class="theme-toggle" onclick="toggleTheme()">
-        <img id="theme-img" src="https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg" alt="Logo">
+        <span id="theme-icon">🔆</span>
     </div>
 </header>
 
 <div class="container">
     <input type="text" class="search-bar" placeholder="Axtarış...">
 
-    <div class="section-title">📅 GÜNÜN OYUNLARI</div>
+    <div class="section-title">🏆 UEFA CHAMPIONS LEAGUE</div>
     <div class="card" style="display: flex; justify-content: space-between;">
-        <span>Real Madrid - Barcelona</span>
-        <span style="color: var(--accent); font-weight: bold;">22:00</span>
+        <span>Real Madrid - Man. City</span>
+        <span style="color: var(--accent); font-weight: bold;">23:55</span>
+    </div>
+    <div class="card" style="display: flex; justify-content: space-between;">
+        <span>Bayern Munich - Arsenal</span>
+        <span style="color: var(--accent); font-weight: bold;">23:55</span>
     </div>
 
-    <div class="section-title">📰 SON XƏBƏRLƏR</div>
-    <div class="card">🔥 <b>Nərman MLS liqasına getdi!</b> Transfer rəsmən təsdiqləndi.</div>
+    <div class="section-title">📰 SON XƏBƏR</div>
+    <div class="card">📉 <b>Man United ard-arda 5 oyun qalib gələ bilmədi!</b> Komandada böhran davam edir.</div>
 
     <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA KEÇİD ET</a>
 
     <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU</div>
-    <div class="card"><b>Məsləhət:</b> <span style="color: var(--accent);">Hər iki komanda qol vuracaq (Q/Q)</span></div>
+    <div class="card"><b>Məsləhət:</b> <span style="color: var(--accent);">Real Madrid - Man City (Hər iki komanda qol vuracaq)</span></div>
 
-    <div class="section-title">🏆 TURNİR CƏDVƏLİ (CANLI)</div>
+    <div class="section-title">📊 UCL TURNİR CƏDVƏLİ</div>
     <table class="custom-table">
         <thead>
             <tr>
@@ -105,9 +106,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr><td class="pos">1</td><td>Barcelona</td><td>22</td><td class="pts">58</td></tr>
-            <tr><td class="pos">2</td><td>Real Madrid</td><td>22</td><td class="pts">55</td></tr>
-            <tr><td class="pos">3</td><td>Atletico Madrid</td><td>22</td><td class="pts">48</td></tr>
+            <tr><td class="pos">1</td><td>Liverpool</td><td>6</td><td class="pts">18</td></tr>
+            <tr><td class="pos">2</td><td>Inter Milan</td><td>6</td><td class="pts">16</td></tr>
+            <tr><td class="pos">3</td><td>Barcelona</td><td>6</td><td class="pts">15</td></tr>
+            <tr><td class="pos">4</td><td>Dortmund</td><td>6</td><td class="pts">14</td></tr>
         </tbody>
     </table>
 </div>
@@ -115,18 +117,14 @@
 <script>
     function toggleTheme() {
         const body = document.getElementById('mainBody');
-        const img = document.getElementById('theme-img');
+        const icon = document.getElementById('theme-icon');
         
-        // Sənin loqolarının GitHub linkləri
-        const logo_light = "https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg";
-        const logo_dark = "https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg"; // Əgər ağ loqo yükləsən linkini bura qoy
-
         if (body.hasAttribute('data-theme')) {
             body.removeAttribute('data-theme');
-            img.src = logo_light; 
+            icon.innerText = '🔆'; 
         } else {
             body.setAttribute('data-theme', 'dark');
-            img.src = logo_dark; 
+            icon.innerText = '🌙'; 
         }
     }
 </script>
