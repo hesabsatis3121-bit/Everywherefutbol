@@ -73,7 +73,7 @@
 <header>
     <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
     <div class="theme-toggle" onclick="toggleTheme()">
-        <img id="theme-img" src="https://via.placeholder.com/100/000000/FFFFFF?text=LOGO1" alt="Logo">
+        <img id="theme-img" src="https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg" alt="Logo">
     </div>
 </header>
 
@@ -117,16 +117,16 @@
         const body = document.getElementById('mainBody');
         const img = document.getElementById('theme-img');
         
-        // Şəkil linklərini bura əlavə et
-        const logo1 = "https://via.placeholder.com/100/000000/FFFFFF?text=LOGO1"; // Light mode loqosu
-        const logo2 = "https://via.placeholder.com/100/FFFFFF/000000?text=LOGO2"; // Dark mode loqosu
+        // Sənin loqolarının GitHub linkləri
+        const logo_light = "https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg";
+        const logo_dark = "https://raw.githubusercontent.com/hesabsatis3121-bit/Everywherefutbol/main/logo.jpg"; // Əgər ağ loqo yükləsən linkini bura qoy
 
         if (body.hasAttribute('data-theme')) {
             body.removeAttribute('data-theme');
-            img.src = logo1; 
+            img.src = logo_light; 
         } else {
             body.setAttribute('data-theme', 'dark');
-            img.src = logo2; 
+            img.src = logo_dark; 
         }
     }
 </script>
