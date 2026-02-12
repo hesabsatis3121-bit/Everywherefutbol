@@ -15,6 +15,7 @@
             --border: #e2e8f0;
             --table-head: #1e3a8a;
             --table-text: #334155;
+            --live: #ff0000;
         }
 
         [data-theme="dark"] {
@@ -27,42 +28,29 @@
             --table-text: #f8fafc;
         }
 
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 50px; }
         header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
         .logo-box { font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; }
         
-        /* Sağ yuxarıdakı yeni ikon düyməsi */
-        .theme-toggle { 
-            cursor: pointer; 
-            width: 45px; 
-            height: 45px; 
-            border-radius: 50%; 
-            border: 2px solid var(--accent); 
-            background: var(--card); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 1.5rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-        }
-        .theme-toggle:hover { transform: scale(1.1); }
+        .theme-toggle { cursor: pointer; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); background: var(--card); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
 
         .container { max-width: 600px; margin: auto; padding: 15px; }
-        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; margin-bottom: 20px; }
-
-        .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; }
-        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 4px solid var(--border); transition: 0.3s; }
         
-        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; margin-top: 10px; border: 1px solid var(--border); }
+        .live-badge { background: var(--live); color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; }
+        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 4px solid var(--border); }
+        
+        .poll-box { display: flex; gap: 10px; margin-top: 10px; }
+        .poll-btn { flex: 1; padding: 10px; border: 1px solid var(--accent); background: transparent; color: var(--text); border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .poll-btn:hover { background: var(--accent); color: white; }
+
+        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
         .custom-table th { background: var(--table-head); color: white; padding: 12px; text-align: left; font-size: 0.8rem; }
         .custom-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--table-text); font-size: 0.9rem; }
-        .pos { font-weight: bold; width: 30px; }
-        .pts { font-weight: bold; color: var(--accent); }
 
-        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; font-size: 1.1rem; }
-        .live-dot { height: 8px; width: 8px; background-color: red; border-radius: 50%; display: inline-block; animation: blink 1s infinite; margin-right: 5px; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
     </style>
 </head>
 <body id="mainBody">
@@ -75,41 +63,40 @@
 </header>
 
 <div class="container">
-    <input type="text" class="search-bar" placeholder="Axtarış...">
+    
+    <div class="section-title">🔴 CANLI HESABLAR</div>
+    <div class="card" style="display: flex; justify-content: space-between; align-items: center; border-left-color: var(--live);">
+        <span>Lazio <b>1 - 0</b> AC Milan</span>
+        <span class="live-badge">72'</span>
+    </div>
 
     <div class="section-title">🏆 UEFA CHAMPIONS LEAGUE</div>
-    <div class="card" style="display: flex; justify-content: space-between;">
-        <span>Real Madrid - Man. City</span>
-        <span style="color: var(--accent); font-weight: bold;">23:55</span>
-    </div>
-    <div class="card" style="display: flex; justify-content: space-between;">
-        <span>Bayern Munich - Arsenal</span>
-        <span style="color: var(--accent); font-weight: bold;">23:55</span>
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <span>Real Madrid - Man. City</span>
+            <span style="color: var(--accent); font-weight: bold;">23:55</span>
+        </div>
+        <div class="poll-box">
+            <button class="poll-btn" onclick="alert('Səs verdiniz: Real Madrid')">1</button>
+            <button class="poll-btn" onclick="alert('Səs verdiniz: Heç-heçə')">X</button>
+            <button class="poll-btn" onclick="alert('Səs verdiniz: Man. City')">2</button>
+        </div>
     </div>
 
     <div class="section-title">📰 SON XƏBƏR</div>
     <div class="card">📉 <b>Man United ard-arda 5 oyun qalib gələ bilmədi!</b> Komandada böhran davam edir.</div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA KEÇİD ET</a>
-
-    <div class="section-title"><span class="live-dot"></span> GÜNÜN PROQNOZU</div>
-    <div class="card"><b>Məsləhət:</b> <span style="color: var(--accent);">Real Madrid - Man City (Hər iki komanda qol vuracaq)</span></div>
+    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA QOŞUL</a>
 
     <div class="section-title">📊 UCL TURNİR CƏDVƏLİ</div>
     <table class="custom-table">
         <thead>
-            <tr>
-                <th>#</th>
-                <th>KOMANDA</th>
-                <th>O</th>
-                <th>X</th>
-            </tr>
+            <tr><th>#</th><th>KOMANDA</th><th>O</th><th>X</th></tr>
         </thead>
         <tbody>
-            <tr><td class="pos">1</td><td>Liverpool</td><td>6</td><td class="pts">18</td></tr>
-            <tr><td class="pos">2</td><td>Inter Milan</td><td>6</td><td class="pts">16</td></tr>
-            <tr><td class="pos">3</td><td>Barcelona</td><td>6</td><td class="pts">15</td></tr>
-            <tr><td class="pos">4</td><td>Dortmund</td><td>6</td><td class="pts">14</td></tr>
+            <tr><td>1</td><td>Liverpool</td><td>6</td><td><b>18</b></td></tr>
+            <tr><td>2</td><td>Inter Milan</td><td>6</td><td><b>16</b></td></tr>
+            <tr><td>3</td><td>Barcelona</td><td>6</td><td><b>15</b></td></tr>
         </tbody>
     </table>
 </div>
@@ -118,7 +105,6 @@
     function toggleTheme() {
         const body = document.getElementById('mainBody');
         const icon = document.getElementById('theme-icon');
-        
         if (body.hasAttribute('data-theme')) {
             body.removeAttribute('data-theme');
             icon.innerText = '🔆'; 
