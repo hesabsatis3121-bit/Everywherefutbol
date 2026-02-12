@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Professional Portal</title>
+    <title>Everywhere Futbol - Mega Portal</title>
     <style>
         :root { 
             --bg: #ffffff; --header-bg: #f1f5f9; --card: #f8fafc; 
@@ -17,64 +17,68 @@
         }
 
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 50px; }
-        header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; }
+        header { background: var(--header-bg); padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         
         .container { max-width: 600px; margin: auto; padding: 15px; }
         
         /* Axtarış Sistemi */
-        .search-container { position: relative; margin-bottom: 20px; }
-        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; outline: none; font-size: 1rem; }
-        .search-results { position: absolute; width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 0 0 10px 10px; z-index: 10; display: none; max-height: 300px; overflow-y: auto; box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
-        .search-item { padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 0.95rem; display: flex; justify-content: space-between; }
-        .search-item:hover { background: var(--header-bg); color: var(--accent); }
-        .league-tag { font-size: 0.7rem; background: var(--accent); color: white; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        .search-container { position: relative; margin-bottom: 25px; }
+        .search-bar { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; outline: none; font-size: 1rem; transition: 0.3s; }
+        .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        .search-results { position: absolute; width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 0 0 12px 12px; z-index: 10; display: none; max-height: 350px; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .search-item { padding: 14px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
+        .search-item:hover { background: var(--header-bg); padding-left: 20px; }
+        .league-tag { font-size: 0.65rem; background: var(--accent); color: white; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
 
         /* Məlumat Kartı (Modal) */
-        #infoModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 400px; background: var(--card); border: 2px solid var(--accent); border-radius: 15px; padding: 25px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -60%); } to { opacity: 1; transform: translate(-50%, -50%); } }
-        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 999; backdrop-filter: blur(3px); }
-        .close-btn { margin-top: 20px; padding: 10px 25px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        #infoModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 88%; max-width: 420px; background: var(--card); border: 2px solid var(--accent); border-radius: 20px; padding: 30px; z-index: 1000; box-shadow: 0 20px 50px rgba(0,0,0,0.6); text-align: center; animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes modalPop { from { opacity: 0; transform: translate(-50%, -60%) scale(0.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 999; backdrop-filter: blur(5px); }
+        .close-btn { margin-top: 25px; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; transition: 0.3s; }
+        .close-btn:hover { filter: brightness(1.2); }
 
-        .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; border-left: 3px solid var(--accent); padding-left: 10px; }
-        .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 30px 0 12px; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; border-left: 4px solid var(--accent); padding-left: 12px; }
+        .card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border); }
         
-        /* Səsvermə */
-        .poll-option { background: var(--header-bg); border: 1px solid var(--border); padding: 14px; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; margin-top: 10px; font-weight: bold; }
-        .poll-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; transition: width 0.8s ease; opacity: 0.4; }
+        /* Rəngli Səsvermə */
+        .poll-option { background: var(--header-bg); border: 1px solid var(--border); padding: 16px; border-radius: 10px; cursor: pointer; position: relative; overflow: hidden; margin-top: 12px; font-weight: bold; transition: 0.3s; }
+        .poll-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; transition: width 1.2s cubic-bezier(0.1, 0.7, 0.1, 1); opacity: 0.4; }
         .bar-real { background: linear-gradient(90deg, #3d1671, #ffffff); }
         .bar-both { background: linear-gradient(90deg, #d4af37, #f1f5f9); }
         .bar-barca { background: linear-gradient(90deg, #a50044, #004d98); }
-        .poll-text { position: relative; z-index: 2; display: flex; justify-content: space-between; }
+        .poll-text { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; }
 
-        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-        .custom-table th { background: var(--table-head); color: white; padding: 12px; text-align: left; }
-        .custom-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--table-text); }
+        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid var(--border); }
+        .custom-table th { background: var(--table-head); color: white; padding: 15px; text-align: left; font-size: 0.8rem; text-transform: uppercase; }
+        .custom-table td { padding: 15px; border-bottom: 1px solid var(--border); color: var(--table-text); font-weight: 500; }
 
-        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; }
+        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 18px; border-radius: 15px; text-decoration: none; text-align: center; font-weight: 800; margin: 25px 0; transition: 0.3s; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        .channel-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
     </style>
 </head>
 <body id="mainBody">
 
 <header>
-    <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
-    <div onclick="toggleTheme()" style="cursor:pointer; font-size:1.5rem;" id="theme-icon">🔆</div>
+    <div class="logo-box" style="font-weight: 900; letter-spacing: 1px;">🌍 EVERYWHERE FUTBOL</div>
+    <div onclick="toggleTheme()" style="cursor:pointer; font-size:1.6rem;" id="theme-icon">🔆</div>
 </header>
 
 <div class="container">
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-bar" placeholder="Klub axtar (Beşiktaş, Lazio, Qarabağ...)" oninput="handleSearch()">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Klub və ya Liqa axtar (Kəpəz, Beşiktaş, Roma...)" oninput="handleSearch()">
         <div id="searchResults" class="search-results"></div>
     </div>
 
     <div id="modalOverlay" onclick="closeModal()"></div>
     <div id="infoModal">
-        <h2 id="modalTitle" style="color: var(--accent); margin-bottom: 10px;"></h2>
-        <div style="height: 2px; background: var(--accent); width: 50px; margin: 10px auto;"></div>
-        <p id="modalDesc" style="line-height: 1.6; font-size: 1.1rem;"></p>
-        <button class="close-btn" onclick="closeModal()">Anladım</button>
+        <h2 id="modalTitle" style="color: var(--accent); margin: 0;"></h2>
+        <div id="modalLeague" style="font-size: 0.75rem; color: #888; margin-top: 5px; font-weight: bold; letter-spacing: 1px;"></div>
+        <hr style="border: 0; height: 1px; background: var(--border); margin: 15px 0;">
+        <p id="modalDesc" style="line-height: 1.7; font-size: 1.05rem;"></p>
+        <button class="close-btn" onclick="closeModal()">BAĞLA</button>
     </div>
 
-    <div class="section-title">📊 EL CLASICO: KİMİN TƏRƏFDARISAN?</div>
+    <div class="section-title">📊 KİMİN TƏRƏFDARISAN?</div>
     <div class="card" id="pollCard">
         <div class="poll-option" onclick="castVote('real')">
             <div class="poll-bar bar-real" id="bar-real"></div>
@@ -82,7 +86,7 @@
         </div>
         <div class="poll-option" onclick="castVote('both')">
             <div class="poll-bar bar-both" id="bar-both"></div>
-            <div class="poll-text"><span>🤝 Hər ikisi yaxşıdır</span> <span id="percent-both">0%</span></div>
+            <div class="poll-text"><span>🤝 Hər ikisi</span> <span id="percent-both">0%</span></div>
         </div>
         <div class="poll-option" onclick="castVote('barca')">
             <div class="poll-bar bar-barca" id="bar-barca"></div>
@@ -90,12 +94,12 @@
         </div>
     </div>
 
-    <div class="section-title">📰 GÜNÜN MANŞETİ</div>
-    <div class="card">📉 <b>Man United böhranda:</b> Ard-arda 5 oyun qalib gələ bilmədi!</div>
+    <div class="section-title">📰 TOP XƏBƏR</div>
+    <div class="card" style="border-left-color: #e11d48;">🔥 <b>Transfer Bombası:</b> Dünyanın ən yaxşı futbolçuları yeni mövsüm üçün hazırlaşır! Bütün detallar tezliklə.</div>
 
     <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA QOŞUL</a>
 
-    <div class="section-title">🏆 UCL REKORDÇULARI</div>
+    <div class="section-title">🏆 UCL REKORDLARI</div>
     <table class="custom-table">
         <thead>
             <tr><th>Klub</th><th>Kubok</th></tr>
@@ -103,7 +107,7 @@
         <tbody>
             <tr><td>Real Madrid</td><td><b>15</b></td></tr>
             <tr><td>AC Milan</td><td><b>7</b></td></tr>
-            <tr><td>Bayern Münih</td><td><b>6</b></td></tr>
+            <tr><td>Bayern Munich</td><td><b>6</b></td></tr>
             <tr><td>Liverpool</td><td><b>6</b></td></tr>
         </tbody>
     </table>
@@ -111,43 +115,49 @@
 
 <script>
     const teamData = {
-        // AZERBAIJAN PREMIER & 1ST LEAGUE
-        "Qarabağ FK": {desc: "Azərbaycanın ən uğurlu klubu. Ağdam təmsilçisi.", league: "Az P-Lig"},
-        "Neftçi PFK": {desc: "Xalq komandası. Azərbaycanın ən köklü klublarındandır.", league: "Az P-Lig"},
-        "Sabah FK": {desc: "Masazırın iddialı klubu.", league: "Az P-Lig"},
-        "Zirə FK": "Bakı komandası.", "Turan Tovuz": "Tovuzun tarixi klubu.", 
-        "Araz-Naxçıvan": "Naxçıvan təmsilçisi.", "Kəpəz PFK": "Gəncənin 3 qat çempion klubu.",
-        "Səbail FK": "Bayıl qəsəbəsinin klubu.", "Sumqayıt FK": "Gənclik şəhərinin komandası.",
-        "Şamaxı FK": "Şamaxı şəhərinin klubu.",
-        "İmişli FK": "1-ci Liqanın iddialı təmsilçisi.", "Karvan İK": "Yevlaxın əfsanəvi klubu.",
-        "MOİK Bakı": "Ordunun komandası.", "Qəbələ FK": "Qəbələ təmsilçisi.",
+        // AZERBAIJAN PREMIER LEAGUE
+        "Qarabağ FK": {desc: "Azərbaycanın son illərdəki mütləq hakimi, Avropa arenalarında ölkəmizi fəxrlə təmsil edən Ağdam klubu.", league: "Az P-Lig"},
+        "Neftçi PFK": {desc: "Azərbaycanın ən köklü və tarixi klubu, 'Xalq komandası' olaraq tanınan Bakı təmsilçisi.", league: "Az P-Lig"},
+        "Kəpəz PFK": {desc: "Gəncə şəhərinin 3 qat ölkə çempionu olan, Azərbaycan futbolunun ən böyük azarkeş kütlələrindən birinə sahib tarixi klub.", league: "Az P-Lig"},
+        "Turan Tovuz": {desc: "Tovuz rayonunun döyüşkən ruhlu klubu, Azərbaycan futboluna çoxsaylı istedadlar bəxş edib.", league: "Az P-Lig"},
+        "Sabah FK": {desc: "Bakının müasir və iddialı klubu, qısa müddətdə ölkənin elit klubları sırasına daxil olub.", league: "Az P-Lig"},
+        "Zirə FK": {desc: "Paytaxtın stabilliyi ilə seçilən, Avrokuboklar uğrunda daim mübarizə aparan klubu.", league: "Az P-Lig"},
+        "Sumqayıt FK": {desc: "Gənclik şəhərinin təmsilçisi, yerli gənc futbolçuların yetişməsində mühüm rol oynayır.", league: "Az P-Lig"},
+        "Araz-Naxçıvan": {desc: "Naxçıvan Muxtar Respublikasını təmsil edən, Premyer Liqaya rəng qatan klub.", league: "Az P-Lig"},
+        "Səbail FK": {desc: "Bakının Bayıl qəsəbəsini təmsil edən, dəniz kənarındakı stadionu ilə tanınan klub.", league: "Az P-Lig"},
+        "Şamaxı FK": {desc: "Şamaxı şəhərinin gənc və istedadlı heyətə sahib Premyer Liqa təmsilçisi.", league: "Az P-Lig"},
 
-        // TURKEY SUPER LIG
-        "Galatasaray": {desc: "Türkiyənin ən çox çempion olan klubu. 4 ulduzlu aslan.", league: "Superlig"},
-        "Fenerbahçe": {desc: "Türkiyənin ən böyük idman klublarından biri. Sarı Kanaryalar.", league: "Superlig"},
-        "Beşiktaş": {desc: "Qara qartallar. Türkiyənin ilk qurulan klubu.", league: "Superlig"},
-        "Trabzonspor": {desc: "Qara dəniz fırtınası.", league: "Superlig"},
+        // AZERBAIJAN 1st LEAGUE
+        "Karvan İK": {desc: "Yevlaxın əfsanəvi klubu, Azərbaycan futbolunda dərin izlər qoymuş və yenidən peşəkar futbola qayıtmış komanda.", league: "Az 1-Lig"},
+        "İmişli FK": {desc: "İmişli rayonunu təmsil edən, 1-ci liqada çempionluq uğrunda mübarizə aparan klub.", league: "Az 1-Lig"},
+        "MOİK Bakı": {desc: "Mərkəzi Ordu İdman Klubu. Azərbaycan ordusunu təmsil edən intizamlı komanda.", league: "Az 1-Lig"},
+        "Qəbələ FK": {desc: "Azərbaycanın ən gözəl akademiyalarından birinə sahib olan, hazırda 1-ci liqada çıxış edən tarixi bölgə klubu.", league: "Az 1-Lig"},
+        "Mingəçevir FK": {desc: "Nur şəhərinin futbol ənənələrini yaşadan komanda.", league: "Az 1-Lig"},
+        "Zaqatala FK": {desc: "Zaqatala bölgəsinin azarkeşləri ilə seçilən peşəkar klubu.", league: "Az 1-Lig"},
+        "Difai Ağsu": {desc: "Ağsu şəhərini təmsil edən 1-ci liqa təmsilçisi.", league: "Az 1-Lig"},
+        "Cəbrayıl FK": {desc: "Azad edilmiş Cəbrayıl rayonunu təmsil edən, 1-ci liqanın yeni və iddialı komandası.", league: "Az 1-Lig"},
 
-        // ENGLISH PREMIER LEAGUE
-        "Manchester City": "İngiltərə çempionu.", "Liverpool": "Mersisayd nəhəngi.",
-        "Arsenal": "Londonun topçuları.", "Manchester United": "Qırmızı şeytanlar.",
-        "Chelsea": "Mavilər.", "Tottenham": "Spurs.",
+        // TURKEY
+        "Galatasaray": {desc: "Türkiyənin ən çox çempion olan klubu, UEFA kuboku qalibi olan yeganə Türk komandası.", league: "Superlig"},
+        "Fenerbahçe": {desc: "Türkiyənin ən böyük idman klublarından biri, sarı-lacivərdli İstanbul devi.", league: "Superlig"},
+        "Beşiktaş": {desc: "Türkiyənin ilk qurulan idman klubu, 'Qara Qartallar'.", league: "Superlig"},
+        "Trabzonspor": {desc: "Anadolunun ən uğurlu və çempionluq yaşamış dördüncü böyük klubu.", league: "Superlig"},
 
-        // LA LIGA (SPAIN)
-        "Real Madrid": "Kral Klubu. 15 UCL sahibi.", "Barcelona": "Kataloniya nəhəngi.",
-        "Atletico Madrid": "Simeonun döyüşçüləri.", "Girona": "Mövsümün sürprizi.",
-
-        // SERIA A (ITALY)
-        "Inter Milan": "İtaliya çempionu.", "AC Milan": "Avropanın devi. 7 UCL qalibi.",
-        "Juventus": "Qoca sinyora.", "Lazio": "Romanın qartalları.", "AS Roma": "Canavarlar.",
-        "Napoli": "Maradonanın klubu.",
-
-        // BUNDESLIGA (GERMANY)
-        "Bayern Munich": "Almaniya nəhəngi.", "Bayer Leverkusen": "Məğlubedilməz komanda.",
-        "Dortmund": "Sarı divar.", "RB Leipzig": "Enerji klubu.",
-
-        // LIGUE 1 (FRANCE)
-        "PSG": "Fransa nəhəngi.", "Monaco": "Knyazlıq klubu.", "Marseille": "Azarkeşli cənub klubu."
+        // EUROPE BIG 5
+        "Real Madrid": {desc: "Futbolun zirvəsi, 15 dəfə Çempionlar Liqası qalibi olan Kral Klubu.", league: "La Liga"},
+        "Barcelona": {desc: "Kataloniya fəxri, dünya futboluna 'Tiki-taka' stilini gətirən dev klub.", league: "La Liga"},
+        "Manchester City": {desc: "Müasir futbolun güc mərkəzi, İngiltərə və Avropa çempionu.", league: "Premier League"},
+        "Liverpool": {desc: "Tarixi uğurları və 'Anfield' atmosferi ilə tanınan İngilis nəhəngi.", league: "Premier League"},
+        "Manchester United": {desc: "Dünyanın ən böyük brendlərindən biri, 'Qırmızı Şeytanlar'.", league: "Premier League"},
+        "Arsenal": {desc: "Londonun 'Topçuları', estetik futbolun mərkəzi.", league: "Premier League"},
+        "Bayern Munich": {desc: "Almaniya futbolunun mütləq hakimi, 6 dəfə Avropa çempionu.", league: "Bundesliga"},
+        "Bayer Leverkusen": {desc: "Məğlubedilməz heyəti ilə Almaniya futboluna yeni nəfəs gətirən klub.", league: "Bundesliga"},
+        "AC Milan": {desc: "Avropanın ən böyük 2-ci klubu, 7 dəfə Çempionlar Liqası qalibi.", league: "Serie A"},
+        "Inter Milan": {desc: "İtaliyanın hazırkı hegemonu, göy-qaralar.", league: "Serie A"},
+        "Juventus": {desc: "İtaliyanın ən çox çempionluq yaşayan klubu, 'Qoca Sinyora'.", league: "Serie A"},
+        "Lazio": {desc: "Romanın qədim və iddialı qartalları.", league: "Serie A"},
+        "AS Roma": {desc: "Romanın canavarları, azarkeşləri ilə dünyada seçilən klub.", league: "Serie A"},
+        "PSG": {desc: "Fransanın ulduzlar yığımı və ən zəngin klubu.", league: "Ligue 1"}
     };
 
     function handleSearch() {
@@ -163,19 +173,16 @@
                 const div = document.createElement('div');
                 div.className = 'search-item';
                 const data = teamData[t];
-                const league = typeof data === 'object' ? data.league : 'Club';
-                div.innerHTML = `<span>${t}</span> <span class="league-tag">${league}</span>`;
-                div.onclick = () => {
-                    const desc = typeof data === 'object' ? data.desc : "Bu klub haqqında ətraflı məlumat tezliklə əlavə olunacaq.";
-                    showModal(t, desc);
-                };
+                div.innerHTML = `<span>${t}</span> <span class="league-tag">${data.league}</span>`;
+                div.onclick = () => showModal(t, data.desc, data.league);
                 resBox.appendChild(div);
             });
         } else { resBox.style.display = 'none'; }
     }
 
-    function showModal(title, desc) {
+    function showModal(title, desc, league) {
         document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalLeague').innerText = league;
         document.getElementById('modalDesc').innerText = desc;
         document.getElementById('modalOverlay').style.display = 'block';
         document.getElementById('infoModal').style.display = 'block';
