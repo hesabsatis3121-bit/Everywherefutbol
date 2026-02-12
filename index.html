@@ -6,51 +6,44 @@
     <title>Everywhere Futbol - Professional Portal</title>
     <style>
         :root { 
-            --bg: #ffffff; 
-            --header-bg: #f1f5f9;
-            --card: #f8fafc; 
-            --text: #1e3a8a; 
-            --accent: #d4af37; 
-            --whatsapp: #25d366;
-            --border: #e2e8f0;
-            --table-head: #1e3a8a;
-            --table-text: #334155;
-            --live: #ff0000;
+            --bg: #ffffff; --header-bg: #f1f5f9; --card: #f8fafc; 
+            --text: #1e3a8a; --accent: #d4af37; --whatsapp: #25d366;
+            --border: #e2e8f0; --table-head: #1e3a8a; --table-text: #334155; --live: #ff0000;
         }
 
         [data-theme="dark"] {
-            --bg: #0f172a; 
-            --header-bg: #161d2f;
-            --card: #1e293b; 
-            --text: #f8fafc; 
-            --border: #334155;
-            --table-head: #161d2f;
-            --table-text: #f8fafc;
+            --bg: #0f172a; --header-bg: #161d2f; --card: #1e293b; 
+            --text: #f8fafc; --border: #334155; --table-head: #161d2f; --table-text: #f8fafc;
         }
 
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 50px; }
-        header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
-        .logo-box { font-size: 1.1rem; font-weight: bold; letter-spacing: 1px; }
+        header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; }
         
-        .theme-toggle { cursor: pointer; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); background: var(--card); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
+        .theme-toggle { cursor: pointer; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: var(--card); }
 
         .container { max-width: 600px; margin: auto; padding: 15px; }
         
-        .live-badge { background: var(--live); color: white; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        /* Axtarış Sistemi */
+        .search-container { position: relative; margin-bottom: 20px; }
+        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); box-sizing: border-box; }
+        .search-results { position: absolute; width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 0 0 10px 10px; z-index: 10; display: none; max-height: 200px; overflow-y: auto; }
+        .search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid var(--border); }
+        .search-item:hover { background: var(--header-bg); }
 
         .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; }
         .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 4px solid var(--border); }
         
-        .poll-box { display: flex; gap: 10px; margin-top: 10px; }
-        .poll-btn { flex: 1; padding: 10px; border: 1px solid var(--accent); background: transparent; color: var(--text); border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .poll-btn:hover { background: var(--accent); color: white; }
+        /* Səsvermə Dizaynı */
+        .poll-box { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .poll-option { background: var(--header-bg); border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; transition: 0.3s; font-weight: bold; }
+        .poll-bar { position: absolute; left: 0; top: 0; height: 100%; background: rgba(212, 175, 55, 0.2); width: 0%; transition: width 1s; }
+        .poll-text { position: relative; z-index: 2; display: flex; justify-content: space-between; }
 
-        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-        .custom-table th { background: var(--table-head); color: white; padding: 12px; text-align: left; font-size: 0.8rem; }
-        .custom-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--table-text); font-size: 0.9rem; }
+        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); font-size: 0.9rem; }
+        .custom-table th { background: var(--table-head); color: white; padding: 12px; text-align: left; }
+        .custom-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--table-text); }
 
-        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; }
     </style>
 </head>
 <body id="mainBody">
@@ -63,23 +56,26 @@
 </header>
 
 <div class="container">
-    
-    <div class="section-title">🔴 CANLI HESABLAR</div>
-    <div class="card" style="display: flex; justify-content: space-between; align-items: center; border-left-color: var(--live);">
-        <span>Lazio <b>1 - 0</b> AC Milan</span>
-        <span class="live-badge">72'</span>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Klub axtar (Qarabağ, Real Madrid...)" oninput="handleSearch()">
+        <div id="searchResults" class="search-results"></div>
     </div>
 
-    <div class="section-title">🏆 UEFA CHAMPIONS LEAGUE</div>
+    <div class="section-title">📊 KİMİN TƏRƏFDARISAN?</div>
     <div class="card">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-            <span>Real Madrid - Man. City</span>
-            <span style="color: var(--accent); font-weight: bold;">23:55</span>
-        </div>
-        <div class="poll-box">
-            <button class="poll-btn" onclick="alert('Səs verdiniz: Real Madrid')">1</button>
-            <button class="poll-btn" onclick="alert('Səs verdiniz: Heç-heçə')">X</button>
-            <button class="poll-btn" onclick="alert('Səs verdiniz: Man. City')">2</button>
+        <div class="poll-box" id="pollBox">
+            <div class="poll-option" onclick="castVote('real')">
+                <div class="poll-bar" id="bar-real"></div>
+                <div class="poll-text"><span>Real Madrid tərəfdarıyam</span> <span id="percent-real">0%</span></div>
+            </div>
+            <div class="poll-option" onclick="castVote('both')">
+                <div class="poll-bar" id="bar-both"></div>
+                <div class="poll-text"><span>Hər ikisi yaxşıdır</span> <span id="percent-both">0%</span></div>
+            </div>
+            <div class="poll-option" onclick="castVote('barca')">
+                <div class="poll-bar" id="bar-barca"></div>
+                <div class="poll-text"><span>Barcelona tərəfdarıyam</span> <span id="percent-barca">0%</span></div>
+            </div>
         </div>
     </div>
 
@@ -88,20 +84,61 @@
 
     <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA QOŞUL</a>
 
-    <div class="section-title">📊 UCL TURNİR CƏDVƏLİ</div>
+    <div class="section-title">🏆 UCL ÇEMPİONLUQ SAYI</div>
     <table class="custom-table">
         <thead>
-            <tr><th>#</th><th>KOMANDA</th><th>O</th><th>X</th></tr>
+            <tr><th>Takım</th><th>Şampiyonluk</th></tr>
         </thead>
         <tbody>
-            <tr><td>1</td><td>Liverpool</td><td>6</td><td><b>18</b></td></tr>
-            <tr><td>2</td><td>Inter Milan</td><td>6</td><td><b>16</b></td></tr>
-            <tr><td>3</td><td>Barcelona</td><td>6</td><td><b>15</b></td></tr>
+            <tr><td>Real Madrid</td><td><b>15</b></td></tr>
+            <tr><td>AC Milan</td><td><b>7</b></td></tr>
+            <tr><td>Bayern Münih</td><td><b>6</b></td></tr>
+            <tr><td>Liverpool FC</td><td><b>6</b></td></tr>
+            <tr><td>FC Barcelona</td><td><b>5</b></td></tr>
         </tbody>
     </table>
 </div>
 
 <script>
+    // Axtarış Datası (Az Ligası daxil)
+    const teams = [
+        "Qarabağ FK", "Neftçi PFK", "Zirə FK", "Sabah FK", "Sumqayıt FK",
+        "Real Madrid", "Barcelona", "Manchester City", "Liverpool", "Bayern Munich"
+    ];
+
+    function handleSearch() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const resBox = document.getElementById('searchResults');
+        resBox.innerHTML = '';
+        if (input.length < 1) { resBox.style.display = 'none'; return; }
+        
+        const filtered = teams.filter(t => t.toLowerCase().includes(input));
+        if (filtered.length > 0) {
+            resBox.style.display = 'block';
+            filtered.forEach(t => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.innerText = t;
+                div.onclick = () => { alert(t + " haqqında məlumat yüklənir..."); };
+                resBox.appendChild(div);
+            });
+        } else { resBox.style.display = 'none'; }
+    }
+
+    // Səsvermə Sistemi
+    let votes = { real: 45, both: 25, barca: 30 }; // Başlanğıc datası
+    function castVote(choice) {
+        votes[choice]++;
+        const total = votes.real + votes.both + votes.barca;
+        
+        for (let key in votes) {
+            const percent = Math.round((votes[key] / total) * 100);
+            document.getElementById(`percent-${key}`).innerText = percent + '%';
+            document.getElementById(`bar-${key}`).style.width = percent + '%';
+        }
+        document.getElementById('pollBox').style.pointerEvents = 'none'; // Təkrar səs verməmək üçün
+    }
+
     function toggleTheme() {
         const body = document.getElementById('mainBody');
         const icon = document.getElementById('theme-icon');
