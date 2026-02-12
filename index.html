@@ -19,8 +19,6 @@
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 50px; }
         header { background: var(--header-bg); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 100; }
         
-        .theme-toggle { cursor: pointer; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: var(--card); transition: 0.3s; }
-
         .container { max-width: 600px; margin: auto; padding: 15px; }
         
         /* Axtarış Sistemi */
@@ -30,90 +28,95 @@
         .search-item { padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
         .search-item:hover { background: var(--header-bg); color: var(--accent); }
 
+        /* Rəngli Məlumat Kartı (Modal) */
+        #infoModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 400px; background: var(--card); border: 2px solid var(--accent); border-radius: 15px; padding: 20px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; }
+        #modalOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
+        .close-btn { margin-top: 15px; padding: 8px 20px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
         .section-title { display: flex; align-items: center; gap: 8px; font-weight: bold; margin: 25px 0 10px; color: var(--accent); font-size: 0.85rem; text-transform: uppercase; }
         .card { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 4px solid var(--border); }
         
-        /* Rəngli Səsvermə Dizaynı */
-        .poll-option { background: var(--header-bg); border: 1px solid var(--border); padding: 14px; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; margin-top: 10px; transition: 0.3s; font-weight: bold; }
-        .poll-option:hover { transform: scale(1.02); }
+        /* Rəngli Səsvermə */
+        .poll-option { background: var(--header-bg); border: 1px solid var(--border); padding: 14px; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; margin-top: 10px; font-weight: bold; }
         .poll-bar { position: absolute; left: 0; top: 0; height: 100%; width: 0%; transition: width 0.8s ease; opacity: 0.4; }
-        
-        /* Klublara görə rəngli barlar */
         .bar-real { background: linear-gradient(90deg, #3d1671, #ffffff); }
         .bar-both { background: linear-gradient(90deg, #d4af37, #f1f5f9); }
         .bar-barca { background: linear-gradient(90deg, #a50044, #004d98); }
-        
-        .poll-text { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; }
+        .poll-text { position: relative; z-index: 2; display: flex; justify-content: space-between; }
 
-        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); font-size: 0.9rem; }
+        .custom-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
         .custom-table th { background: var(--table-head); color: white; padding: 12px; text-align: left; }
         .custom-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--table-text); }
 
-        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2); }
+        .channel-btn { display: block; background: var(--whatsapp); color: white; padding: 15px; border-radius: 12px; text-decoration: none; text-align: center; font-weight: bold; margin: 20px 0; }
     </style>
 </head>
 <body id="mainBody">
 
 <header>
     <div class="logo-box">🌍 EVERYWHERE FUTBOL</div>
-    <div class="theme-toggle" onclick="toggleTheme()">
-        <span id="theme-icon">🔆</span>
-    </div>
+    <div onclick="toggleTheme()" style="cursor:pointer; font-size:1.2rem;" id="theme-icon">🔆</div>
 </header>
 
 <div class="container">
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-bar" placeholder="Klub axtar (Kəpəz, Qarabağ, Real...)" oninput="handleSearch()">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Klub və ya Liqa axtar..." oninput="handleSearch()">
         <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div id="modalOverlay" onclick="closeModal()"></div>
+    <div id="infoModal">
+        <h3 id="modalTitle" style="color: var(--accent);"></h3>
+        <p id="modalDesc"></p>
+        <button class="close-btn" onclick="closeModal()">Bağla</button>
     </div>
 
     <div class="section-title">📊 KİMİN TƏRƏFDARISAN?</div>
     <div class="card" id="pollCard">
         <div class="poll-option" onclick="castVote('real')">
             <div class="poll-bar bar-real" id="bar-real"></div>
-            <div class="poll-text"><span>⚪ Real Madrid tərəfdarıyam</span> <span id="percent-real">0%</span></div>
+            <div class="poll-text"><span>⚪ Real Madrid</span> <span id="percent-real">0%</span></div>
         </div>
         <div class="poll-option" onclick="castVote('both')">
             <div class="poll-bar bar-both" id="bar-both"></div>
-            <div class="poll-text"><span>🤝 Hər ikisini xoşlayıram</span> <span id="percent-both">0%</span></div>
+            <div class="poll-text"><span>🤝 Hər ikisi</span> <span id="percent-both">0%</span></div>
         </div>
         <div class="poll-option" onclick="castVote('barca')">
             <div class="poll-bar bar-barca" id="bar-barca"></div>
-            <div class="poll-text"><span>🔴 Barcelona tərəfdarıyam</span> <span id="percent-barca">0%</span></div>
+            <div class="poll-text"><span>🔴 Barcelona</span> <span id="percent-barca">0%</span></div>
         </div>
     </div>
 
     <div class="section-title">📰 SON XƏBƏR</div>
-    <div class="card">📉 <b>Man United ard-arda 5 oyun qalib gələ bilmədi!</b> Komandada böhran davam edir.</div>
+    <div class="card">📉 <b>Man United ard-arda 5 oyun qalib gələ bilmədi!</b></div>
 
     <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="channel-btn">🚀 WHATSAPP KANALA QOŞUL</a>
 
     <div class="section-title">🏆 UCL ÇEMPİONLUQ SAYI</div>
     <table class="custom-table">
         <thead>
-            <tr><th>Takım</th><th>Şampiyonluk</th></tr>
+            <tr><th>Takım</th><th>Sayı</th></tr>
         </thead>
         <tbody>
             <tr><td>Real Madrid</td><td><b>15</b></td></tr>
             <tr><td>AC Milan</td><td><b>7</b></td></tr>
-            <tr><td>FC Bayern Münih</td><td><b>6</b></td></tr>
-            <tr><td>FC Barcelona</td><td><b>5</b></td></tr>
+            <tr><td>Bayern Münih</td><td><b>6</b></td></tr>
+            <tr><td>Barcelona</td><td><b>5</b></td></tr>
         </tbody>
     </table>
 </div>
 
 <script>
-    // Klub Datası (Kəpəz daxil)
     const teamData = {
-        "Kəpəz PFK": "Gəncə şəhərini təmsil edir. Azərbaycanın 3 qat çempionu və ölkənin ən köklü klublarından biridir.",
-        "Qarabağ FK": "Ağdam təmsilçisi. Azərbaycanın ən çox çempion olan və Avropada ölkəni daim təmsil edən klubudur.",
-        "Neftçi PFK": "Bakı klubu. Azərbaycan futbolunun tarixinə adını 'Xalq komandası' kimi yazdırıb.",
-        "Zirə FK": "Bakı təmsilçisi. Qısa müddətdə böyük uğurlar qazanan iddialı bir komandadır.",
-        "Sabah FK": "Masazır təmsilçisi. Gənc olmasına baxmayaraq, yüksək səviyyəli infrastrukturu ilə seçilir.",
-        "Sumqayıt FK": "Gənclik şəhərinin komandası, yerli futbolçulara verdiyi önəmlə tanınır.",
-        "Real Madrid": "İspaniya nəhəngi. 15 dəfə UEFA Çempionlar Liqasının qalibidir.",
-        "Barcelona": "Kataloniya təmsilçisi. 5 dəfə UCL qalibidir və özünəməxsus futbol məktəbi var.",
-        "Man City": "Müasir futbolun ən güclü komandalarından biri, 2023-cü il Avropa çempionu."
+        "Qarabağ FK": "Ağdamın fəxri. Azərbaycan futbolunun Avropadakı üzüdür.",
+        "Kəpəz PFK": "Gəncənin tarixi klubu. 3 qat ölkə çempionudur.",
+        "Neftçi PFK": "Azərbaycanın ən köklü klublarından biri, xalq komandası.",
+        "Karvan İK": "Yevlax təmsilçisi. Azərbaycan futbolunda silinməz izləri var.",
+        "İmişli FK": "1-ci Liqanın iddialı İmişli təmsilçisi.",
+        "MOİK Bakı": "Ordunun komandası. Döyüşkən ruhu ilə tanınır.",
+        "Qəbələ FK": "Gözəl infrastruktura malik Qəbələ təmsilçisi.",
+        "Real Madrid": "15 dəfə UCL çempionu. Dünyanın ən uğurlu klubu.",
+        "Barcelona": "5 dəfə UCL qalibi. Möhtəşəm futbol akademiyası ilə tanınır."
     };
 
     function handleSearch() {
@@ -121,7 +124,6 @@
         const resBox = document.getElementById('searchResults');
         resBox.innerHTML = '';
         if (input.length < 1) { resBox.style.display = 'none'; return; }
-        
         const filtered = Object.keys(teamData).filter(t => t.toLowerCase().includes(input));
         if (filtered.length > 0) {
             resBox.style.display = 'block';
@@ -129,22 +131,29 @@
                 const div = document.createElement('div');
                 div.className = 'search-item';
                 div.innerText = t;
-                div.onclick = () => { 
-                    alert(`${t}: ${teamData[t]}`); 
-                    resBox.style.display = 'none';
-                    document.getElementById('searchInput').value = t;
-                };
+                div.onclick = () => showModal(t, teamData[t]);
                 resBox.appendChild(div);
             });
         } else { resBox.style.display = 'none'; }
     }
 
-    // Səsvermə Sistemi (0-dan başlayır)
+    function showModal(title, desc) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalDesc').innerText = desc;
+        document.getElementById('modalOverlay').style.display = 'block';
+        document.getElementById('infoModal').style.display = 'block';
+        document.getElementById('searchResults').style.display = 'none';
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+        document.getElementById('infoModal').style.display = 'none';
+    }
+
     let votes = { real: 0, both: 0, barca: 0 };
     function castVote(choice) {
         votes[choice]++;
         const total = votes.real + votes.both + votes.barca;
-        
         for (let key in votes) {
             const percent = Math.round((votes[key] / total) * 100);
             document.getElementById(`percent-${key}`).innerText = percent + '%';
@@ -158,13 +167,12 @@
         const icon = document.getElementById('theme-icon');
         if (body.hasAttribute('data-theme')) {
             body.removeAttribute('data-theme');
-            icon.innerText = '🔆'; 
+            icon.innerText = '🔆';
         } else {
             body.setAttribute('data-theme', 'dark');
-            icon.innerText = '🌙'; 
+            icon.innerText = '🌙';
         }
     }
 </script>
-
 </body>
 </html>
