@@ -16,47 +16,39 @@
             --text: #f8fafc; --border: #374151; --table-head: #111827; --glass: rgba(31,41,55,0.8);
         }
 
-        body { font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 80px; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3; padding-bottom: 100px; overflow-x: hidden; }
         
-        /* Header & Profile */
-        header { background: var(--header-bg); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; }
-        .user-stats { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--accent); }
+        header { background: var(--header-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        .user-stats { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; background: rgba(255,255,255,0.15); padding: 6px 15px; border-radius: 25px; border: 1px solid var(--accent); transition: 0.3s; }
+        .xp-gain-anim { animation: pulse-gold 0.6s ease-in-out; }
+        @keyframes pulse-gold { 0% { transform: scale(1); box-shadow: 0 0 0 rgba(212,175,55,0); } 50% { transform: scale(1.1); box-shadow: 0 0 15px var(--accent); } 100% { transform: scale(1); } }
 
         .container { max-width: 500px; margin: auto; padding: 15px; }
 
         /* Goal Animasiyası */
-        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 20px 40px; border-radius: 50px; font-size: 2rem; font-weight: 900; z-index: 9999; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; box-shadow: 0 0 50px var(--accent); }
+        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 25px 50px; border-radius: 50px; font-size: 2.5rem; font-weight: 900; z-index: 9999; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; }
 
-        /* Canlı Match Card */
-        .live-match-box { background: linear-gradient(135deg, #1e3a8a 0%, #000000 100%); color: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .live-match-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%); animation: rotate 10s linear infinite; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* Match Card */
+        .live-match-box { background: linear-gradient(135deg, #1e3a8a 0%, #000 100%); color: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .score-display { font-size: 2.2rem; font-weight: 900; letter-spacing: 3px; color: var(--accent); }
 
-        .score-display { font-size: 2.5rem; font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 15px var(--accent); }
+        /* Penalty Game */
+        .penalty-arena { background: #22c55e; border: 4px solid white; border-radius: 15px; padding: 20px; position: relative; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.2); }
+        .goal-post { position: absolute; top: 10px; width: 80%; height: 80px; border: 5px solid white; border-bottom: none; }
+        .keeper { position: absolute; top: 40px; font-size: 3rem; transition: 0.4s ease-out; z-index: 2; }
+        .ball { font-size: 1.5rem; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3; position: absolute; bottom: 20px; }
+        .kick-btn-group { display: flex; gap: 10px; width: 100%; margin-top: 15px; }
+        .kick-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; background: var(--header-bg); color: white; font-weight: 800; cursor: pointer; }
 
-        /* News Ticker */
-        .news-ticker { background: var(--accent); color: #000; padding: 5px 0; font-size: 0.8rem; font-weight: bold; margin: -15px -15px 20px -15px; }
+        /* Quiz Fixes */
+        .quiz-option { background: var(--card); padding: 15px; border-radius: 12px; margin-top: 10px; cursor: pointer; border: 2px solid var(--border); transition: 0.2s; font-weight: bold; }
+        .quiz-option.correct { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .quiz-option.wrong { background: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
 
-        /* Cards */
-        .card { background: var(--card); border-radius: 15px; padding: 20px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        
-        /* Quiz Styles */
-        .quiz-option { background: var(--bg); padding: 15px; border-radius: 12px; margin-top: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; font-weight: bold; display: flex; justify-content: space-between; }
-        .quiz-option:hover { border-color: var(--accent); background: var(--card); }
-        .correct { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.1) !important; color: #22c55e; }
-        .wrong { border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.1) !important; color: #ef4444; }
-
-        .whatsapp-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--whatsapp); color: white; padding: 18px; border-radius: 15px; text-decoration: none; font-weight: 800; transform: translateZ(0); transition: 0.3s; }
-        .whatsapp-btn:active { transform: scale(0.95); }
-
-        .section-title { display: flex; align-items: center; justify-content: space-between; font-weight: 900; color: var(--text); font-size: 0.9rem; margin-bottom: 12px; }
-        .badge { background: var(--accent); color: #000; padding: 2px 8px; border-radius: 5px; font-size: 0.7rem; }
-
-        /* Floating Menu */
-        .nav-bar { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: var(--glass); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000; }
-        .nav-item { cursor: pointer; font-size: 1.2rem; opacity: 0.6; transition: 0.3s; }
-        .nav-item.active { opacity: 1; color: var(--accent); transform: translateY(-5px); }
-
+        .nav-bar { position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 15px; border-radius: 25px; border: 1px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; }
+        .section-title { font-weight: 900; color: var(--text); font-size: 0.9rem; margin: 20px 0 10px; display: flex; align-items: center; gap: 10px; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
     </style>
 </head>
 <body id="mainBody">
@@ -64,107 +56,83 @@
 <div id="goalAlert">GOAAAL! ⚽</div>
 
 <header>
-    <div style="font-weight: 900; font-size: 1.2rem;">EF PRO</div>
-    <div class="user-stats">
+    <div style="font-weight: 900; font-size: 1rem; letter-spacing: -0.5px;">🌐 EVERYWHERE FUTBOL 🌍</div>
+    <div class="user-stats" id="statsBox">
         <span id="userLevel">LVL 1</span>
-        <span style="color:var(--accent)">★</span>
         <span id="userXP">0 XP</span>
     </div>
 </header>
 
-<div class="news-ticker">
-    <marquee scrollamount="5">🚨 TRANSFER: Lionel Messi yenidən Barselonaya qayıda bilər! | 🚨 PREMYER LİQA: Bu axşam böyük derbi var! | 🚨 QARABAĞ: Yeni hücumçu yoldadır...</marquee>
-</div>
-
 <div class="container">
-    <div class="search-container" style="margin-bottom: 20px;">
-        <input type="text" id="searchInput" class="search-bar" style="width:100%; padding:15px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text);" placeholder="Klub və ya oyunçu axtar..." oninput="handleSearch()">
-        <div id="searchResults" class="search-results" style="position:absolute; width:100%; background:var(--card); z-index:100; display:none; border:1px solid var(--border); border-radius:0 0 12px 12px;"></div>
-    </div>
-
-    <div class="section-title"><span>🔴 CANLI ARENA</span> <span class="badge">LIVE</span></div>
     <div class="live-match-box">
         <div style="display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2">
-            <div style="text-align:center; width:40%">
-                <div style="font-size:2rem">🛡️</div>
-                <div style="font-weight:bold; margin-top:5px;">QARABAĞ</div>
-            </div>
-            <div style="text-align:center; width:20%">
+            <div style="text-align:center; width:35%">🛡️ <br> QARABAĞ</div>
+            <div style="text-align:center; width:30%">
                 <div class="score-display" id="liveScore">0-0</div>
-                <div style="font-size:0.8rem; background:red; border-radius:10px; padding:2px 8px;" id="liveMin">12'</div>
+                <div style="background:red; padding:2px 8px; border-radius:10px; font-size:0.7rem;" id="liveMin">12'</div>
             </div>
-            <div style="text-align:center; width:40%">
-                <div style="font-size:2rem">🦅</div>
-                <div style="font-weight:bold; margin-top:5px;">NEFTÇİ</div>
-            </div>
+            <div style="text-align:center; width:35%">🦅 <br> NEFTÇİ</div>
         </div>
     </div>
 
-    <div class="section-title"><span>🏆 SIRALAMA</span></div>
+    <div class="section-title">🧠 GÜNLÜK SUAL</div>
+    <div class="card" style="background:var(--card); border-radius:15px; padding:20px;">
+        <h3 id="qText" style="margin:0 0 15px 0; font-size:1rem;">Yüklənir...</h3>
+        <div id="qOptions"></div>
+    </div>
+
+    <div class="section-title">🥅 PENALTY CHALLENGE (HƏR GÜN)</div>
+    <div class="card" style="padding:10px;">
+        <div class="penalty-arena" id="arena">
+            <div class="goal-post"></div>
+            <div class="keeper" id="keeper">🧤</div>
+            <div class="ball" id="ball">⚽</div>
+        </div>
+        <div class="kick-btn-group" id="controls">
+            <button class="kick-btn" onclick="shoot(0)">SOL</button>
+            <button class="kick-btn" onclick="shoot(1)">ORTA</button>
+            <button class="kick-btn" onclick="shoot(2)">SAĞ</button>
+        </div>
+        <p id="gameMsg" style="text-align:center; font-weight:bold; margin-top:10px; font-size:0.8rem;"></p>
+    </div>
+
+    <div class="section-title">🏆 TURNİR CƏDVƏLİ</div>
     <div class="card" style="padding:0; overflow:hidden;">
-        <div style="display:flex; border-bottom:1px solid var(--border)">
-            <button onclick="showLeague('az')" id="btn-az" style="flex:1; padding:12px; border:none; background:none; color:var(--text); font-weight:bold; cursor:pointer;">AZƏRBAYCAN</button>
-            <button onclick="showLeague('tr')" id="btn-tr" style="flex:1; padding:12px; border:none; background:none; color:var(--text); font-weight:bold; cursor:pointer;">TÜRKİYƏ</button>
+        <div style="display:flex; background:var(--header-bg);">
+            <button onclick="showLeague('az')" id="btn-az" style="flex:1; padding:12px; border:none; color:white; font-weight:bold; cursor:pointer;">AZ</button>
+            <button onclick="showLeague('tr')" id="btn-tr" style="flex:1; padding:12px; border:none; color:white; font-weight:bold; cursor:pointer;">TR</button>
         </div>
         <table style="width:100%; border-collapse:collapse; font-size:0.8rem;">
             <tbody id="table-body"></tbody>
         </table>
     </div>
-
-    <div class="section-title"><span>🧠 FUTBOL BİLGİNİ</span> <span id="timerText" style="font-size:0.7rem; color:gray;"></span></div>
-    <div class="card" id="quizContainer">
-        <h3 id="qText" style="margin-top:0; font-size:1rem;">Yüklənir...</h3>
-        <div id="qOptions"></div>
-    </div>
-
-    <a href="https://whatsapp.com" class="whatsapp-btn">
-        <span>QOŞUL VƏ QAZAN</span>
-        <span style="font-size:1.2rem">📲</span>
-    </a>
 </div>
 
 <div class="nav-bar">
     <div class="nav-item active" onclick="toggleTheme()">🌓</div>
     <div class="nav-item">🏠</div>
     <div class="nav-item" onclick="alert('Tezliklə: Canlı Söhbət!')">💬</div>
-    <div class="nav-item" onclick="alert('Xallarınız: ' + userXP)">🏆</div>
+    <div class="nav-item" onclick="window.scrollTo(0,0)">🔝</div>
 </div>
 
 <script>
-    // Stats & Leveling
+    // Stats & XP
     let userXP = parseInt(localStorage.getItem('ef_xp')) || 0;
-    function updateStats(xpGain) {
-        userXP += xpGain;
+    function updateStats(xp) {
+        userXP += xp;
         localStorage.setItem('ef_xp', userXP);
+        const box = document.getElementById('statsBox');
+        box.classList.add('xp-gain-anim');
+        setTimeout(() => box.classList.remove('xp-gain-anim'), 600);
         document.getElementById('userXP').innerText = userXP + " XP";
         document.getElementById('userLevel').innerText = "LVL " + (Math.floor(userXP/100) + 1);
     }
 
-    // Live Match Logic
-    let s1 = 0, s2 = 0, min = 12;
-    function runMatch() {
-        min++;
-        if(min > 90) { min = 1; s1 = 0; s2 = 0; }
-        document.getElementById('liveMin').innerText = min + "'";
-        if(Math.random() > 0.97) {
-            Math.random() > 0.5 ? s1++ : s2++;
-            document.getElementById('liveScore').innerText = `${s1}-${s2}`;
-            triggerGoal();
-        }
-    }
-    setInterval(runMatch, 4000);
-
-    function triggerGoal() {
-        const ga = document.getElementById('goalAlert');
-        ga.style.transform = "translate(-50%, -50%) scale(1.2)";
-        setTimeout(() => ga.style.transform = "translate(-50%, -50%) scale(0)", 2000);
-    }
-
-    // Quiz System
+    // Quiz System Fix
     const questions = [
         {q: "Tofiq Bəhramov hansı finalda qərar verib?", a: ["1966 İngiltərə", "1970 Braziliya", "1954 Almaniya"], c: 0},
         {q: "Qarabağ FK-nın ləqəbi nədir?", a: ["Qartallar", "Atlılar", "Canavarlar"], c: 1},
-        {q: "Dünyanın ən böyük stadionu?", a: ["Marakana", "Rungrado", "Camp Nou"], c: 1}
+        {q: "Dünyanın ən çox çempion olan ölkəsi?", a: ["Almaniya", "İtaliya", "Braziliya"], c: 2}
     ];
 
     function loadQuiz() {
@@ -175,28 +143,87 @@
         q.a.forEach((opt, i) => {
             const div = document.createElement('div');
             div.className = 'quiz-option';
-            div.innerHTML = `<span>${opt}</span> <span>⚽</span>`;
-            div.onclick = () => {
-                if(div.parentElement.classList.contains('locked')) return;
+            div.innerText = opt;
+            div.onclick = function() {
+                if(optCont.getAttribute('data-locked')) return;
+                optCont.setAttribute('data-locked', 'true');
                 if(i === q.c) {
-                    div.classList.add('correct');
-                    updateStats(25);
+                    this.classList.add('correct');
+                    updateStats(20);
                 } else {
-                    div.classList.add('wrong');
+                    this.classList.add('wrong');
+                    optCont.children[q.c].classList.add('correct');
                 }
-                div.parentElement.classList.add('locked');
-                setTimeout(loadQuiz, 3000);
+                setTimeout(() => {
+                    optCont.removeAttribute('data-locked');
+                    loadQuiz();
+                }, 2500);
             };
             optCont.appendChild(div);
         });
     }
 
-    // League Logic
+    // eFootball Style Penalty Game
+    function shoot(playerPos) {
+        const lastShot = localStorage.getItem('lastShotDate');
+        const today = new Date().toDateString();
+        
+        if(lastShot === today) {
+            document.getElementById('gameMsg').innerText = "Gündəlik haqqın bitdi! Sabah gəl. 🕒";
+            return;
+        }
+
+        const keeper = document.getElementById('keeper');
+        const ball = document.getElementById('ball');
+        const keeperPos = Math.floor(Math.random() * 3); // 0: Left, 1: Center, 2: Right
+        
+        const positions = ["-80px", "0px", "80px"];
+        
+        // Move Keeper & Ball
+        keeper.style.transform = `translateX(${positions[keeperPos]})`;
+        ball.style.transform = `translate(${positions[playerPos]}, -130px) scale(0.6)`;
+        
+        setTimeout(() => {
+            if(playerPos === keeperPos) {
+                document.getElementById('gameMsg').innerText = "QAPICI TUTDU! 🧤";
+            } else {
+                document.getElementById('gameMsg').innerText = "QOOOOL! ⚽ +50 XP";
+                updateStats(50);
+                triggerGoal();
+            }
+            localStorage.setItem('lastShotDate', today);
+            setTimeout(resetGame, 2000);
+        }, 500);
+    }
+
+    function resetGame() {
+        document.getElementById('keeper').style.transform = "translateX(0)";
+        document.getElementById('ball').style.transform = "translate(0,0) scale(1)";
+    }
+
+    function triggerGoal() {
+        const ga = document.getElementById('goalAlert');
+        ga.style.transform = "translate(-50%, -50%) scale(1)";
+        setTimeout(() => ga.style.transform = "translate(-50%, -50%) scale(0)", 1500);
+    }
+
+    // Match Sim
+    let s1=0, s2=0, min=12;
+    setInterval(() => {
+        min++; if(min>90) {min=1; s1=0; s2=0;}
+        document.getElementById('liveMin').innerText = min+"'";
+        if(Math.random()>0.98) {
+            Math.random()>0.5 ? s1++ : s2++;
+            document.getElementById('liveScore').innerText = s1+"-"+s2;
+            triggerGoal();
+        }
+    }, 4000);
+
+    // League UI
     const leagues = {
-        az: [{n: "Sabah", x: 46}, {n: "Qarabağ", x: 42}, {n: "Turan", x: 33}],
+        az: [{n: "Qarabağ", x: 48}, {n: "Sabah", x: 46}, {n: "Turan", x: 35}],
         tr: [{n: "Galatasaray", x: 63}, {n: "Fenerbahçe", x: 61}, {n: "Beşiktaş", x: 47}]
     };
-
     function showLeague(l) {
         const body = document.getElementById('table-body');
         body.innerHTML = '';
@@ -207,8 +234,6 @@
                 <td style="padding:12px; text-align:right; font-weight:900">${t.x} Xal</td>
             </tr>`;
         });
-        document.getElementById('btn-az').style.borderBottom = l === 'az' ? '3px solid var(--accent)' : 'none';
-        document.getElementById('btn-tr').style.borderBottom = l === 'tr' ? '3px solid var(--accent)' : 'none';
     }
 
     function toggleTheme() {
@@ -216,12 +241,7 @@
         b.hasAttribute('data-theme') ? b.removeAttribute('data-theme') : b.setAttribute('data-theme', 'dark');
     }
 
-    // Init
-    window.onload = () => {
-        showLeague('az');
-        loadQuiz();
-        updateStats(0);
-    };
+    window.onload = () => { showLeague('az'); loadQuiz(); updateStats(0); };
 </script>
 </body>
 </html>
