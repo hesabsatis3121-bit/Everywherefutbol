@@ -14,14 +14,19 @@
             --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; --accent: #d97706; --border: #e2e8f0;
         }
         
-        body { font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); padding-bottom: 150px; overflow-x: hidden; }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.5s; padding-bottom: 150px; overflow-x: hidden; }
         
-        /* Coin Animation */
-        .coin-float {
-            position: fixed; font-weight: bold; color: var(--accent); font-size: 1.5rem;
-            pointer-events: none; z-index: 10000; animation: floatUp 1.2s forwards ease-out;
+        /* Axtarış Çubuğu */
+        .search-container { margin: 15px 0; position: relative; }
+        .search-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); outline: none; }
+
+        /* Goal & Coin Animations */
+        .float-anim {
+            position: fixed; font-weight: 900; color: var(--accent); font-size: 1.8rem;
+            pointer-events: none; z-index: 10000; animation: floatUp 1.2s forwards;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
         }
-        @keyframes floatUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-100px); } }
+        @keyframes floatUp { 0% { opacity: 0; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -150px); } }
 
         header { 
             background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); padding: 15px 20px; 
@@ -29,153 +34,110 @@
             position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--accent);
         }
 
-        .level-badge { position: absolute; top: -12px; left: 5px; background: var(--gold); color: #000; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3); }
+        .level-badge { position: absolute; top: -12px; left: 5px; background: var(--gold); color: #000; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; }
         .user-profile { display: flex; align-items: center; gap: 12px; position: relative; }
         .avatar { width: 45px; height: 45px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 1.2rem; }
 
         .container { max-width: 500px; margin: auto; padding: 15px; }
 
-        .live-ticker { 
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border-radius: 25px; 
-            padding: 25px; margin-bottom: 25px; position: relative; box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
-        }
-        .score-box { font-size: 2.2rem; font-weight: 900; background: rgba(0,0,0,0.3); padding: 8px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
-
-        /* Arena & Enhanced Keeper */
+        /* Arena & PRO Animasiyalı Qapıcı */
         .arena { 
             background: #064e3b; border: 6px solid #fff; border-radius: 30px; height: 220px; 
             position: relative; overflow: hidden; margin-top: 15px; display: flex; align-items: flex-end; justify-content: center;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 40px #000;
         }
-        .keeper-ai { position: absolute; top: 45px; font-size: 4rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; text-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+        .keeper-ai { position: absolute; top: 45px; font-size: 4rem; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; }
+        .keeper-save-anim { transform: scale(1.3) rotate(10deg) translateX(-50%); filter: brightness(1.2); }
         .save-shake { animation: shake 0.4s; }
-        @keyframes shake { 0%, 100% { transform: translateX(-50%); } 25% { transform: translateX(-60%); } 75% { transform: translateX(-40%); } }
+        @keyframes shake { 0%, 100% { margin-left: 0; } 25% { margin-left: -10px; } 75% { margin-left: 10px; } }
 
         .ball-pro { position: absolute; bottom: 25px; font-size: 2.5rem; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3; }
 
-        /* WhatsApp Button */
-        .wa-btn {
-            background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center;
-            gap: 10px; padding: 15px; border-radius: 15px; margin: 20px 0; font-weight: bold; transition: 0.3s;
-        }
-        .wa-btn:hover { transform: scale(1.02); background: #128c7e; }
+        .wa-btn { background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; margin: 20px 0; font-weight: bold; }
 
-        /* News 2h Engine */
-        .news-box { background: var(--card); border-radius: 20px; padding: 20px; border-left: 5px solid var(--primary); margin: 20px 0; }
-
-        .quiz-box { background: var(--card); padding: 20px; border-radius: 25px; margin-top: 25px; border: 1px solid var(--border); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .quiz-option { padding: 12px; margin-top: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; border: 1px solid transparent; }
+        .news-box, .quiz-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin: 20px 0; border-left: 5px solid var(--primary); }
+        
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .item-card { background: var(--card); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid var(--border); }
 
         .bottom-nav { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
             width: 85%; max-width: 400px; background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(25px);
             display: flex; justify-content: space-around; padding: 18px; border-radius: 35px; z-index: 2000; border: 1px solid var(--border);
         }
-        .nav-item { font-size: 1.8rem; cursor: pointer; transition: 0.3s; }
+        .nav-item { font-size: 1.8rem; cursor: pointer; opacity: 0.5; }
+        .nav-item.active { opacity: 1; color: var(--accent); }
 
         .footer-ads { text-align: center; padding: 30px; border-top: 1px solid var(--border); margin-top: 40px; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
     </style>
 </head>
-<body id="mainBody">
+<body>
 
 <header>
     <div class="user-profile">
         <div class="level-badge" id="lvlDisp">LVL 1</div>
-        <div class="avatar" id="avatarLetter">⚽</div>
+        <div class="avatar">⚽</div>
         <div>
-            <div id="uName" style="font-weight:900; font-size:0.95rem; letter-spacing: 0.5px;">PLAYER PRO</div>
+            <div id="uName" style="font-weight:900;">PLAYER PRO</div>
             <div id="uRank" style="font-size:0.65rem; color:var(--accent); font-weight: bold;">YÜKLƏNİR...</div>
         </div>
     </div>
     <div style="text-align:right;">
-        <div style="font-weight:900; color:var(--accent); font-size:1.1rem; display:flex; align-items:center; gap:5px;">
-            <span id="efCoins">100</span> 🪙
-        </div>
-        <div style="width: 80px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 5px; overflow: hidden;">
-            <div id="xpBarInner" style="height:100%; width:0%; background: var(--accent); transition: 1s;"></div>
-        </div>
+        <div style="font-weight:900; color:var(--accent);"><span id="efCoins">100</span> 🪙</div>
+        <div style="width: 80px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 5px;"><div id="xpBarInner" style="height:100%; width:0%; background: var(--accent); transition: 1s;"></div></div>
     </div>
 </header>
 
 <div class="container" id="homePage">
-    <div class="live-ticker">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="text-align:center; font-weight: bold;">
-                <img src="https://flagcdn.com/w80/az.png" width="45" style="border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"><br>QARABAĞ
-            </div>
-            <div class="score-box" id="matchScore">0 - 0</div>
-            <div style="text-align:center; font-weight: bold;">
-                <img src="https://flagcdn.com/w80/es.png" width="45" style="border-radius:8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);"><br>R.MADRİD
-            </div>
-        </div>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Xəbər axtar..." onkeyup="searchContent(this.value)">
     </div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="25"> BİZƏ QOŞUL (WHATSAPP)
-    </a>
-
-    <div style="display:flex; justify-content:space-between; margin:20px 0 10px; align-items: center;">
-        <b style="font-size:0.9rem; letter-spacing: 1px;">🏟️ MEGA ARENA</b>
-        <span id="shotTimer" style="font-size:0.75rem; font-weight:900; color:var(--danger); background: rgba(239,68,68,0.1); padding: 4px 10px; border-radius: 8px;">00:00:00</span>
-    </div>
-
-    <div class="arena" id="arenaBox">
+    <div class="arena">
         <div class="keeper-ai" id="keeper" style="left: 50%; transform: translateX(-50%);">✨🧤✨</div>
         <div class="ball-pro" id="ball" style="left: 50%; transform: translateX(-50%);">⚽</div>
     </div>
 
     <div style="display:flex; gap:12px; margin-top:20px;">
-        <button onclick="shoot(0)" style="flex:1; padding:18px; border-radius:15px; border:none; background:var(--card); color:var(--text); font-weight:900; cursor:pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">SOL</button>
-        <button onclick="shoot(1)" style="flex:1; padding:18px; border-radius:15px; border:none; background:var(--card); color:var(--text); font-weight:900; cursor:pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">ORTA</button>
-        <button onclick="shoot(2)" style="flex:1; padding:18px; border-radius:15px; border:none; background:var(--card); color:var(--text); font-weight:900; cursor:pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">SAĞ</button>
+        <button onclick="shoot(0)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">SOL</button>
+        <button onclick="shoot(1)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">ORTA</button>
+        <button onclick="shoot(2)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">SAĞ</button>
     </div>
 
-    <div class="news-box">
-        <div style="display:flex; justify-content:space-between; font-size: 0.8rem; margin-bottom: 10px; font-weight: bold;">
+    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn" target="_blank">📲 WHATSAPP KANALI</a>
+
+    <div class="news-box" id="newsBox">
+        <div style="display:flex; justify-content:space-between; font-size: 0.8rem; font-weight: bold;">
             <span>📰 FLAŞ XƏBƏRLƏR</span>
-            <span id="newsTimer" style="color:var(--primary)">02:00:00</span>
+            <span id="newsTimer">02:00:00</span>
         </div>
-        <div id="newsContent" style="font-size: 0.95rem; line-height: 1.5; font-weight: 500;">Xəbər yüklənir...</div>
-    </div>
-
-    <div class="quiz-box">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <b style="letter-spacing: 1px;">🧠 GÜNÜN SUALI</b>
-            <span id="quizTimer" style="font-size:0.8rem; font-weight: 900; color:var(--primary);">00:00:00</span>
-        </div>
-        <p id="qText" style="margin-top:15px; font-size:1rem; font-weight: 500;">Sual yüklənir...</p>
-        <div id="qOptions"></div>
+        <div id="newsContent" style="margin-top:10px;">Xəbərlər yüklənir...</div>
     </div>
 
     <div class="footer-ads">
-        <div style="font-weight: 900;">📞 Əlaqə: 0558430505</div>
-        <div style="border:2px dashed var(--accent); padding:15px; margin-top:20px; color:var(--accent); font-weight: 900; border-radius: 15px;">
-            ADREKLAM: BURADA SƏNİN REKLAMIN OLA BİLƏR
-        </div>
+        <div style="font-weight: 900;">📞 0558430505</div>
+        <div style="border:2px dashed var(--accent); padding:15px; margin-top:20px; color:var(--accent); font-weight: 900; border-radius: 15px;">REKLAM YERİ</div>
     </div>
 </div>
 
 <div class="container hidden" id="marketPage">
-    <h2 style="color:var(--accent); text-align: center; margin-bottom: 30px;">🏪 EF MEGA MARKET</h2>
-    <div class="market-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-        <div class="item-card" style="background: var(--card); padding: 20px; border-radius: 20px; text-align: center;">
+    <h2 style="color:var(--accent); text-align:center;">🏪 MARKET</h2>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Əşya axtar..." onkeyup="searchMarket(this.value)">
+    </div>
+    <div class="market-grid" id="marketGrid">
+        <div class="item-card" data-name="top">
             <div style="font-size:3rem;">🏀</div>
-            <b style="display:block; margin: 10px 0;">Basketbol Topu</b>
-            <span class="price-tag">500 🪙</span>
-            <button onclick="buyItem('basketball', 'ball', '🏀', 500)" style="width:100%; margin-top:15px; padding:10px; border-radius:10px; border:none; background: var(--primary); color:white; font-weight:bold;">AL (3 GÜN)</button>
+            <b>Basketbol Topu</b><br>
+            <span style="color:var(--accent);">500 🪙</span>
+            <button onclick="buyItem('basketball', 'ball', '🏀', 500)" style="width:100%; margin-top:10px; padding:10px; background:var(--primary); color:white; border:none; border-radius:10px;">AL</button>
         </div>
-        <div class="item-card" style="background: var(--card); padding: 20px; border-radius: 20px; text-align: center;">
+        <div class="item-card" data-name="əlcək">
             <div style="font-size:3rem;">✨</div>
-            <b style="display:block; margin: 10px 0;">Qızıl Əlcəklər</b>
-            <span class="price-tag">1500 🪙</span>
-            <button onclick="buyItem('gold_glv', 'keeper', '✨🧤✨', 1500)" style="width:100%; margin-top:15px; padding:10px; border-radius:10px; border:none; background: var(--primary); color:white; font-weight:bold;">AL (3 GÜN)</button>
-        </div>
-        <div class="item-card" style="background: var(--card); padding: 20px; border-radius: 20px; text-align: center; grid-column: span 2;">
-            <div style="font-size:3rem;">👑</div>
-            <b style="display:block; margin: 10px 0;">VIP STATUS</b>
-            <span class="price-tag">5000 🪙</span>
-            <button onclick="buyItem('vip', 'other', '👑', 5000)" style="width:100%; margin-top:15px; padding:12px; border-radius:10px; border:none; background: var(--gold); color:black; font-weight:900;">VIP OL</button>
+            <b>Qızıl Əlcəklər</b><br>
+            <span style="color:var(--accent);">1500 🪙</span>
+            <button onclick="buyItem('gold_glv', 'keeper', '✨🧤✨', 1500)" style="width:100%; margin-top:10px; padding:10px; background:var(--primary); color:white; border:none; border-radius:10px;">AL</button>
         </div>
     </div>
 </div>
@@ -183,175 +145,77 @@
 <div class="bottom-nav">
     <div class="nav-item active" onclick="showPage('home')" id="nav-home">🏠</div>
     <div class="nav-item" onclick="showPage('market')" id="nav-market">🏪</div>
-    <div class="nav-item" onclick="toggleTheme()" id="nav-theme">🌓</div>
+    <div class="nav-item" onclick="toggleTheme()">🌓</div>
 </div>
 
 <script>
     let db = {
         xp: parseInt(localStorage.getItem('mega_xp')) || 0,
-        coins: localStorage.getItem('mega_coins') === null ? 100 : parseInt(localStorage.getItem('mega_coins')),
+        coins: parseInt(localStorage.getItem('mega_coins')) || 100,
         lastShotDay: localStorage.getItem('mega_shot_day') || "",
-        lastQuizTime: parseInt(localStorage.getItem('mega_quiz_t')) || 0,
         lastNewsTime: parseInt(localStorage.getItem('mega_news_t')) || 0,
         currentNewsIdx: parseInt(localStorage.getItem('mega_news_idx')) || 0,
         rentals: JSON.parse(localStorage.getItem('mega_rentals')) || {}
     };
 
-    const RANKS = [{n: "BÜRÜNC", m: 0}, {n: "GÜMÜŞ", m: 2500}, {n: "QIZIL", m: 6000}, {n: "PLATİN", m: 12000}, {n: "LEGEND", m: 25000}];
-    const newsList = [
-        "Qarabağ FK Çempionlar Liqasında tarix yazır! Real Madrid ilə oyun öncəsi gərginlik pik həddə.",
-        "Messi və Ronaldo 2026 Dünya Çempionatında son dəfə üz-üzə gələcəklərini rəsmən açıqladılar.",
-        "Arda Güler Real Madriddə 10 nömrəli formanı aldı! Türkiyə futbolu üçün yeni era başlayır.",
-        "Yeni texnologiya: Artıq ofsayd qərarları 1 saniyə içində süni intellekt tərəfindən veriləcək.",
-        "Lamine Yamal dünyanın ən bahalı oyunçusu statusunu qoruyur: 280 milyon Avro!"
-    ];
+    const RANKS = [{n: "BÜRÜNC", m: 0}, {n: "GÜMÜŞ", m: 2500}, {n: "QIZIL", m: 6000}];
+    const newsList = ["Qarabağ FK qələbə çaldı!", "Messi 2026-da!", "Arda Güler vurdu!"];
 
-    const quizData = [
-        {q: "Futbolun vətəni haradır?", a: ["İngiltərə", "Braziliya", "Fransa"], c: 0},
-        {q: "DÇ-2026 hansı ölkədə keçiriləcək?", a: ["Azərbaycan", "ABŞ/Kanada/Meksika", "Qətər"], c: 1},
-        {q: "Qızıl topu 8 dəfə qazanan kimdir?", a: ["Ronaldo", "Messi", "Pele"], c: 1}
-    ];
-
-    function save() {
-        for(let key in db) {
-            localStorage.setItem('mega_' + (key === 'lastShotDay' ? 'shot_day' : key === 'lastQuizTime' ? 'quiz_t' : key === 'lastNewsTime' ? 'news_t' : key === 'currentNewsIdx' ? 'news_idx' : key), typeof db[key] === 'object' ? JSON.stringify(db[key]) : db[key]);
-        }
-    }
-
-    function spawnCoinAnim(amount) {
-        const anim = document.createElement('div');
-        anim.className = 'coin-float';
-        anim.innerText = `+${amount} 🪙`;
-        anim.style.left = '50%';
-        anim.style.top = '50%';
-        document.body.appendChild(anim);
-        setTimeout(() => anim.remove(), 1200);
-    }
+    function save() { for(let k in db) localStorage.setItem('mega_'+k, typeof db[k]==='object'?JSON.stringify(db[k]):db[k]); }
 
     function updateStats() {
         document.getElementById('efCoins').innerText = db.coins;
         let lvl = Math.floor(db.xp / 1000) + 1;
-        document.getElementById('lvlDisp').innerText = "LVL " + (lvl > 10 ? 10 : lvl);
-        let r = RANKS[0];
-        RANKS.forEach(x => { if(db.xp >= x.m) r = x; });
+        document.getElementById('lvlDisp').innerText = "LVL " + lvl;
+        let r = RANKS[0]; RANKS.forEach(x => { if(db.xp >= x.m) r = x; });
         document.getElementById('uRank').innerText = r.n + " LİQA";
         document.getElementById('xpBarInner').style.width = (db.xp % 1000 / 10) + "%";
         
-        // Skin System
-        let now = Date.now();
-        let bSkin = "⚽", kSkin = "✨🧤✨";
-        for(let id in db.rentals) {
-            if(now < db.rentals[id].expiry) {
-                if(db.rentals[id].type === 'ball') bSkin = db.rentals[id].skin;
-                if(db.rentals[id].type === 'keeper') kSkin = db.rentals[id].skin;
-            }
+        let now = Date.now(), b = "⚽", k = "✨🧤✨";
+        for(let id in db.rentals) if(now < db.rentals[id].expiry) {
+            if(db.rentals[id].type === 'ball') b = db.rentals[id].skin;
+            if(db.rentals[id].type === 'keeper') k = db.rentals[id].skin;
         }
-        document.getElementById('ball').innerText = bSkin;
-        document.getElementById('keeper').innerText = kSkin;
+        document.getElementById('ball').innerText = b;
+        document.getElementById('keeper').innerText = k;
     }
 
     function shoot(dir) {
         let today = new Date().toDateString();
-        if(db.lastShotDay === today) { alert("Bu günlük şansın bitib! 00:00-da qayıt."); return; }
+        if(db.lastShotDay === today) { alert("Sabah qayıt!"); return; }
+        const b = document.getElementById('ball'), k = document.getElementById('keeper');
+        const kDir = Math.floor(Math.random() * 3), pos = ["-90px", "0px", "90px"];
         
-        const b = document.getElementById('ball');
-        const k = document.getElementById('keeper');
-        const kDir = Math.floor(Math.random() * 3);
-        const pos = ["-90px", "0px", "90px"];
-
         k.style.left = `calc(50% + ${pos[kDir]})`;
         b.style.transform = `translate(calc(-50% + ${pos[dir]}), -145px) scale(0.6)`;
 
         setTimeout(() => {
             if(dir === kDir) {
-                k.classList.add('save-shake');
+                k.classList.add('keeper-save-anim', 'save-shake');
                 alert("MÖHTƏŞƏM SEYV! 🧤");
-                setTimeout(() => k.classList.remove('save-shake'), 400);
+                setTimeout(() => k.classList.remove('keeper-save-anim', 'save-shake'), 600);
             } else {
-                db.xp += 200; db.coins += 50;
-                spawnCoinAnim(50);
-                alert("QOOOOL! ⚽");
+                db.xp += 200; db.coins += 50; alert("QOL!");
             }
-            db.lastShotDay = today;
-            save(); updateStats();
+            db.lastShotDay = today; save(); updateStats();
             setTimeout(() => { b.style.transform = "translateX(-50%)"; k.style.left = "50%"; }, 2000);
         }, 700);
     }
 
-    function loadNews() {
-        const now = Date.now();
-        if(now - db.lastNewsTime > 2*60*60*1000) {
-            db.currentNewsIdx = (db.currentNewsIdx + 1) % newsList.length;
-            db.lastNewsTime = now;
-            save();
-        }
-        document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx];
-    }
-
-    function loadQuiz() {
-        const now = Date.now();
-        if(now - db.lastQuizTime < 2*60*60*1000) {
-            document.getElementById('qOptions').innerHTML = "<p style='opacity:0.5; font-style:italic;'>Yeni sual hazırlanır...</p>";
-            return;
-        }
-        let q = quizData[Math.floor(Math.random()*quizData.length)];
-        document.getElementById('qText').innerText = q.q;
-        document.getElementById('qOptions').innerHTML = q.a.map((o,i) => `<div class="quiz-option" onclick="checkQuiz(${i}, ${q.c}, this)">${o}</div>`).join('');
-    }
-
-    function checkQuiz(idx, correct, el) {
-        if(idx === correct) {
-            el.style.background = "var(--success)";
-            db.coins += 20; spawnCoinAnim(20);
-            alert("DOĞRUDUR! +20 Coin");
-        } else {
-            el.style.background = "var(--danger)";
-            alert("SƏHV CAVAB!");
-        }
-        db.lastQuizTime = Date.now();
-        save(); updateStats();
-        setTimeout(loadQuiz, 2000);
-    }
+    function searchContent(val) { document.getElementById('newsBox').style.display = newsList[db.currentNewsIdx].toLowerCase().includes(val.toLowerCase()) ? "block" : "none"; }
+    function searchMarket(val) { document.querySelectorAll('.item-card').forEach(c => c.style.display = c.getAttribute('data-name').includes(val.toLowerCase()) ? "block" : "none"); }
 
     function buyItem(id, type, skin, price) {
         if(db.coins >= price) {
-            db.coins -= price;
-            db.rentals[id] = { type, skin, expiry: Date.now() + (3*24*60*60*1000) };
-            save(); updateStats();
-            alert("Uğurla alındı! 3 gün aktivdir.");
-        } else alert("Kifayət qədər coin yoxdur!");
+            db.coins -= price; db.rentals[id] = { type, skin, expiry: Date.now() + (3*24*60*60*1000) };
+            save(); updateStats(); alert("Alındı!");
+        } else alert("Coin yoxdur!");
     }
 
-    function toggleTheme() {
-        const b = document.body;
-        b.getAttribute('data-theme') === 'light' ? b.removeAttribute('data-theme') : b.setAttribute('data-theme', 'light');
-    }
+    function toggleTheme() { document.body.getAttribute('data-theme') === 'light' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'light'); }
+    function showPage(p) { document.getElementById('homePage').classList.toggle('hidden', p !== 'home'); document.getElementById('marketPage').classList.toggle('hidden', p !== 'market'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('nav-'+p).classList.add('active'); }
 
-    function showPage(p) {
-        document.getElementById('homePage').classList.toggle('hidden', p !== 'home');
-        document.getElementById('marketPage').classList.toggle('hidden', p !== 'market');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById('nav-'+p).classList.add('active');
-    }
-
-    setInterval(() => {
-        let now = new Date();
-        let diff = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
-        let h = Math.floor(diff/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
-        document.getElementById('shotTimer').innerText = `${h}:${m<10?'0'+m:m}:${s<10?'0'+s:s}`;
-
-        let qDiff = (2*60*60*1000) - (Date.now() - db.lastQuizTime);
-        if(qDiff > 0) {
-            let qm = Math.floor(qDiff/60000), qs = Math.floor((qDiff%60000)/1000);
-            document.getElementById('quizTimer').innerText = `01:${qm<10?'0'+qm:qm}:${qs<10?'0'+qs:qs}`;
-        } else document.getElementById('quizTimer').innerText = "HAZIR";
-
-        let nDiff = (2*60*60*1000) - (Date.now() - db.lastNewsTime);
-        let nm = Math.floor(nDiff/60000), ns = Math.floor((nDiff%60000)/1000);
-        document.getElementById('newsTimer').innerText = `0${Math.floor(nDiff/3600000)}:${nm<10?'0'+nm:nm}:${ns<10?'0'+ns:ns}`;
-    }, 1000);
-
-    window.onload = () => { updateStats(); loadQuiz(); loadNews(); };
+    window.onload = () => { updateStats(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx]; };
 </script>
 </body>
 </html>
