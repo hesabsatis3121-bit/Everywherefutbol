@@ -163,28 +163,28 @@
     <p style="opacity:0.7;">Coinlərinizlə yeni avadanlıqlar alın.</p>
     <div class="market-grid">
         <div class="item-card">
+            <div style="font-size:2rem;">🏐</div>
+            <b>Voleybol Topu</b><br>
+            <span class="price-tag">0 🪙</span>
+            <button onclick="buyItem('volleyball', 'ball', '🏐', 0)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px; cursor:pointer;">AL</button>
+        </div>
+        <div class="item-card">
             <div style="font-size:2rem;">🏀</div>
             <b>Basketbol Topu</b><br>
             <span class="price-tag">500 🪙</span>
-            <button onclick="buyItem('basketball', 500)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px;">AL</button>
+            <button onclick="buyItem('basketball', 'ball', '🏀', 500)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px; cursor:pointer;">AL</button>
         </div>
         <div class="item-card">
             <div style="font-size:2rem;">🧤</div>
             <b>Qızıl Əlcəklər</b><br>
             <span class="price-tag">1200 🪙</span>
-            <button onclick="buyItem('gold_gloves', 1200)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px;">AL</button>
+            <button onclick="buyItem('gold_gloves', 'keeper', '🧤', 1200)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px; cursor:pointer;">AL</button>
         </div>
         <div class="item-card">
             <div style="font-size:2rem;">👕</div>
             <b>Milli Forma</b><br>
             <span class="price-tag">800 🪙</span>
-            <button onclick="buyItem('jersey', 800)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px;">AL</button>
-        </div>
-        <div class="item-card" style="opacity:0.5;">
-            <div style="font-size:2rem;">🏆</div>
-            <b>VIP Giriş</b><br>
-            <span class="price-tag">5000 🪙</span>
-            <button disabled style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px;">TEZLİKLƏ</button>
+            <button onclick="buyItem('jersey', 'other', '👕', 800)" style="width:100%; margin-top:10px; border:none; padding:5px; border-radius:5px; cursor:pointer;">AL</button>
         </div>
     </div>
 </div>
@@ -201,9 +201,10 @@
     let db = {
         xp: parseInt(localStorage.getItem('mega_xp')) || 0,
         coins: parseInt(localStorage.getItem('mega_coins')) || 100,
-        lastShot: localStorage.getItem('mega_shot_t') || 0,
+        lastShot: parseInt(localStorage.getItem('mega_shot_t')) || 0,
         lastNews: localStorage.getItem('mega_news_t') || 0,
         inventory: JSON.parse(localStorage.getItem('mega_inv')) || [],
+        rentals: JSON.parse(localStorage.getItem('mega_rentals')) || {},
         tasks: JSON.parse(localStorage.getItem('mega_tasks')) || {p:0, q:0}
     };
 
@@ -217,7 +218,9 @@
         localStorage.setItem('mega_xp', db.xp);
         localStorage.setItem('mega_coins', db.coins);
         localStorage.setItem('mega_inv', JSON.stringify(db.inventory));
+        localStorage.setItem('mega_rentals', JSON.stringify(db.rentals));
         localStorage.setItem('mega_tasks', JSON.stringify(db.tasks));
+        localStorage.setItem('mega_shot_t', db.lastShot);
     }
 
     function updateStats() {
@@ -232,6 +235,24 @@
         
         document.getElementById('task1').innerText = `${db.tasks.p}/3`;
         document.getElementById('task2').innerText = `${db.tasks.q}/1`;
+
+        // Skinləri tətbiq et (Rental sistemi)
+        let now = Date.now();
+        let currentBall = "⚽";
+        let currentKeeper = "🕴️";
+
+        for (let id in db.rentals) {
+            let item = db.rentals[id];
+            if (now < item.expiry) {
+                if (item.type === 'ball') currentBall = item.skin;
+                if (item.type === 'keeper') currentKeeper = item.skin;
+            } else {
+                delete db.rentals[id];
+                save();
+            }
+        }
+        document.getElementById('ball').innerText = currentBall;
+        document.getElementById('keeper').innerText = currentKeeper;
     }
 
     // Navigation Engine
@@ -252,8 +273,13 @@
     // Penalty Engine 3.0
     function shoot(dir) {
         let now = Date.now();
-        if(now - db.lastShot < 10000) { // 10 saniyə soyuma (Test üçün qısadır)
-            alert("Topu gətirirlər, gözləyin...");
+        let waitTime = 12 * 60 * 60 * 1000; // 12 SAAT
+
+        if(now - db.lastShot < waitTime) {
+            let rem = waitTime - (now - db.lastShot);
+            let h = Math.floor(rem / 3600000);
+            let m = Math.floor((rem % 3600000) / 60000);
+            alert(`Növbəti qol şansı üçün ${h} saat ${m} dəqiqə gözləyin!`);
             return;
         }
 
@@ -268,13 +294,13 @@
         setTimeout(() => {
             if(dir === kDir) {
                 alert("SEYV! 🧤 Qapıçı topu tutdu!");
+                db.lastShot = now - (waitTime - 10000); // Seyv olanda cəmi 10 saniyə cəza
             } else {
                 db.xp += 200; db.coins += 50;
                 if(db.tasks.p < 3) db.tasks.p++;
                 showGoalAlert();
+                db.lastShot = now; // Qol olanda 12 SAAT gözləmə
             }
-            db.lastShot = now;
-            localStorage.setItem('mega_shot_t', now);
             save();
             updateStats();
             resetArena();
@@ -309,16 +335,18 @@
         container.innerHTML = newsFeed.map(n => `<div class="news-slide"><b>FLAŞ:</b><br>${n}</div>`).join('');
     }
 
-    // Market Engine
-    function buyItem(id, price) {
+    // Market Engine (3 günlük İcarə sistemi əlavə edildi)
+    function buyItem(id, type, skin, price) {
         if(db.coins >= price) {
             db.coins -= price;
-            db.inventory.push(id);
-            alert("Uğurla alındı! Yeni əşyanız inventarda.");
+            // 3 Günlük müddət hesabla
+            let expiry = Date.now() + (3 * 24 * 60 * 60 * 1000);
+            db.rentals[id] = { type, skin, expiry };
+            alert(`${skin} alındı! 3 gün ərzində arenada görünəcək.`);
             save();
             updateStats();
         } else {
-            alert("Kifayət qədər EF Coin yoxdur! Penalti vurun.");
+            alert("Kifayət qədər EF Coin yoxdur! Qol vurun.");
         }
     }
 
@@ -327,7 +355,8 @@
         setInterval(() => {
             let score = document.getElementById('matchScore');
             let time = document.getElementById('matchMin');
-            let m = parseInt(time.innerText.split(' ')[1]);
+            let mText = time.innerText.split(' ')[1];
+            let m = parseInt(mText.replace("'", ""));
             if(m < 90) time.innerText = `LIVE ${m+1}'`;
             if(Math.random() > 0.95) {
                 let s = score.innerText.split(' - ');
@@ -338,8 +367,20 @@
 
     function checkTimers() {
         setInterval(() => {
-            let sRem = 43200000 - (Date.now() - db.lastShot);
-            document.getElementById('shotTimer').innerText = sRem > 0 ? "BƏRPA OLUNUR" : "HAZIR";
+            let waitTime = 12 * 60 * 60 * 1000;
+            let diff = Date.now() - db.lastShot;
+            let sRem = waitTime - diff;
+            
+            if (sRem > 0) {
+                let h = Math.floor(sRem / 3600000);
+                let m = Math.floor((sRem % 3600000) / 60000);
+                let s = Math.floor((sRem % 60000) / 1000);
+                document.getElementById('shotTimer').innerText = `${h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                document.getElementById('shotTimer').style.color = "var(--danger)";
+            } else {
+                document.getElementById('shotTimer').innerText = "HAZIR ⚽";
+                document.getElementById('shotTimer').style.color = "var(--success)";
+            }
         }, 1000);
     }
 
@@ -353,10 +394,8 @@
         initNews();
         lifeSim();
         checkTimers();
-        // İsim hərfi
         document.getElementById('avatarLetter').innerText = db.xp > 1000 ? "👑" : "U";
     };
 </script>
 </body>
 </html>
-
