@@ -3,308 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Pro Max Arena 2026</title>
+    <title>Everywhere Futbol - Ultra Arena 2026</title>
     <style>
-        :root { 
-            --bg: #0f172a; --card: #1e293b; --accent: #fbbf24; --text: #f8fafc; 
-            --primary: #3b82f6; --success: #22c55e; --danger: #ef4444; --border: rgba(255,255,255,0.1);
-            --gold: linear-gradient(45deg, #ffd700, #ffae00);
-        }
-        [data-theme="light"] { 
-            --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; --accent: #d97706; --border: #e2e8f0;
-        }
+        :root { --bg: #f0f2f5; --header-bg: #1e3a8a; --card: #ffffff; --text: #1e3a8a; --accent: #d4af37; --whatsapp: #25d366; --border: #e2e8f0; --glass: rgba(255,255,255,0.95); }
+        [data-theme="dark"] { --bg: #0b0f19; --header-bg: #161b28; --card: #1f2937; --text: #f8fafc; --border: #374151; --glass: rgba(31,41,55,0.95); }
         
-        body { font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.5s; padding-bottom: 150px; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 120px; overflow-x: hidden; }
+        header { background: var(--header-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; }
         
-        /* Goal & XP Animations */
-        .float-anim {
-            position: fixed; font-weight: 900; color: var(--accent); font-size: 1.8rem;
-            pointer-events: none; z-index: 10000; animation: floatUp 1.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
-        }
-        @keyframes floatUp { 0% { opacity: 0; transform: translate(-50%, 0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -150px); } }
-
-        .goal-pop {
-            position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 5rem; font-weight: 900; color: var(--accent); z-index: 9999;
-            animation: goalScale 0.8s forwards ease; pointer-events: none; opacity: 0;
-            text-shadow: 0 0 30px #000;
-        }
-        @keyframes goalScale { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); } }
-
-        header { 
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); padding: 15px 20px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--accent);
-        }
-
-        /* User Profile Elements */
-        .level-badge { position: absolute; top: -12px; left: 5px; background: var(--gold); color: #000; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3); }
-        .user-profile { display: flex; align-items: center; gap: 12px; position: relative; }
-        .avatar { width: 45px; height: 45px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 1.2rem; }
-
+        /* Stats & Progress */
+        .user-stats { display: flex; flex-direction: column; align-items: flex-end; cursor: pointer; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 12px; border: 1px solid var(--accent); min-width: 100px; }
+        .xp-container { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+        #xpBar { height: 100%; background: var(--accent); width: 0%; transition: 0.5s; }
+        
         .container { max-width: 500px; margin: auto; padding: 15px; }
+        .timer-badge { font-size: 0.65rem; background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
 
-        .live-ticker { 
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border-radius: 25px; 
-            padding: 25px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
-        }
-        .score-box { font-size: 2.2rem; font-weight: 900; background: rgba(0,0,0,0.3); padding: 8px 20px; border-radius: 15px; }
+        /* Live Score Card */
+        .live-card { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-around; align-items: center; position: relative; overflow: hidden; }
+        .live-dot { position: absolute; top: 10px; left: 10px; width: 8px; height: 8px; background: #ff4757; border-radius: 50%; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        .arena { 
-            background: #064e3b; border: 6px solid #fff; border-radius: 30px; height: 220px; 
-            position: relative; overflow: hidden; margin-top: 15px; display: flex; align-items: flex-end; justify-content: center;
-        }
-        .keeper-ai { position: absolute; top: 45px; font-size: 4rem; transition: 0.4s; z-index: 2; }
-        .save-shake { animation: shake 0.4s; }
-        @keyframes shake { 0%, 100% { transform: translateX(-50%); } 25% { transform: translateX(-65%); } 75% { transform: translateX(-35%); } }
-        .ball-pro { position: absolute; bottom: 25px; font-size: 2.5rem; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3; }
+        /* News Slider */
+        .news-wrapper { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 5px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+        .news-wrapper::-webkit-scrollbar { display: none; }
+        .news-item { min-width: 85%; background: var(--card); border-left: 5px solid var(--accent); padding: 15px; border-radius: 15px; scroll-snap-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* Buttons & Links */
-        .wa-btn { background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; margin: 20px 0; font-weight: bold; transition: 0.3s; }
-        .wa-btn:hover { background: #128c7e; transform: scale(1.02); }
+        /* Penalty Arena */
+        .penalty-arena { background: linear-gradient(#2ecc71, #27ae60); border: 4px solid white; border-radius: 15px; position: relative; height: 180px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; margin-top: 10px; box-shadow: inset 0 0 50px rgba(0,0,0,0.2); }
+        .goal-post { position: absolute; top: 10px; width: 75%; height: 100px; border: 4px solid white; border-bottom: none; z-index: 1; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 11px); }
+        .keeper { position: absolute; top: 40px; font-size: 3rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; }
+        .ball { font-size: 1.8rem; transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 3; position: absolute; bottom: 15px; filter: drop-shadow(0 5px 3px rgba(0,0,0,0.3)); }
+        
+        .kick-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; background: var(--header-bg); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #0f172a; }
+        .kick-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #0f172a; }
+        .kick-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .news-box, .quiz-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin: 20px 0; border-left: 5px solid var(--primary); }
-        .quiz-option { padding: 12px; margin-top: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
-        .quiz-option:hover { background: rgba(255,255,255,0.1); border-color: var(--primary); }
-
-        /* Market UI */
-        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .item-card { background: var(--card); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid var(--border); }
-        .price-tag { color: var(--accent); font-weight: 900; display: block; margin: 10px 0; font-size: 1.1rem; }
-        .buy-btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; }
-
-        .bottom-nav { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 85%; max-width: 400px; background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(25px);
-            display: flex; justify-content: space-around; padding: 18px; border-radius: 35px; z-index: 2000; border: 1px solid var(--border);
-        }
-        .nav-item { font-size: 1.8rem; cursor: pointer; opacity: 0.5; transition: 0.3s; }
-        .nav-item.active { opacity: 1; color: var(--accent); transform: scale(1.2); }
-
-        .footer-ads { text-align: center; padding: 30px; border-top: 1px solid var(--border); margin-top: 40px; }
-        .hidden { display: none !important; }
+        .card { background: var(--card); border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .quiz-option { padding: 12px; margin: 8px 0; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; text-align: center; font-weight: 600; transition: 0.2s; }
+        
+        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 25px 50px; border-radius: 100px; font-size: 2.5rem; font-weight: 900; z-index: 9999; transition: 0.5s; border: 5px solid white; pointer-events: none; text-shadow: 2px 2px 0 white; }
+        
+        .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); display: flex; justify-content: space-around; padding: 15px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; backdrop-filter: blur(10px); }
+        .wp-btn { background: var(--whatsapp); color: white; text-decoration: none; padding: 15px; border-radius: 15px; display: block; font-weight: bold; text-align: center; margin-top: 10px; }
     </style>
 </head>
 <body id="mainBody">
 
-<div id="goalPop" class="goal-pop">QOOL!</div>
+<div id="goalAlert">QOL OLDU! ⚽</div>
+<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:10000;" id="overlay" onclick="closeModal()"></div>
+
+<div id="levelModal" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:85%;max-width:400px;background:var(--card);border-radius:25px;padding:25px;z-index:10001;border:2px solid var(--accent);transition:0.3s;">
+    <h2 style="text-align:center;color:var(--accent);margin-top:0;">🏆 Səviyyə Cədvəli</h2>
+    <div id="rankList" style="font-size:0.85rem;line-height:2.2;"></div>
+    <button onclick="closeModal()" style="width:100%;margin-top:20px;padding:12px;background:var(--header-bg);color:white;border:none;border-radius:12px;font-weight:bold;">ANLADIM</button>
+</div>
 
 <header>
-    <div class="user-profile">
-        <div class="level-badge" id="lvlDisp">LVL 1</div>
-        <div class="avatar" id="avatarLetter">⚽</div>
-        <div>
-            <div id="uName" style="font-weight:900; font-size:0.95rem; letter-spacing: 0.5px;">PLAYER PRO</div>
-            <div id="uRank" style="font-size:0.65rem; color:var(--accent); font-weight: bold;">YÜKLƏNİR...</div>
-        </div>
+    <div>
+        <div style="font-size: 0.6rem; opacity: 0.8;">XOŞ GƏLDİN</div>
+        <div style="font-weight:900;font-size:0.9rem;">EVERYWHERE FUTBOL</div>
     </div>
-    <div style="text-align:right;">
-        <div style="font-weight:900; color:var(--accent); font-size:1.1rem; display:flex; align-items:center; gap:5px;">
-            <span id="efCoins">100</span> 🪙
-        </div>
-        <div style="width: 80px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 5px; overflow: hidden;">
-            <div id="xpBarInner" style="height:100%; width:0%; background: var(--accent); transition: 1s;"></div>
-        </div>
+    <div class="user-stats" onclick="openModal()">
+        <span class="rank-name" id="userRank">YAXŞI</span>
+        <div class="xp-container"><div id="xpBar"></div></div>
+        <span id="xpText" style="font-size:0.6rem; margin-top:3px;">0 / 150 XP</span>
     </div>
 </header>
 
-<div class="container" id="homePage">
-    <div class="live-ticker">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="text-align:center;"><img src="https://flagcdn.com/w80/az.png" width="45"><br><b>QARABAĞ</b></div>
-            <div class="score-box" id="matchScore">0 - 0</div>
-            <div style="text-align:center;"><img src="https://flagcdn.com/w80/es.png" width="45"><br><b>R.MADRİD</b></div>
+<div class="container">
+    <div class="live-card">
+        <div class="live-dot"></div>
+        <div style="text-align:center;">🇦🇿<br><small>Qarabağ</small></div>
+        <div style="text-align:center;">
+            <div id="matchTime" style="font-size:0.7rem; background:rgba(255,0,0,0.6); padding:2px 6px; border-radius:5px; margin-bottom:5px;">24'</div>
+            <div style="font-size:1.8rem; font-weight:900; letter-spacing: 5px;">2-1</div>
         </div>
+        <div style="text-align:center;">🇪🇸<br><small>R.Madrid</small></div>
     </div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20"> BİZƏ QOŞUL (WHATSAPP)
-    </a>
-
-    <div style="display:flex; justify-content:space-between; align-items: center;">
-        <b style="font-size:0.9rem;">🏟️ MEGA ARENA</b>
-        <span id="shotTimer" style="font-size:0.75rem; font-weight:900; color:var(--danger);">00:00:00</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <b style="font-size:0.8rem;">🗞️ TRANSFER BOMBALARI (2026)</b>
+        <span class="timer-badge" id="newsTimer">00:00:00</span>
     </div>
+    <div class="news-wrapper" id="newsSection"></div>
 
-    <div class="arena">
-        <div class="keeper-ai" id="keeper" style="left: 50%; transform: translateX(-50%);">✨🧤✨</div>
-        <div class="ball-pro" id="ball" style="left: 50%; transform: translateX(-50%);">⚽</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 5px;">
+        <b style="font-size:0.8rem;">🥅 PENALTİ CHALLENGE (12H)</b>
+        <span class="timer-badge" id="shotTimer">HAZIR</span>
     </div>
-
-    <div style="display:flex; gap:12px; margin-top:20px;">
-        <button onclick="shoot(0)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">SOL</button>
-        <button onclick="shoot(1)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">ORTA</button>
-        <button onclick="shoot(2)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">SAĞ</button>
-    </div>
-
-    <div class="news-box">
-        <div style="display:flex; justify-content:space-between; font-size: 0.8rem; font-weight: bold;">
-            <span>📰 FLAŞ XƏBƏRLƏR</span>
-            <span id="newsTimer" style="color:var(--primary)">02:00:00</span>
+    <div class="card" style="padding:10px;">
+        <div class="penalty-arena">
+            <div class="goal-post"></div>
+            <div class="keeper" id="keeper" style="left: 50%; transform: translateX(-50%);">🕴️</div>
+            <div class="ball" id="ball" style="left: 50%; transform: translateX(-50%);">⚽</div>
         </div>
-        <div id="newsContent" style="margin-top:10px; font-weight: 500;">Xəbərlər yüklənir...</div>
+        <div style="display:flex;gap:10px;margin-top:15px;" id="shotControls">
+            <button class="kick-btn" onclick="shoot(0)">SOL</button>
+            <button class="kick-btn" onclick="shoot(1)">ORTA</button>
+            <button class="kick-btn" onclick="shoot(2)">SAĞ</button>
+        </div>
+        <p id="gameMsg" style="text-align:center;font-weight:bold;margin-top:10px;color:var(--accent);min-height:1.2em;"></p>
     </div>
 
-    <div class="quiz-box">
-        <div style="display:flex; justify-content:space-between;">
-            <b>🧠 GÜNÜN SUALI</b>
-            <span id="quizTimer" style="font-size:0.8rem; font-weight:900; color:var(--primary);">00:00:00</span>
-        </div>
-        <p id="qText" style="margin-top:15px; font-weight: 500;">Sual yüklənir...</p>
-        <div id="qOptions"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
+        <b style="font-size:0.8rem;">🧠 SUAL (2 SAAT)</b>
+        <span class="timer-badge" id="quizTimer">AKTİVDİR</span>
     </div>
+    <div class="card" id="quizBox"><div id="quizIn"></div></div>
 
-    <div class="footer-ads">
-        <div style="font-weight: 900;">📞 Əlaqə: 0558430505</div>
-        <div style="border:2px dashed var(--accent); padding:15px; margin-top:20px; color:var(--accent); font-weight: 900; border-radius: 15px;">
-            ADREKLAM: BURADA SƏNİN REKLAMIN OLA BİLƏR
-        </div>
-    </div>
-</div>
-
-<div class="container hidden" id="marketPage">
-    <h2 style="color:var(--accent); text-align: center; margin-bottom: 30px;">🏪 EF MEGA MARKET</h2>
-    <div class="market-grid">
-        <div class="item-card">
-            <div style="font-size:3rem;">🏀</div>
-            <b>Basketbol Topu</b>
-            <span class="price-tag">500 🪙</span>
-            <button class="buy-btn" style="background:var(--primary); color:white;" onclick="buyItem('basketball', 'ball', '🏀', 500)">AL (3 GÜN)</button>
-        </div>
-        <div class="item-card">
-            <div style="font-size:3rem;">✨</div>
-            <b>Qızıl Əlcəklər</b>
-            <span class="price-tag">1500 🪙</span>
-            <button class="buy-btn" style="background:var(--primary); color:white;" onclick="buyItem('gold_glv', 'keeper', '✨🧤✨', 1500)">AL (3 GÜN)</button>
-        </div>
-        <div class="item-card" style="grid-column: span 2;">
-            <div style="font-size:3rem;">👑</div>
-            <b style="font-size:1.2rem;">VIP STATUS</b>
-            <p style="font-size:0.8rem; opacity:0.7;">Bütün qazanclar 2 qat artır!</p>
-            <span class="price-tag">5000 🪙</span>
-            <button class="buy-btn" style="background:var(--gold); color:black;" onclick="buyItem('vip', 'other', '👑', 5000)">VIP OL</button>
+    <div class="footer-promo">
+        <h3 style="margin:0;font-size:1rem;">📢 Kanalımıza Qoşul</h3>
+        <p style="font-size:0.8rem; opacity:0.8;">Ən son transferləri ilk sən bil!</p>
+        <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H
+" target="_blank" class="wp-btn">WHATSAPP-A KEÇ</a>
+        <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--border); font-size:0.75rem;">
+            <p style="font-weight:bold;color:var(--accent);margin-bottom:5px;">✨ Reklam yerləşdirmək üçün:</p>
+            <small>Əlaqə: <b>055 843 05 05</b></small>
         </div>
     </div>
 </div>
 
-<div class="bottom-nav">
-    <div class="nav-item active" onclick="showPage('home')" id="nav-home">🏠</div>
-    <div class="nav-item" onclick="showPage('market')" id="nav-market">🏪</div>
-    <div class="nav-item" onclick="toggleTheme()">🌓</div>
+<div class="nav-bar">
+    <div onclick="toggleTheme()" style="font-size:1.5rem;cursor:pointer;">🌓</div>
+    <div onclick="window.scrollTo({top:0, behavior:'smooth'})" style="font-size:1.5rem;cursor:pointer;">🏠</div>
+    <div onclick="alert('Market Tezliklə: Qazandığın XP-lərlə yeni toplar ala biləcəksən!')" style="font-size:1.5rem;cursor:pointer;">🏪</div>
 </div>
 
 <script>
-    let db = {
-        xp: parseInt(localStorage.getItem('mega_xp')) || 0,
-        coins: localStorage.getItem('mega_coins') === null ? 100 : parseInt(localStorage.getItem('mega_coins')),
-        lastShotDay: localStorage.getItem('mega_shot_day') || "",
-        lastQuizTime: parseInt(localStorage.getItem('mega_quiz_t')) || 0,
-        lastNewsTime: parseInt(localStorage.getItem('mega_news_t')) || 0,
-        currentNewsIdx: parseInt(localStorage.getItem('mega_news_idx')) || 0,
-        rentals: JSON.parse(localStorage.getItem('mega_rentals')) || {}
-    };
+    let userXP = parseInt(localStorage.getItem('ef_xp')) || 0;
+    const NEWS_INT = 14400000, QUIZ_INT = 7200000, SHOT_INT = 43200000;
+    const ranks = [{lvl:1,n:"Yaxşı",x:0},{lvl:2,n:"Azərkeş",x:150},{lvl:3,n:"Fanat",x:450},{lvl:4,n:"Taktik",x:1000},{lvl:5,n:"Pro",x:2000},{lvl:6,n:"Ulduz",x:3500},{lvl:7,n:"Rəhbər",x:5500},{lvl:8,n:"Analitik",x:8000},{lvl:9,n:"Çempion",x:11500},{lvl:10,n:"LEGEND",x:16000}];
 
-    const RANKS = [{n: "BÜRÜNC", m: 0}, {n: "GÜMÜŞ", m: 2500}, {n: "QIZIL", m: 6000}, {n: "PLATİN", m: 12000}, {n: "LEGEND", m: 25000}];
-    const newsList = ["Qarabağ FK Real Madridə qarşı möhtəşəm oyuna hazırlaşır!", "Messi 2026 DÇ üçün qərarını verdi!", "Arda Güler Realın əsas heyətində!", "Yeni ofsayd texnologiyası penaltiləri artıracaq!", "Lamine Yamalın qiyməti rekord qırdı!"];
-    const quizData = [{q: "Futbolun vətəni haradır?", a: ["İngiltərə", "Braziliya", "Azərbaycan"], c: 0}, {q: "Qızıl topu 8 dəfə kim qazanıb?", a: ["Ronaldo", "Messi", "Pele"], c: 1}];
-
-    function save() { for(let k in db) localStorage.setItem('mega_'+k, typeof db[k]==='object'?JSON.stringify(db[k]):db[k]); }
-
-    function animatePop(txt) {
-        const a = document.createElement('div');
-        a.className = 'float-anim';
-        a.innerText = txt;
-        a.style.left = '50%'; a.style.top = '40%';
-        document.body.appendChild(a);
-        setTimeout(() => a.remove(), 1200);
-    }
-
-    function updateStats() {
-        document.getElementById('efCoins').innerText = db.coins;
-        let lvl = Math.floor(db.xp / 1000) + 1;
-        document.getElementById('lvlDisp').innerText = "LVL " + (lvl > 10 ? 10 : lvl);
+    function updateStats(xp=0){
+        userXP+=xp; localStorage.setItem('ef_xp', userXP);
+        let curr = ranks[0], next = ranks[1];
+        ranks.forEach((r, i)=>{if(userXP>=r.x) { curr=r; next=ranks[i+1] || r; }});
         
-        let r = RANKS[0];
-        RANKS.forEach(x => { if(db.xp >= x.m) r = x; });
-        document.getElementById('uRank').innerText = r.n + " LİQA";
-        document.getElementById('xpBarInner').style.width = (db.xp % 1000 / 10) + "%";
-
-        let now = Date.now();
-        let b = "⚽", k = "✨🧤✨";
-        for(let id in db.rentals) if(now < db.rentals[id].expiry) {
-            if(db.rentals[id].type === 'ball') b = db.rentals[id].skin;
-            if(db.rentals[id].type === 'keeper') k = db.rentals[id].skin;
-        }
-        document.getElementById('ball').innerText = b;
-        document.getElementById('keeper').innerText = k;
+        document.getElementById('userRank').innerText = curr.n;
+        let progress = next === curr ? 100 : ((userXP - curr.x) / (next.x - curr.x)) * 100;
+        document.getElementById('xpBar').style.width = progress + "%";
+        document.getElementById('xpText').innerText = `${userXP} / ${next.x} XP`;
     }
 
-    function shoot(dir) {
-        let today = new Date().toDateString();
-        if(db.lastShotDay === today) { alert("Bu günlük haqqın bitib! Gecə 00:00-da qayıt."); return; }
-        const b = document.getElementById('ball'), k = document.getElementById('keeper');
-        const kDir = Math.floor(Math.random() * 3), pos = ["-90px", "0px", "90px"];
-        k.style.left = `calc(50% + ${pos[kDir]})`;
-        b.style.transform = `translate(calc(-50% + ${pos[dir]}), -145px) scale(0.6)`;
-        setTimeout(() => {
-            if(dir === kDir) {
-                k.classList.add('save-shake'); alert("SEYV! 🧤");
-                setTimeout(() => k.classList.remove('save-shake'), 400);
+    function formatTime(ms){
+        if(ms<0) return "00:00:00";
+        let h=Math.floor(ms/3600000).toString().padStart(2,'0');
+        let m=Math.floor((ms%3600000)/60000).toString().padStart(2,'0');
+        let s=Math.floor((ms%60000)/1000).toString().padStart(2,'0');
+        return `${h}:${m}:${s}`;
+    }
+
+    function handleNews(){
+        const now=Date.now(); let last=localStorage.getItem('news_t')||0;
+        let data=JSON.parse(localStorage.getItem('news_d'));
+        if(now-last>NEWS_INT || !data){
+            data=[
+                "DÇ-2026: Bakı Olimpiya Stadionu açılış üçün namizəddir!",
+                "Real Madrid Arda Güler üçün 80 milyonluq təklifi rədd etdi.",
+                "Qarabağ FK Çempionlar Liqasında yeni rekorda imza atdı!",
+                "Messi rəsmən açıqladı: 'DÇ-2026-da kapitan mənəm!'",
+                "Lamine Yamalın bazar dəyəri 200 milyon avronu keçdi."
+            ].sort(()=>.5-Math.random());
+            localStorage.setItem('news_d',JSON.stringify(data)); localStorage.setItem('news_t',now); last=now;
+        }
+        document.getElementById('newsSection').innerHTML=data.map(n=>`<div class="news-item"><b>TƏCİLİ:</b><br>${n}</div>`).join('');
+        setInterval(()=>{document.getElementById('newsTimer').innerText=formatTime(NEWS_INT-(Date.now()-last))},1000);
+    }
+
+    function shoot(p){
+        const last=localStorage.getItem('shot_t')||0;
+        if(Date.now()-last < SHOT_INT) return;
+        
+        const k=Math.floor(Math.random()*3), off=["-75px","0px","75px"];
+        const keeper = document.getElementById('keeper');
+        const ball = document.getElementById('ball');
+        
+        keeper.style.transform = `translateX(calc(-50% + ${off[k]}))`;
+        ball.style.transform = `translate(calc(-50% + ${off[p]}), -130px) scale(0.5)`;
+        
+        setTimeout(()=>{
+            if(p===k) {
+                document.getElementById('gameMsg').innerText="QAPICI TUTDU! 🕴️";
             } else {
-                let xpG = 200, coinG = 50;
-                db.xp += xpG; db.coins += coinG;
-                document.getElementById('goalPop').style.animation = 'none';
-                setTimeout(() => { document.getElementById('goalPop').style.animation = 'goalScale 0.8s forwards'; }, 10);
-                animatePop("+200 XP");
+                document.getElementById('gameMsg').innerText="MÜKƏMMƏL QOL! +100 XP";
+                updateStats(100);
+                let ga=document.getElementById('goalAlert');
+                ga.style.transform="translate(-50%,-50%) scale(1)";
+                setTimeout(()=>ga.style.transform="translate(-50%,-50%) scale(0)",1500);
             }
-            db.lastShotDay = today; save(); updateStats();
-            setTimeout(() => { b.style.transform = "translateX(-50%)"; k.style.left = "50%"; }, 2000);
-        }, 700);
+            localStorage.setItem('shot_t', Date.now());
+            handleShot();
+            setTimeout(resetArena, 2000);
+        },600);
     }
 
-    function loadQuiz() {
-        if(Date.now() - db.lastQuizTime < 2*60*60*1000) { document.getElementById('qOptions').innerHTML = "<p style='opacity:0.5'>Yeni sual hazırlanır...</p>"; return; }
-        let q = quizData[Math.floor(Math.random()*quizData.length)];
-        document.getElementById('qText').innerText = q.q;
-        document.getElementById('qOptions').innerHTML = q.a.map((o,i) => `<div class="quiz-option" onclick="checkQuiz(${i}, ${q.c}, this)">${o}</div>`).join('');
+    function resetArena(){
+        document.getElementById('keeper').style.transform = "translateX(-50%)";
+        document.getElementById('ball').style.transform = "translateX(-50%)";
     }
 
-    function checkQuiz(idx, correct, el) {
-        if(idx === correct) { el.style.background = "var(--success)"; db.coins += 20; animatePop("+20 Coin"); }
-        else { el.style.background = "var(--danger)"; alert("SƏHV!"); }
-        db.lastQuizTime = Date.now(); save(); updateStats(); setTimeout(loadQuiz, 2000);
+    function handleShot(){
+        const last=localStorage.getItem('shot_t')||0, rem=SHOT_INT-(Date.now()-last);
+        const btns=document.querySelectorAll('#shotControls button');
+        if(rem>0){
+            btns.forEach(b=>b.disabled=true);
+            const itv=setInterval(()=>{
+                let r=SHOT_INT-(Date.now()-last);
+                document.getElementById('shotTimer').innerText=formatTime(r);
+                if(r<=0){clearInterval(itv); handleShot();}
+            },1000);
+        } else { btns.forEach(b=>b.disabled=false); document.getElementById('shotTimer').innerText="HAZIR"; }
     }
 
-    function buyItem(id, type, skin, price) { 
-        if(db.coins >= price) { 
-            db.coins -= price; 
-            db.rentals[id] = { type, skin, expiry: Date.now() + (3*24*60*60*1000) }; 
-            save(); updateStats(); alert("Uğurla alındı! ✅"); 
-        } else alert("Coin kifayət deyil! ❌"); 
-    }
-
-    function toggleTheme() { const b = document.body; b.getAttribute('data-theme') === 'light' ? b.removeAttribute('data-theme') : b.setAttribute('data-theme', 'light'); }
-    function showPage(p) { document.getElementById('homePage').classList.toggle('hidden', p !== 'home'); document.getElementById('marketPage').classList.toggle('hidden', p !== 'market'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('nav-'+p).classList.add('active'); }
-
-    setInterval(() => {
-        let now = new Date();
-        let diff = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
-        document.getElementById('shotTimer').innerText = `${Math.floor(diff/3600000)}:${Math.floor((diff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((diff%60000)/1000).toString().padStart(2,'0')}`;
-        
-        let qDiff = (2*60*60*1000) - (Date.now() - db.lastQuizTime);
-        if(qDiff > 0) document.getElementById('quizTimer').innerText = `${Math.floor(qDiff/3600000).toString().padStart(2,'0')}:${Math.floor((qDiff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((qDiff%60000)/1000).toString().padStart(2,'0')}`;
-        else document.getElementById('quizTimer').innerText = "HAZIR";
-
-        let nDiff = (2*60*60*1000) - (Date.now() - db.lastNewsTime);
-        if(nDiff > 0) {
-            document.getElementById('newsTimer').innerText = `${Math.floor(nDiff/3600000).toString().padStart(2,'0')}:${Math.floor((nDiff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((nDiff%60000)/1000).toString().padStart(2,'0')}`;
+    function handleQuiz(){
+        const last=localStorage.getItem('quiz_t')||0, rem=QUIZ_INT-(Date.now()-last), b=document.getElementById('quizIn');
+        if(rem>0){
+            b.innerHTML=`<center style="padding:20px;opacity:0.5">Növbəti sual hazırlanır...</center>`;
+            setInterval(()=>document.getElementById('quizTimer').innerText=formatTime(QUIZ_INT-(Date.now()-last)),1000);
         } else {
-            db.currentNewsIdx = (db.currentNewsIdx + 1) % newsList.length; db.lastNewsTime = Date.now(); save(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx];
+            const pool=[
+                {q:"Dünya Çempionatını ən çox qazanan ölkə?", a:["Almaniya","Braziliya","İtaliya"], c:1},
+                {q:"2024-cü il Avropa Çempionu hansı ölkədir?", a:["İngiltərə","Fransa","İspaniya"], c:2},
+                {q:"Qızıl Topu ən çox qazanan oyunçu?", a:["C.Ronaldo","L.Messi","Zidan"], c:1}
+            ];
+            const q = pool[Math.floor(Math.random()*pool.length)];
+            b.innerHTML=`<div style="text-align:center;font-weight:bold;margin-bottom:12px">${q.q}</div>`+q.a.map((o,i)=>`<div class="quiz-option" onclick="checkQ(this,${i},${q.c})">${o}</div>`).join('');
+            document.getElementById('quizTimer').innerText="AKTİVDİR";
         }
-    }, 1000);
+    }
 
-    window.onload = () => { updateStats(); loadQuiz(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx]; };
+    function checkQ(el,i,c){
+        const opts = document.querySelectorAll('.quiz-option');
+        opts.forEach(o => o.style.pointerEvents = 'none');
+        if(i===c){el.classList.add('quiz-correct'); updateStats(50);} else el.classList.add('quiz-wrong');
+        localStorage.setItem('quiz_t',Date.now()); setTimeout(handleQuiz,2000);
+    }
+
+    function openModal(){
+        document.getElementById('rankList').innerHTML=ranks.map(r=>`<div style="display:flex;justify-content:space-between;${userXP>=r.x?'color:var(--accent);font-weight:bold':'opacity:0.4'}"><span>LVL ${r.lvl} - ${r.n}</span><span>${r.x} XP</span></div>`).join('');
+        document.getElementById('levelModal').style.transform="translate(-50%,-50%) scale(1)"; document.getElementById('overlay').style.display='block';
+    }
+    function closeModal(){ document.getElementById('levelModal').style.transform="translate(-50%,-50%) scale(0)"; document.getElementById('overlay').style.display='none'; }
+    function toggleTheme(){ let b=document.body; b.hasAttribute('data-theme')?b.removeAttribute('data-theme'):b.setAttribute('data-theme','dark'); }
+    
+    // Live Match Time Sim
+    setInterval(() => {
+        let m = document.getElementById('matchTime');
+        let current = parseInt(m.innerText);
+        if(current < 90) m.innerText = (current + 1) + "'";
+    }, 60000);
+
+    window.onload=()=>{ updateStats(); handleNews(); handleShot(); handleQuiz(); };
 </script>
 </body>
 </html>
