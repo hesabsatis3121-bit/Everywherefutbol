@@ -16,12 +16,11 @@
             --text: #f8fafc; --border: #374151; --glass: rgba(31,41,55,0.85);
         }
 
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 100px; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 100px; overflow-x: hidden; }
         
         header { background: var(--header-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         
-        /* XP Display */
-        .user-stats { position: relative; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; background: rgba(255,255,255,0.15); padding: 6px 15px; border-radius: 25px; border: 1px solid var(--accent); cursor: pointer; }
+        .user-stats { position: relative; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; background: rgba(255,255,255,0.15); padding: 6px 15px; border-radius: 25px; border: 1px solid var(--accent); }
         .xp-float { position: absolute; top: -20px; right: 10px; color: var(--accent); font-weight: bold; animation: floatUp 0.8s forwards; opacity: 0; }
         @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
 
@@ -37,22 +36,23 @@
         /* Penalty Game */
         .penalty-arena { background: linear-gradient(#2ecc71, #27ae60); border: 4px solid white; border-radius: 15px; padding: 20px; position: relative; height: 180px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
         .goal-post { position: absolute; top: 5px; width: 85%; height: 90px; border: 6px solid white; border-bottom: none; border-radius: 5px 5px 0 0; }
-        .keeper { position: absolute; top: 35px; font-size: 3.5rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3)); }
+        .keeper { position: absolute; top: 35px; font-size: 3.5rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; }
         .ball { font-size: 1.8rem; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3; position: absolute; bottom: 15px; }
         
         /* Quiz */
         .quiz-option { background: var(--card); padding: 16px; border-radius: 12px; margin-top: 10px; cursor: pointer; border: 2px solid var(--border); transition: 0.2s; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-        .quiz-option:active { transform: scale(0.98); }
-        .correct { background: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
-        .wrong { background: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
+        .correct { background: #2ecc71 !important; color: white !important; }
+        .wrong { background: #e74c3c !important; color: white !important; }
 
         .kick-btn { flex: 1; padding: 14px; border-radius: 12px; border: none; background: var(--header-bg); color: white; font-weight: 800; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 0 #0d1b3e; }
-        .kick-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0d1b3e; }
+        .kick-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
 
         .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 16px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 15px 35px rgba(0,0,0,0.4); z-index: 1000; }
         
         .section-title { font-weight: 900; color: var(--text); font-size: 0.85rem; margin: 25px 0 12px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .section-title::after { content: ""; flex: 1; height: 2px; background: var(--accent); opacity: 0.3; }
+
+        .timer-msg { font-size: 0.9rem; font-weight: bold; color: #e74c3c; padding: 15px; text-align: center; background: rgba(231, 76, 60, 0.1); border-radius: 10px; margin-top: 10px; }
     </style>
 </head>
 <body id="mainBody">
@@ -60,7 +60,7 @@
 <div id="goalAlert">GOAAAL! ⚽</div>
 
 <header>
-    <div style="font-weight: 900; font-size: 1.1rem; letter-spacing: -0.5px;">🌐 EVERYWHERE FUTBOL 🌍</div>
+    <div style="font-weight: 900; font-size: 1.1rem;">🌐 EVERYWHERE FUTBOL 🌍</div>
     <div class="user-stats" id="statsBox">
         <span id="userLevel">LVL 1</span>
         <span id="userXP">0 XP</span>
@@ -73,16 +73,18 @@
             <div style="width:35%">🛡️<br><b>QARABAĞ</b></div>
             <div style="width:30%">
                 <div class="score-display" id="liveScore">0-0</div>
-                <div style="background:rgba(255,0,0,0.8); padding:3px 10px; border-radius:15px; font-size:0.75rem; display:inline-block;" id="liveMin">12'</div>
+                <div style="background:red; padding:3px 10px; border-radius:15px; font-size:0.75rem;" id="liveMin">12'</div>
             </div>
             <div style="width:35%">🦅<br><b>NEFTÇİ</b></div>
         </div>
     </div>
 
-    <div class="section-title">🧠 GÜNLÜK SUAL</div>
-    <div class="card" style="background:var(--card); border-radius:20px; padding:20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <h3 id="qText" style="margin:0 0 15px 0; font-size:1.1rem; line-height:1.4;">Yüklənir...</h3>
-        <div id="qOptions"></div>
+    <div class="section-title">🧠 SUAL (HƏR 4 SAATDAN BİR)</div>
+    <div class="card" id="quizContainer" style="background:var(--card); border-radius:20px; padding:20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <div id="quizContent">
+            <h3 id="qText" style="margin:0 0 15px 0; font-size:1.1rem;">Yüklənir...</h3>
+            <div id="qOptions"></div>
+        </div>
     </div>
 
     <div class="section-title">🥅 PENALTY CHALLENGE</div>
@@ -92,7 +94,7 @@
             <div class="keeper" id="keeper">🧤</div>
             <div class="ball" id="ball">⚽</div>
         </div>
-        <div style="display:flex; gap:10px; margin-top:15px;">
+        <div style="display:flex; gap:10px; margin-top:15px;" id="penaltyControls">
             <button class="kick-btn" onclick="shoot(0)">SOL</button>
             <button class="kick-btn" onclick="shoot(1)">ORTA</button>
             <button class="kick-btn" onclick="shoot(2)">SAĞ</button>
@@ -101,10 +103,10 @@
     </div>
 
     <div class="section-title">🏆 TURNİR CƏDVƏLİ</div>
-    <div style="background:var(--card); border-radius:20px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.05);">
+    <div style="background:var(--card); border-radius:20px; overflow:hidden;">
         <div style="display:flex; background:var(--header-bg);">
-            <button onclick="showLeague('az')" id="btn-az" style="flex:1; padding:15px; border:none; color:white; font-weight:900; cursor:pointer; background:none;">AZƏRBAYCAN</button>
-            <button onclick="showLeague('tr')" id="btn-tr" style="flex:1; padding:15px; border:none; color:white; font-weight:900; cursor:pointer; background:none; opacity:0.5;">TÜRKİYƏ</button>
+            <button onclick="showLeague('az')" id="btn-az" style="flex:1; padding:15px; border:none; color:white; font-weight:900; cursor:pointer; background:none;">AZ</button>
+            <button onclick="showLeague('tr')" id="btn-tr" style="flex:1; padding:15px; border:none; color:white; font-weight:900; cursor:pointer; background:none; opacity:0.5;">TR</button>
         </div>
         <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
             <tbody id="table-body"></tbody>
@@ -135,44 +137,64 @@
         document.getElementById('userLevel').innerText = "LVL " + (Math.floor(userXP/100) + 1);
     }
 
+    // Quiz Logic (4 Hours)
     const questions = [
-        {q: "Hansı futbolçu ən çox 'Qızıl Top' (Ballon d'Or) qazanıb?", a: ["C. Ronaldo", "L. Messi", "Zidane"], c: 1},
-        {q: "2022 Dünya Çempionu hansı ölkə oldu?", a: ["Fransa", "Braziliya", "Argentina"], c: 2},
-        {q: "Qarabağ FK-nın baş məşqçisi kimdir?", a: ["Qurban Qurbanov", "Rəşad Sadıqov", "Ayxan Abbasov"], c: 0}
+        {q: "Dünya Çempionatını ən çox hansı ölkə qazanıb?", a: ["Almaniya", "Braziliya", "İtaliya"], c: 1},
+        {q: "Azərbaycanın ilk milli qapıçısı kim olub?", a: ["Sergey Kramarenko", "Kamran Ağayev", "Tofiq Bəhramov"], c: 0},
+        {q: "Çempionlar Liqasını ard-arda 3 dəfə qazanan klub?", a: ["Barcelona", "Milan", "Real Madrid"], c: 2}
     ];
+
+    function checkQuizTimer() {
+        const lastQuiz = localStorage.getItem('lastQuizTime');
+        const now = new Date().getTime();
+        const fourHours = 4 * 60 * 60 * 1000;
+
+        if (lastQuiz && (now - lastQuiz < fourHours)) {
+            const remaining = fourHours - (now - lastQuiz);
+            showQuizTimer(remaining);
+        } else {
+            loadQuiz();
+        }
+    }
+
+    function showQuizTimer(ms) {
+        const container = document.getElementById('quizContent');
+        const hours = Math.floor(ms / (1000 * 60 * 60));
+        const mins = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+        container.innerHTML = `<div class="timer-msg">Yeni sual üçün 4 saatdan sonra gəl! ⏳ <br> Qalan vaxt: ${hours}saat ${mins}dəq</div>`;
+        setTimeout(checkQuizTimer, 60000);
+    }
 
     function loadQuiz() {
         const q = questions[Math.floor(Math.random()*questions.length)];
-        document.getElementById('qText').innerText = q.q;
+        const container = document.getElementById('quizContent');
+        container.innerHTML = `<h3 id="qText" style="margin:0 0 15px 0;">${q.q}</h3><div id="qOptions"></div>`;
         const optCont = document.getElementById('qOptions');
-        optCont.innerHTML = '';
+        
         q.a.forEach((opt, i) => {
             const div = document.createElement('div');
             div.className = 'quiz-option';
             div.innerHTML = `<span>${opt}</span> ⚽`;
             div.onclick = function() {
-                if(optCont.getAttribute('data-locked')) return;
-                optCont.setAttribute('data-locked', 'true');
                 if(i === q.c) {
                     this.classList.add('correct');
-                    updateStats(20);
+                    updateStats(25);
                 } else {
                     this.classList.add('wrong');
                     optCont.children[q.c].classList.add('correct');
                 }
-                setTimeout(() => {
-                    optCont.removeAttribute('data-locked');
-                    loadQuiz();
-                }, 2000);
+                localStorage.setItem('lastQuizTime', new Date().getTime());
+                setTimeout(checkQuizTimer, 2000);
             };
             optCont.appendChild(div);
         });
     }
 
+    // Penalty Logic
     function shoot(playerPos) {
         const today = new Date().toDateString();
         if(localStorage.getItem('lastShot') === today) {
-            document.getElementById('gameMsg').innerText = "GÜNDƏLİK ŞANSIN BİTDİ! 🕒";
+            document.getElementById('gameMsg').innerText = "BU GÜNLÜK ŞANSIN BİTDİ! 🕒";
             return;
         }
 
@@ -180,9 +202,8 @@
         const ball = document.getElementById('ball');
         const kPos = Math.floor(Math.random()*3);
         const offsets = ["-85px", "0px", "85px"];
-        const rotates = ["-20deg", "0deg", "20deg"];
 
-        keeper.style.transform = `translateX(${offsets[kPos]}) rotate(${rotates[kPos]})`;
+        keeper.style.transform = `translateX(${offsets[kPos]}) rotate(${kPos === 1 ? '0' : (kPos === 0 ? '-20deg' : '20deg')})`;
         ball.style.transform = `translate(${offsets[playerPos]}, -130px) scale(0.6)`;
 
         setTimeout(() => {
@@ -207,18 +228,18 @@
         setTimeout(() => ga.style.transform = "translate(-50%, -50%) scale(0)", 1500);
     }
 
+    // Standard UI Logic
     const leagues = {
-        az: [{n: "Qarabağ", x: 48}, {n: "Sabah", x: 46}, {n: "Turan", x: 35}, {n: "Zirə", x: 32}],
-        tr: [{n: "Galatasaray", x: 63}, {n: "Fenerbahçe", x: 61}, {n: "Beşiktaş", x: 47}, {n: "Trabzon", x: 41}]
+        az: [{n: "Qarabağ", x: 48}, {n: "Sabah", x: 46}, {n: "Turan", x: 35}],
+        tr: [{n: "Galatasaray", x: 63}, {n: "Fenerbahçe", x: 61}, {n: "Beşiktaş", x: 47}]
     };
-
     function showLeague(l) {
         const body = document.getElementById('table-body');
         document.getElementById('btn-az').style.opacity = l === 'az' ? '1' : '0.5';
         document.getElementById('btn-tr').style.opacity = l === 'tr' ? '1' : '0.5';
         body.innerHTML = '';
         leagues[l].forEach((t, i) => {
-            body.innerHTML += `<tr style="border-bottom:1px solid var(--border); animation: slideIn 0.3s forwards; opacity:0;">
+            body.innerHTML += `<tr style="border-bottom:1px solid var(--border)">
                 <td style="padding:15px; font-weight:900; color:var(--accent)">${i+1}</td>
                 <td style="padding:15px; font-weight:bold">${t.n}</td>
                 <td style="padding:15px; text-align:right; font-weight:900">${t.x} XAL</td>
@@ -236,17 +257,18 @@
     setInterval(() => {
         m++; if(m>90) {m=1; s1=0; s2=0;}
         document.getElementById('liveMin').innerText = m+"'";
-        if(Math.random()>0.97) { Math.random()>0.5 ? s1++ : s2++; 
+        if(Math.random()>0.97) { 
+            Math.random()>0.5 ? s1++ : s2++; 
             document.getElementById('liveScore').innerText = s1+"-"+s2; 
             triggerGoal();
         }
     }, 4000);
 
-    window.onload = () => { showLeague('az'); loadQuiz(); updateStats(0); };
+    window.onload = () => { 
+        showLeague('az'); 
+        checkQuizTimer();
+        updateStats(0); 
+    };
 </script>
-
-<style>
-    @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-</style>
 </body>
 </html>
