@@ -8,205 +8,241 @@
         :root { 
             --bg: #f0f2f5; --header-bg: #1e3a8a; --card: #ffffff; 
             --text: #1e3a8a; --accent: #d4af37; --whatsapp: #25d366;
-            --border: #e2e8f0; --glass: rgba(255,255,255,0.85);
+            --border: #e2e8f0; --glass: rgba(255,255,255,0.95);
         }
 
         [data-theme="dark"] {
             --bg: #0b0f19; --header-bg: #161b28; --card: #1f2937; 
-            --text: #f8fafc; --border: #374151; --glass: rgba(31,41,55,0.85);
+            --text: #f8fafc; --border: #374151; --glass: rgba(31,41,55,0.95);
         }
 
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 120px; overflow-x: hidden; }
         
         header { background: var(--header-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         
-        .user-stats { position: relative; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; background: rgba(255,255,255,0.15); padding: 6px 15px; border-radius: 25px; border: 1px solid var(--accent); }
+        .user-stats { position: relative; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; cursor: pointer; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 15px; border: 1px solid var(--accent); transition: 0.3s; }
+        .rank-name { font-size: 0.65rem; font-weight: 900; color: var(--accent); text-transform: uppercase; }
+        .xp-bump { transform: scale(1.1); }
+
+        /* Level Modal */
+        #levelModal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 85%; max-width: 400px; background: var(--glass); border-radius: 25px; padding: 25px; z-index: 10001; color: var(--text); border: 2px solid var(--accent); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(15px); }
+        #levelModal.active { transform: translate(-50%, -50%) scale(1); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 10000; }
 
         .container { max-width: 500px; margin: auto; padding: 15px; }
 
-        /* Goal Animasiyası */
-        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 30px 60px; border-radius: 60px; font-size: 3rem; font-weight: 900; z-index: 9999; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; border: 5px solid white; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        /* Everywhere Legend 10 LVL Effect */
+        .legend-glow { animation: legendPulse 2s infinite; border: 2px solid gold !important; background: linear-gradient(45deg, rgba(212,175,55,0.2), transparent) !important; }
+        @keyframes legendPulse { 0% { box-shadow: 0 0 5px gold; } 50% { box-shadow: 0 0 25px gold; } 100% { box-shadow: 0 0 5px gold; } }
 
-        /* News Section */
-        .news-card { background: linear-gradient(135deg, var(--card), var(--bg)); border-left: 5px solid var(--accent); padding: 15px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); animation: fadeIn 0.5s ease; }
-        .news-time { font-size: 0.7rem; color: #777; margin-bottom: 5px; display: block; }
+        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 30px 60px; border-radius: 60px; font-size: 3rem; font-weight: 900; z-index: 9999; transition: 0.4s; border: 5px solid white; pointer-events: none; }
 
-        /* Live Animation (Sol Aşağı) */
-        .live-float { position: fixed; bottom: 85px; left: 15px; background: var(--header-bg); color: white; padding: 10px 15px; border-radius: 30px; display: flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 999; animation: bounce 2s infinite; border: 1px solid var(--accent); }
-        .pulse-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; box-shadow: 0 0 10px #2ecc71; animation: pulse 1.5s infinite; }
-
-        /* Penalty & Quiz */
-        .penalty-arena { background: linear-gradient(#2ecc71, #27ae60); border: 4px solid white; border-radius: 15px; padding: 20px; position: relative; height: 160px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
-        .keeper { position: absolute; top: 30px; font-size: 3rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; }
-        .ball { font-size: 1.5rem; transition: 0.5s; z-index: 3; position: absolute; bottom: 10px; }
+        .news-box { background: var(--card); border-left: 5px solid var(--accent); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         
-        .kick-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; background: var(--header-bg); color: white; font-weight: 800; cursor: pointer; }
+        .live-indicator { position: fixed; bottom: 85px; left: 15px; background: var(--header-bg); color: white; padding: 10px 18px; border-radius: 30px; display: flex; align-items: center; gap: 10px; font-size: 0.7rem; z-index: 999; border: 1px solid var(--accent); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .status-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; box-shadow: 0 0 10px #2ecc71; animation: pulse 1.5s infinite; }
 
-        .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); backdrop-filter: blur(20px); display: flex; justify-content: space-around; padding: 16px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 15px 35px rgba(0,0,0,0.4); z-index: 1000; }
+        .penalty-arena { background: linear-gradient(#2ecc71, #27ae60); border: 4px solid white; border-radius: 15px; position: relative; height: 160px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+        .keeper { position: absolute; top: 30px; font-size: 3.2rem; transition: 0.4s; z-index: 2; }
+        .ball { font-size: 1.6rem; transition: 0.5s; z-index: 3; position: absolute; bottom: 10px; }
         
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .kick-btn { flex: 1; padding: 14px; border-radius: 12px; border: none; background: var(--header-bg); color: white; font-weight: 800; cursor: pointer; }
 
-        .timer-msg { font-size: 0.85rem; font-weight: bold; color: #e74c3c; text-align: center; padding: 10px; }
+        .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); display: flex; justify-content: space-around; padding: 16px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); z-index: 1000; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body id="mainBody">
 
 <div id="goalAlert">GOAAAL! ⚽</div>
+<div class="overlay" id="overlay" onclick="closeLevelModal()"></div>
 
-<div class="live-float">
-    <div class="pulse-dot"></div>
-    <span>CANLI DATA: <span id="activeUsers">...</span></span>
+<div id="levelModal">
+    <h2 style="margin-top: 0; color: var(--accent); text-align: center;">🏆 Futbol Karyerası</h2>
+    <div id="rankList" style="font-size: 0.85rem; line-height: 2; max-height: 300px; overflow-y: auto; padding-right: 5px;">
+        </div>
+    <button onclick="closeLevelModal()" style="width: 100%; margin-top: 20px; padding: 12px; background: var(--header-bg); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer;">MEYDANA QAYIT</button>
+</div>
+
+<div class="live-indicator">
+    <div class="status-dot"></div>
+    <span>SERVER: <span id="serverLoad">AKTİV</span></span>
 </div>
 
 <header>
-    <div style="font-weight: 900; font-size: 1rem;">🌐 EVERYWHERE FUTBOL 🌍</div>
-    <div class="user-stats" id="statsBox">
-        <span id="userLevel">LVL 1</span>
-        <span id="userXP">0 XP</span>
+    <div style="font-weight: 900; font-size: 0.9rem; letter-spacing: 1px;">🌐 EVERYWHERE FUTBOL</div>
+    <div class="user-stats" id="statsBox" onclick="openLevelModal()">
+        <span class="rank-name" id="userRank">YAXŞI</span>
+        <span id="userLevelXP" style="font-size: 0.75rem; font-weight: bold;">LVL 1 • 0 XP</span>
     </div>
 </header>
 
 <div class="container">
-    <div class="section-title" style="display:flex; justify-content:space-between; align-items:center; font-weight:900; font-size:0.8rem; margin:15px 0 10px;">
-        <span>🗞️ TRANSFER MƏRKƏZİ (4 SAAT)</span>
-    </div>
-    <div id="newsContainer"></div>
+    <div class="section-title" style="font-weight:900; font-size:0.8rem; margin:10px 0;">🗞️ TRANSFER BOMBALARI (4 SAAT)</div>
+    <div id="newsSection"></div>
 
-    <div class="live-match-box" style="background: linear-gradient(135deg, #1e3a8a 0%, #000 100%); color: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+    <div class="live-match-box" style="background: linear-gradient(135deg, #1e3a8a 0%, #000 100%); color: white; border-radius: 20px; padding: 25px; margin: 20px 0; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.2);">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="width:35%">🛡️<br><b>QARABAĞ</b></div>
-            <div style="width:30%">
-                <div style="font-size:2rem; font-weight:900; color:var(--accent);" id="liveScore">0-0</div>
-                <div style="background:red; padding:2px 8px; border-radius:10px; font-size:0.7rem;" id="liveMin">12'</div>
+            <div>🛡️<br><small>QARABAĞ</small></div>
+            <div>
+                <div style="font-size:2.2rem; font-weight:900; color:var(--accent); text-shadow: 0 0 10px rgba(212,175,55,0.5);" id="liveScore">0-0</div>
+                <div style="background:red; padding:2px 10px; border-radius:15px; font-size:0.7rem; display:inline-block; margin-top:5px;" id="liveMin">12'</div>
             </div>
-            <div style="width:35%">🦅<br><b>NEFTÇİ</b></div>
+            <div>🦅<br><small>NEFTÇİ</small></div>
         </div>
     </div>
 
-    <div class="section-title" style="font-weight:900; font-size:0.8rem; margin-bottom:10px;">🧠 SUAL (4 SAAT)</div>
-    <div class="card" id="quizContainer" style="background:var(--card); border-radius:20px; padding:20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <div id="quizContent"></div>
+    <div class="section-title" style="font-weight:900; font-size:0.8rem; margin-bottom:10px;">🧠 GÜNLÜK SUAL</div>
+    <div class="card" id="quizBox" style="background:var(--card); border-radius:20px; padding:20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <div id="quizIn"></div>
     </div>
 
-    <div class="section-title" style="font-weight:900; font-size:0.8rem; margin:20px 0 10px;">🥅 PENALTY CHALLENGE</div>
+    <div class="section-title" style="font-weight:900; font-size:0.8rem; margin:20px 0 10px;">🥅 PENALTI CHALLENGE</div>
     <div class="card" style="padding:10px; background:var(--card); border-radius:20px;">
         <div class="penalty-arena">
-            <div style="position:absolute; top:5px; width:85%; height:80px; border:4px solid white; border-bottom:none;"></div>
+            <div style="position:absolute; top:5px; width:80%; height:80px; border:4px solid white; border-bottom:none;"></div>
             <div class="keeper" id="keeper">🧤</div>
             <div class="ball" id="ball">⚽</div>
         </div>
-        <div style="display:flex; gap:10px; margin-top:10px;">
+        <div style="display:flex; gap:10px; margin-top:15px;">
             <button class="kick-btn" onclick="shoot(0)">SOL</button>
             <button class="kick-btn" onclick="shoot(1)">ORTA</button>
             <button class="kick-btn" onclick="shoot(2)">SAĞ</button>
         </div>
-        <p id="gameMsg" style="text-align:center; font-weight:bold; margin-top:8px; font-size:0.8rem; color:var(--accent);"></p>
+        <p id="gameMsg" style="text-align:center; font-weight:bold; margin-top:10px; color:var(--accent); font-size:0.85rem; min-height:1.2rem;"></p>
     </div>
 </div>
 
 <div class="nav-bar">
     <div class="nav-item" onclick="toggleTheme()" style="font-size:1.5rem; cursor:pointer;">🌓</div>
     <div class="nav-item" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="font-size:1.5rem; cursor:pointer;">🏠</div>
-    <div class="nav-item" onclick="alert('Tezliklə: Canlı Söhbət!')" style="font-size:1.5rem; cursor:pointer;">💬</div>
+    <div class="nav-item" onclick="alert('Tezliklə: Bazar!')" style="font-size:1.5rem; cursor:pointer;">🏪</div>
 </div>
 
 <script>
     let userXP = parseInt(localStorage.getItem('ef_xp')) || 0;
-    const fourHours = 4 * 60 * 60 * 1000;
+    const interval4h = 4 * 60 * 60 * 1000;
 
-    // Xəbərlər Bazası
-    const newsData = [
-        "🚨 Messi və Ronaldo son dəfə eyni komandada? Səudiyyə Ərəbistanı hərəkətə keçdi!",
-        "🚨 Qarabağ FK Avropa Liqasında yeni hədəflərini açıqladı: Yarımfinal mümkündürmü?",
-        "🚨 Galatasaray-da şok ayrılıq: Əsas hücumçu transfer siyahısına salındı.",
-        "🚨 Mahir Emreli yenidən Türkiyə Premyer Liqasına qayıda bilər.",
-        "🚨 Real Madrid Mbappe üçün xüsusi bonus hazırlayır: Rekord məbləğ!",
-        "🚨 Neftçi-də yeni baş məşqçi axtarışları sürətləndi: Portuqaliyalı mütəxəssis gündəmdədir."
+    // Rütbə Sistemi - Bütün səviyyələr əlavə edildi
+    const ranks = [
+        { lvl: 1, name: "Yaxşı", xpNeeded: 0 },
+        { lvl: 2, name: "Futbol Azərkeşi", xpNeeded: 150 },
+        { lvl: 3, name: "Sadiq Fanat", xpNeeded: 450 },
+        { lvl: 4, name: "Taktika Ustası", xpNeeded: 1000 },
+        { lvl: 5, name: "Professional", xpNeeded: 2000 },
+        { lvl: 6, name: "Ulduz Oyunçu", xpNeeded: 3500 },
+        { lvl: 7, name: "Klub Rəhbəri", xpNeeded: 5500 },
+        { lvl: 8, name: "Futbol Analitiki", xpNeeded: 8000 },
+        { lvl: 9, name: "Dünya Çempionu", xpNeeded: 11000 },
+        { lvl: 10, name: "EVERYWHERE LEGEND", xpNeeded: 15000 }
     ];
+
+    function calculateLevel() {
+        let currentLvl = 1;
+        let currentRankName = ranks[0].name;
+        for (let i = ranks.length - 1; i >= 0; i--) {
+            if (userXP >= ranks[i].xpNeeded) {
+                currentLvl = ranks[i].lvl;
+                currentRankName = ranks[i].name;
+                break;
+            }
+        }
+        return { lvl: currentLvl, name: currentRankName };
+    }
 
     function updateStats(xp) {
         userXP += xp;
         localStorage.setItem('ef_xp', userXP);
-        document.getElementById('userXP').innerText = userXP + " XP";
-        document.getElementById('userLevel').innerText = "LVL " + (Math.floor(userXP/100) + 1);
+        const stats = calculateLevel();
+        
+        document.getElementById('userRank').innerText = stats.name;
+        document.getElementById('userLevelXP').innerText = `LVL ${stats.lvl} • ${userXP} XP`;
+        
+        const box = document.getElementById('statsBox');
+        box.classList.add('xp-bump');
+        setTimeout(() => box.classList.remove('xp-bump'), 300);
+
+        if(stats.lvl >= 10) box.classList.add('legend-glow');
     }
 
-    // 4 Saatlıq Xəbər Sistemi
-    function loadNews() {
-        const lastNewsTime = localStorage.getItem('lastNewsTime');
-        const now = new Date().getTime();
-        let currentNews = JSON.parse(localStorage.getItem('currentNews'));
+    function openLevelModal() {
+        const list = document.getElementById('rankList');
+        list.innerHTML = ranks.map(r => `
+            <div style="display:flex; justify-content:space-between; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.05); ${userXP >= r.xpNeeded ? 'color:var(--accent); font-weight:bold;' : 'opacity:0.4;'}">
+                <span>LVL ${r.lvl} - ${r.name}</span>
+                <span>${r.xpNeeded} XP</span>
+            </div>
+        `).join('');
+        document.getElementById('levelModal').classList.add('active');
+        document.getElementById('overlay').style.display = 'block';
+    }
 
-        if (!lastNewsTime || (now - lastNewsTime > fourHours)) {
-            // Təsadüfi 2 xəbər seç
-            const shuffled = newsData.sort(() => 0.5 - Math.random());
-            currentNews = shuffled.slice(0, 2);
-            localStorage.setItem('currentNews', JSON.stringify(currentNews));
+    function closeLevelModal() {
+        document.getElementById('levelModal').classList.remove('active');
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Xəbərlər (4 Saat)
+    const newsPool = ["Messi-dən MLS rekordu!", "Qarabağ FK yeni transferini açıqladı!", "Everywhere Futbol artıq 10.000 istifadəçiyə çatdı!", "Real Madrid Mbappe üçün xüsusi proqram hazırlayır."];
+    function handleNews() {
+        const now = new Date().getTime();
+        const lastNews = localStorage.getItem('lastNewsTime');
+        let currentNews = JSON.parse(localStorage.getItem('savedNews'));
+        if (!lastNews || (now - lastNews > interval4h)) {
+            currentNews = newsPool.sort(() => 0.5 - Math.random()).slice(0, 2);
+            localStorage.setItem('savedNews', JSON.stringify(currentNews));
             localStorage.setItem('lastNewsTime', now);
         }
-
-        const newsCont = document.getElementById('newsContainer');
-        newsCont.innerHTML = currentNews.map(n => `
-            <div class="news-card">
-                <span class="news-time">🕒 Transfer Fısıltıları</span>
-                <div style="font-weight:bold; font-size:0.9rem;">${n}</div>
+        document.getElementById('newsSection').innerHTML = currentNews.map(n => `
+            <div class="news-box">
+                <span style="color:#e74c3c; font-size:0.6rem; font-weight:900;">[TƏCİLİ]</span>
+                <div style="font-weight:bold; font-size:0.85rem; margin-top:3px;">${n}</div>
             </div>
         `).join('');
     }
 
-    // Quiz & Penalty (Öncəki kodla eyni məntiqli)
-    const questions = [{q: "Dünya Çempionatı 2026 harada keçiriləcək?", a: ["ABŞ/Kanada/Meksika", "Braziliya", "Fransa"], c: 0}];
-
-    function checkQuiz() {
-        const lastQ = localStorage.getItem('lastQuizTime');
+    // Quiz (4 Saat)
+    function handleQuiz() {
         const now = new Date().getTime();
-        if (lastQ && (now - lastQ < fourHours)) {
-            document.getElementById('quizContent').innerHTML = `<div class="timer-msg">4 saatdan sonra yeni sual gələcək! ⏳</div>`;
+        const lastQ = localStorage.getItem('lastQuizTime');
+        const box = document.getElementById('quizIn');
+        if (lastQ && (now - lastQ < interval4h)) {
+            const diff = interval4h - (now - lastQ);
+            const h = Math.floor(diff / (1000*60*60));
+            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            box.innerHTML = `<div style="text-align:center; color:#e74c3c; font-weight:bold;">Yeni sual ${h}s ${m}d sonra gələcək! 🕒</div>`;
         } else {
-            const q = questions[0];
-            document.getElementById('quizContent').innerHTML = `
-                <div style="font-weight:bold; margin-bottom:10px;">${q.q}</div>
-                <div id="opts"></div>
-            `;
-            q.a.forEach((opt, i) => {
-                const b = document.createElement('div');
-                b.className = 'news-card'; // Stil üçün eyni kartı istifadə edirik
-                b.style.cursor = 'pointer';
-                b.innerText = opt;
-                b.onclick = () => {
-                    if (i === q.c) { updateStats(30); alert("Düzdür! +30 XP"); }
-                    localStorage.setItem('lastQuizTime', new Date().getTime());
-                    checkQuiz();
-                };
-                document.getElementById('opts').appendChild(b);
-            });
+            box.innerHTML = `<div><b>Çempionlar Liqasını ard-arda 3 dəfə qazanan yeganə klub hansıdır?</b></div><br>
+                <button onclick="quizAns(true)" class="kick-btn">Real Madrid</button>
+                <button onclick="quizAns(false)" class="kick-btn" style="margin-top:8px;">Barcelona</button>`;
         }
     }
 
+    function quizAns(correct) {
+        if(correct) { updateStats(40); alert("Möhtəşəm! +40 XP"); }
+        localStorage.setItem('lastQuizTime', new Date().getTime());
+        handleQuiz();
+    }
+
+    // Penalty
     function shoot(p) {
         const today = new Date().toDateString();
         if(localStorage.getItem('lastShot') === today) {
-            document.getElementById('gameMsg').innerText = "Bu günlük şansın bitdi!";
+            document.getElementById('gameMsg').innerText = "Bu günlük limitin dolub!";
             return;
         }
         const k = Math.floor(Math.random()*3);
-        const ball = document.getElementById('ball');
-        const keep = document.getElementById('keeper');
-        const pos = ["-70px", "0px", "70px"];
-        
-        keep.style.transform = `translateX(${pos[k]})`;
-        ball.style.transform = `translate(${pos[p]}, -110px) scale(0.7)`;
-
+        const offsets = ["-75px", "0px", "75px"];
+        document.getElementById('keeper').style.transform = `translateX(${offsets[k]})`;
+        document.getElementById('ball').style.transform = `translate(${offsets[p]}, -115px) scale(0.6)`;
         setTimeout(() => {
-            if(p === k) { document.getElementById('gameMsg').innerText = "Qapıçı tutdu! 🧤"; }
+            if(p === k) { document.getElementById('gameMsg').innerText = "QAPICI TUTDU! 🧤"; }
             else { 
-                document.getElementById('gameMsg').innerText = "QOOOOL! ⚽ +50 XP";
+                document.getElementById('gameMsg').innerText = "QOOOOL! +50 XP"; 
                 updateStats(50);
-                const ga = document.getElementById('goalAlert');
-                ga.style.transform = "translate(-50%, -50%) scale(1)";
-                setTimeout(() => ga.style.transform = "translate(-50%, -50%) scale(0)", 1500);
+                document.getElementById('goalAlert').style.transform = "translate(-50%, -50%) scale(1)";
+                setTimeout(()=> document.getElementById('goalAlert').style.transform="translate(-50%,-50%) scale(0)", 1500);
             }
             localStorage.setItem('lastShot', today);
         }, 500);
@@ -217,18 +253,12 @@
         b.hasAttribute('data-theme') ? b.removeAttribute('data-theme') : b.setAttribute('data-theme', 'dark');
     }
 
-    // Simulyasiyalar
+    // Online counter simulation
     setInterval(() => {
-        document.getElementById('activeUsers').innerText = Math.floor(Math.random() * (1500 - 800) + 800);
-    }, 3000);
-
-    let m=12, s1=0, s2=0;
-    setInterval(() => {
-        m++; document.getElementById('liveMin').innerText = m+"'";
-        if(Math.random() > 0.98) { s1++; document.getElementById('liveScore').innerText = s1+"-"+s2; }
+        document.getElementById('serverLoad').innerText = Math.floor(Math.random()*150 + 850) + " ON";
     }, 4000);
 
-    window.onload = () => { loadNews(); checkQuiz(); updateStats(0); };
+    window.onload = () => { handleNews(); handleQuiz(); updateStats(0); };
 </script>
 </body>
 </html>
