@@ -15,20 +15,22 @@
         .container { max-width: 500px; margin: auto; padding: 15px; }
         .timer-badge { font-size: 0.65rem; background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
         .news-box { background: var(--card); border-left: 5px solid var(--accent); padding: 12px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        /* Penalty Arena */
+        
+        /* Penalty Arena Update */
         .penalty-arena { background: linear-gradient(#2ecc71, #27ae60); border: 4px solid white; border-radius: 15px; position: relative; height: 160px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; margin-top: 10px; }
-        .keeper { position: absolute; top: 30px; font-size: 3rem; transition: 0.4s; z-index: 2; }
+        .goal-post { position: absolute; top: 5px; width: 75%; height: 90px; border: 4px solid white; border-bottom: none; z-index: 1; }
+        .keeper { position: absolute; top: 35px; font-size: 2.8rem; transition: 0.4s; z-index: 2; }
         .ball { font-size: 1.6rem; transition: 0.5s; z-index: 3; position: absolute; bottom: 10px; }
+        
         .kick-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; background: var(--header-bg); color: white; font-weight: bold; cursor: pointer; }
         .kick-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        /* Common UI */
         .card { background: var(--card); border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .quiz-option { padding: 10px; margin: 5px 0; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; text-align: center; font-weight: 600; }
         .quiz-correct { background: #2ecc71 !important; color: white; }
         .quiz-wrong { background: #e74c3c !important; color: white; }
-        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 20px 40px; border-radius: 50px; font-size: 2.5rem; font-weight: 900; z-index: 9999; transition: 0.4s; border: 4px solid white; pointer-events: none; }
+        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 20px 40px; border-radius: 50px; font-size: 2.2rem; font-weight: 900; z-index: 9999; transition: 0.4s; border: 4px solid white; pointer-events: none; }
         .footer-promo { background: var(--card); border-radius: 20px; padding: 20px; text-align: center; border: 1px dashed var(--accent); }
-        .wp-btn { background: var(--whatsapp); color: white; text-decoration: none; padding: 12px 20px; border-radius: 30px; display: inline-block; font-weight: bold; }
+        .wp-btn { background: var(--whatsapp); color: white; text-decoration: none; padding: 12px 20px; border-radius: 30px; display: inline-block; font-weight: bold; margin: 10px 0; }
         .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); display: flex; justify-content: space-around; padding: 15px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; }
     </style>
 </head>
@@ -53,18 +55,19 @@
 
 <div class="container">
     <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
-        <b style="font-size:0.8rem;">🗞️ TRANSFER BOMBALARI</b>
+        <b style="font-size:0.8rem;">🗞️ TRANSFER BOMBALARI (2026)</b>
         <span class="timer-badge" id="newsTimer">00:00:00</span>
     </div>
     <div id="newsSection"></div>
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0 5px;">
-        <b style="font-size:0.8rem;">🥅 PENALTİ (12 SAAT)</b>
+        <b style="font-size:0.8rem;">🥅 PENALTİ CHALLENGE (12H)</b>
         <span class="timer-badge" id="shotTimer">HAZIR</span>
     </div>
     <div class="card" style="padding:10px;">
         <div class="penalty-arena">
-            <div class="keeper" id="keeper">🧤</div>
+            <div class="goal-post"></div>
+            <div class="keeper" id="keeper">🕴️</div>
             <div class="ball" id="ball">⚽</div>
         </div>
         <div style="display:flex;gap:10px;margin-top:15px;" id="shotControls">
@@ -92,9 +95,9 @@
 </div>
 
 <div class="nav-bar">
-    <div onclick="toggleTheme()" style="font-size:1.5rem;">🌓</div>
-    <div onclick="window.scrollTo(0,0)" style="font-size:1.5rem;">🏠</div>
-    <div onclick="alert('Tezliklə!')" style="font-size:1.5rem;">🏪</div>
+    <div onclick="toggleTheme()" style="font-size:1.5rem;cursor:pointer;">🌓</div>
+    <div onclick="window.scrollTo(0,0)" style="font-size:1.5rem;cursor:pointer;">🏠</div>
+    <div onclick="alert('Tezliklə!')" style="font-size:1.5rem;cursor:pointer;">🏪</div>
 </div>
 
 <script>
@@ -121,7 +124,13 @@
         const now=Date.now(); let last=localStorage.getItem('news_t')||0;
         let data=JSON.parse(localStorage.getItem('news_d'));
         if(now-last>NEWS_INT || !data){
-            data=["Real Madrid Arda üçün 40M rədd etdi!","Juninho Avropa klublarının radarında!","Mbappe PSJ-dən ayrılmaqdan danışdı."].sort(()=>.5-Math.random()).slice(0,2);
+            data=[
+                "DÇ-2026: Açılış oyunu üçün hazırlıqlar sürətləndi!",
+                "Real Madrid Lamine Yamal üçün rekord təklif hazırlayır.",
+                "Qarabağ FK Avropa Liqasında pley-off mərhələsinə yüksəldi!",
+                "Messi DÇ-2026-da oynayacağını rəsmi olaraq açıqladı.",
+                "Arda Güler Liverpulun transfer siyahısında bir nömrədir!"
+            ].sort(()=>.5-Math.random()).slice(0,2);
             localStorage.setItem('news_d',JSON.stringify(data)); localStorage.setItem('news_t',now); last=now;
         }
         document.getElementById('newsSection').innerHTML=data.map(n=>`<div class="news-box"><b>${n}</b></div>`).join('');
@@ -135,7 +144,7 @@
         document.getElementById('keeper').style.transform=`translateX(${off[k]})`;
         document.getElementById('ball').style.transform=`translate(${off[p]},-115px) scale(0.6)`;
         setTimeout(()=>{
-            if(p===k) document.getElementById('gameMsg').innerText="QAPICI TUTDU! 🧤";
+            if(p===k) document.getElementById('gameMsg').innerText="QAPICI TUTDU! 🕴️";
             else {
                 document.getElementById('gameMsg').innerText="QOL OLDU! +100 XP"; updateStats(100);
                 let ga=document.getElementById('goalAlert'); ga.style.transform="translate(-50%,-50%) scale(1)";
@@ -161,16 +170,18 @@
     function handleQuiz(){
         const last=localStorage.getItem('quiz_t')||0, rem=QUIZ_INT-(Date.now()-last), b=document.getElementById('quizIn');
         if(rem>0){
-            b.innerHTML=`<center style="padding:20px;opacity:0.5">Sual hazırlanır...</center>`;
+            b.innerHTML=`<center style="padding:20px;opacity:0.5">Növbəti sual hazırlanır...</center>`;
             setInterval(()=>document.getElementById('quizTimer').innerText=formatTime(QUIZ_INT-(Date.now()-last)),1000);
         } else {
-            const q={q:"Dünya Çempionatını ən çox qazanan?", a:["İtaliya","Braziliya","Almaniya"], c:1};
+            const q={q:"DÇ-2026-nın açılış oyunu hansı ölkədə olacaq?", a:["ABŞ","Meksika","Kanada"], c:1};
             b.innerHTML=`<div style="text-align:center;font-weight:bold;margin-bottom:10px">${q.q}</div>`+q.a.map((o,i)=>`<div class="quiz-option" onclick="checkQ(this,${i},${q.c})">${o}</div>`).join('');
             document.getElementById('quizTimer').innerText="AKTİVDİR";
         }
     }
 
     function checkQ(el,i,c){
+        const opts = document.querySelectorAll('.quiz-option');
+        opts.forEach(o => o.style.pointerEvents = 'none');
         if(i===c){el.classList.add('quiz-correct'); updateStats(50);} else el.classList.add('quiz-wrong');
         localStorage.setItem('quiz_t',Date.now()); setTimeout(handleQuiz,2000);
     }
