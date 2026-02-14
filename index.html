@@ -16,7 +16,7 @@
         
         body { font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.5s; padding-bottom: 150px; overflow-x: hidden; }
         
-        /* Goal & Coin Animations */
+        /* Goal & XP Animations */
         .float-anim {
             position: fixed; font-weight: 900; color: var(--accent); font-size: 1.8rem;
             pointer-events: none; z-index: 10000; animation: floatUp 1.2s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -38,7 +38,8 @@
             position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--accent);
         }
 
-        .level-badge { position: absolute; top: -12px; left: 5px; background: var(--gold); color: #000; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; }
+        /* User Profile Elements */
+        .level-badge { position: absolute; top: -12px; left: 5px; background: var(--gold); color: #000; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3); }
         .user-profile { display: flex; align-items: center; gap: 12px; position: relative; }
         .avatar { width: 45px; height: 45px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 1.2rem; }
 
@@ -59,29 +60,29 @@
         @keyframes shake { 0%, 100% { transform: translateX(-50%); } 25% { transform: translateX(-65%); } 75% { transform: translateX(-35%); } }
         .ball-pro { position: absolute; bottom: 25px; font-size: 2.5rem; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3; }
 
-        .wa-btn { background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; margin: 20px 0; font-weight: bold; }
+        /* Buttons & Links */
+        .wa-btn { background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; margin: 20px 0; font-weight: bold; transition: 0.3s; }
+        .wa-btn:hover { background: #128c7e; transform: scale(1.02); }
 
-        .news-box, .quiz-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin: 20px 0; }
-        .quiz-option { padding: 12px; margin-top: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; transition: 0.2s; }
+        .news-box, .quiz-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin: 20px 0; border-left: 5px solid var(--primary); }
+        .quiz-option { padding: 12px; margin-top: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
+        .quiz-option:hover { background: rgba(255,255,255,0.1); border-color: var(--primary); }
 
-        /* Market Cards Design */
-        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-        .item-card { background: var(--card); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid var(--border); transition: 0.3s; }
-        .item-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        /* Market UI */
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .item-card { background: var(--card); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid var(--border); }
         .price-tag { color: var(--accent); font-weight: 900; display: block; margin: 10px 0; font-size: 1.1rem; }
-        .buy-btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.2s; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-gold { background: var(--gold); color: black; }
+        .buy-btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; }
 
         .bottom-nav { 
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
             width: 85%; max-width: 400px; background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(25px);
             display: flex; justify-content: space-around; padding: 18px; border-radius: 35px; z-index: 2000; border: 1px solid var(--border);
         }
-        .nav-item { font-size: 1.8rem; cursor: pointer; opacity: 0.5; }
-        .nav-item.active { opacity: 1; color: var(--accent); }
+        .nav-item { font-size: 1.8rem; cursor: pointer; opacity: 0.5; transition: 0.3s; }
+        .nav-item.active { opacity: 1; color: var(--accent); transform: scale(1.2); }
 
-        .footer-ads { text-align: center; padding: 30px; border-top: 1px solid var(--border); }
+        .footer-ads { text-align: center; padding: 30px; border-top: 1px solid var(--border); margin-top: 40px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -92,15 +93,19 @@
 <header>
     <div class="user-profile">
         <div class="level-badge" id="lvlDisp">LVL 1</div>
-        <div class="avatar">⚽</div>
+        <div class="avatar" id="avatarLetter">⚽</div>
         <div>
-            <div id="uName" style="font-weight:900; font-size:0.95rem;">PLAYER PRO</div>
-            <div id="uRank" style="font-size:0.65rem; color:var(--accent); font-weight: bold;">BÜRÜNC LİQA</div>
+            <div id="uName" style="font-weight:900; font-size:0.95rem; letter-spacing: 0.5px;">PLAYER PRO</div>
+            <div id="uRank" style="font-size:0.65rem; color:var(--accent); font-weight: bold;">YÜKLƏNİR...</div>
         </div>
     </div>
     <div style="text-align:right;">
-        <div style="font-weight:900; color:var(--accent); font-size:1.1rem;"><span id="efCoins">100</span> 🪙</div>
-        <div style="width: 80px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 5px;"><div id="xpBarInner" style="height:100%; width:0%; background: var(--accent); transition: 1s;"></div></div>
+        <div style="font-weight:900; color:var(--accent); font-size:1.1rem; display:flex; align-items:center; gap:5px;">
+            <span id="efCoins">100</span> 🪙
+        </div>
+        <div style="width: 80px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 5px; overflow: hidden;">
+            <div id="xpBarInner" style="height:100%; width:0%; background: var(--accent); transition: 1s;"></div>
+        </div>
     </div>
 </header>
 
@@ -113,7 +118,9 @@
         </div>
     </div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn" target="_blank">📲 BİZƏ QOŞUL (WHATSAPP)</a>
+    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20"> BİZƏ QOŞUL (WHATSAPP)
+    </a>
 
     <div style="display:flex; justify-content:space-between; align-items: center;">
         <b style="font-size:0.9rem;">🏟️ MEGA ARENA</b>
@@ -150,39 +157,34 @@
 
     <div class="footer-ads">
         <div style="font-weight: 900;">📞 Əlaqə: 0558430505</div>
-        <div style="border:2px dashed var(--accent); padding:15px; margin-top:20px; color:var(--accent); font-weight: 900; border-radius: 15px;">ADREKLAM: BURADA SƏNİN REKLAMIN OLA BİLƏR</div>
+        <div style="border:2px dashed var(--accent); padding:15px; margin-top:20px; color:var(--accent); font-weight: 900; border-radius: 15px;">
+            ADREKLAM: BURADA SƏNİN REKLAMIN OLA BİLƏR
+        </div>
     </div>
 </div>
 
 <div class="container hidden" id="marketPage">
-    <h2 style="color:var(--accent); text-align: center; margin-bottom: 25px;">🏪 EF MEGA MARKET</h2>
-    
+    <h2 style="color:var(--accent); text-align: center; margin-bottom: 30px;">🏪 EF MEGA MARKET</h2>
     <div class="market-grid">
         <div class="item-card">
             <div style="font-size:3rem;">🏀</div>
             <b>Basketbol Topu</b>
             <span class="price-tag">500 🪙</span>
-            <button class="buy-btn btn-primary" onclick="buyItem('basketball', 'ball', '🏀', 500)">AL (3 GÜN)</button>
+            <button class="buy-btn" style="background:var(--primary); color:white;" onclick="buyItem('basketball', 'ball', '🏀', 500)">AL (3 GÜN)</button>
         </div>
-
         <div class="item-card">
             <div style="font-size:3rem;">✨</div>
             <b>Qızıl Əlcəklər</b>
             <span class="price-tag">1500 🪙</span>
-            <button class="buy-btn btn-primary" onclick="buyItem('gold_glv', 'keeper', '✨🧤✨', 1500)">AL (3 GÜN)</button>
+            <button class="buy-btn" style="background:var(--primary); color:white;" onclick="buyItem('gold_glv', 'keeper', '✨🧤✨', 1500)">AL (3 GÜN)</button>
         </div>
-
         <div class="item-card" style="grid-column: span 2;">
-            <div style="font-size:3.5rem;">👑</div>
+            <div style="font-size:3rem;">👑</div>
             <b style="font-size:1.2rem;">VIP STATUS</b>
             <p style="font-size:0.8rem; opacity:0.7;">Bütün qazanclar 2 qat artır!</p>
             <span class="price-tag">5000 🪙</span>
-            <button class="buy-btn btn-gold" onclick="buyItem('vip', 'other', '👑', 5000)">VIP OL</button>
+            <button class="buy-btn" style="background:var(--gold); color:black;" onclick="buyItem('vip', 'other', '👑', 5000)">VIP OL</button>
         </div>
-    </div>
-
-    <div style="margin-top:30px; padding:15px; background:rgba(251,191,36,0.1); border-radius:15px; font-size:0.85rem; border:1px solid var(--accent);">
-        💡 <b>Məlumat:</b> Alınan əşyalar 3 gün ərzində aktiv qalır və sonra yenidən alınmalıdır.
     </div>
 </div>
 
@@ -203,6 +205,7 @@
         rentals: JSON.parse(localStorage.getItem('mega_rentals')) || {}
     };
 
+    const RANKS = [{n: "BÜRÜNC", m: 0}, {n: "GÜMÜŞ", m: 2500}, {n: "QIZIL", m: 6000}, {n: "PLATİN", m: 12000}, {n: "LEGEND", m: 25000}];
     const newsList = ["Qarabağ FK Real Madridə qarşı möhtəşəm oyuna hazırlaşır!", "Messi 2026 DÇ üçün qərarını verdi!", "Arda Güler Realın əsas heyətində!", "Yeni ofsayd texnologiyası penaltiləri artıracaq!", "Lamine Yamalın qiyməti rekord qırdı!"];
     const quizData = [{q: "Futbolun vətəni haradır?", a: ["İngiltərə", "Braziliya", "Azərbaycan"], c: 0}, {q: "Qızıl topu 8 dəfə kim qazanıb?", a: ["Ronaldo", "Messi", "Pele"], c: 1}];
 
@@ -219,8 +222,14 @@
 
     function updateStats() {
         document.getElementById('efCoins').innerText = db.coins;
-        document.getElementById('lvlDisp').innerText = "LVL " + (Math.floor(db.xp / 1000) + 1);
+        let lvl = Math.floor(db.xp / 1000) + 1;
+        document.getElementById('lvlDisp').innerText = "LVL " + (lvl > 10 ? 10 : lvl);
+        
+        let r = RANKS[0];
+        RANKS.forEach(x => { if(db.xp >= x.m) r = x; });
+        document.getElementById('uRank').innerText = r.n + " LİQA";
         document.getElementById('xpBarInner').style.width = (db.xp % 1000 / 10) + "%";
+
         let now = Date.now();
         let b = "⚽", k = "✨🧤✨";
         for(let id in db.rentals) if(now < db.rentals[id].expiry) {
@@ -233,7 +242,7 @@
 
     function shoot(dir) {
         let today = new Date().toDateString();
-        if(db.lastShotDay === today) { alert("Haqqın bitib! Gecə 00:00-da qayıt."); return; }
+        if(db.lastShotDay === today) { alert("Bu günlük haqqın bitib! Gecə 00:00-da qayıt."); return; }
         const b = document.getElementById('ball'), k = document.getElementById('keeper');
         const kDir = Math.floor(Math.random() * 3), pos = ["-90px", "0px", "90px"];
         k.style.left = `calc(50% + ${pos[kDir]})`;
@@ -243,7 +252,8 @@
                 k.classList.add('save-shake'); alert("SEYV! 🧤");
                 setTimeout(() => k.classList.remove('save-shake'), 400);
             } else {
-                db.xp += 200; db.coins += 50;
+                let xpG = 200, coinG = 50;
+                db.xp += xpG; db.coins += coinG;
                 document.getElementById('goalPop').style.animation = 'none';
                 setTimeout(() => { document.getElementById('goalPop').style.animation = 'goalScale 0.8s forwards'; }, 10);
                 animatePop("+200 XP");
@@ -254,7 +264,7 @@
     }
 
     function loadQuiz() {
-        if(Date.now() - db.lastQuizTime < 2*60*60*1000) { document.getElementById('qOptions').innerHTML = "<p style='opacity:0.5'>Növbəti sual hazırlanıb...</p>"; return; }
+        if(Date.now() - db.lastQuizTime < 2*60*60*1000) { document.getElementById('qOptions').innerHTML = "<p style='opacity:0.5'>Yeni sual hazırlanır...</p>"; return; }
         let q = quizData[Math.floor(Math.random()*quizData.length)];
         document.getElementById('qText').innerText = q.q;
         document.getElementById('qOptions').innerHTML = q.a.map((o,i) => `<div class="quiz-option" onclick="checkQuiz(${i}, ${q.c}, this)">${o}</div>`).join('');
@@ -278,7 +288,8 @@
     function showPage(p) { document.getElementById('homePage').classList.toggle('hidden', p !== 'home'); document.getElementById('marketPage').classList.toggle('hidden', p !== 'market'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('nav-'+p).classList.add('active'); }
 
     setInterval(() => {
-        let diff = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1) - new Date();
+        let now = new Date();
+        let diff = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
         document.getElementById('shotTimer').innerText = `${Math.floor(diff/3600000)}:${Math.floor((diff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((diff%60000)/1000).toString().padStart(2,'0')}`;
         
         let qDiff = (2*60*60*1000) - (Date.now() - db.lastQuizTime);
@@ -286,8 +297,11 @@
         else document.getElementById('quizTimer').innerText = "HAZIR";
 
         let nDiff = (2*60*60*1000) - (Date.now() - db.lastNewsTime);
-        document.getElementById('newsTimer').innerText = `${Math.floor(nDiff/3600000).toString().padStart(2,'0')}:${Math.floor((nDiff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((nDiff%60000)/1000).toString().padStart(2,'0')}`;
-        if(nDiff <= 0) { db.currentNewsIdx = (db.currentNewsIdx + 1) % newsList.length; db.lastNewsTime = Date.now(); save(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx]; }
+        if(nDiff > 0) {
+            document.getElementById('newsTimer').innerText = `${Math.floor(nDiff/3600000).toString().padStart(2,'0')}:${Math.floor((nDiff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((nDiff%60000)/1000).toString().padStart(2,'0')}`;
+        } else {
+            db.currentNewsIdx = (db.currentNewsIdx + 1) % newsList.length; db.lastNewsTime = Date.now(); save(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx];
+        }
     }, 1000);
 
     window.onload = () => { updateStats(); loadQuiz(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx]; };
