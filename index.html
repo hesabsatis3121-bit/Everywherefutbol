@@ -3,258 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Ultra Arena 2026</title>
+    <title>Everywhere Futbol - Pro Arena</title>
     <style>
-        :root { --bg: #f0f2f5; --header-bg: #1e3a8a; --card: #ffffff; --text: #1e3a8a; --accent: #d4af37; --whatsapp: #25d366; --border: #e2e8f0; --glass: rgba(255,255,255,0.95); }
-        [data-theme="dark"] { --bg: #0b0f19; --header-bg: #161b28; --card: #1f2937; --text: #f8fafc; --border: #374151; --glass: rgba(31,41,55,0.95); }
-        
+        :root { 
+            --bg: #f0f2f5; --header-bg: #1e3a8a; --card: #ffffff; 
+            --text: #1e3a8a; --accent: #d4af37; --whatsapp: #25d366;
+            --border: #e2e8f0; --glass: rgba(255,255,255,0.95);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0b0f19; --header-bg: #161b28; --card: #1f2937; 
+            --text: #f8fafc; --border: #374151; --glass: rgba(31,41,55,0.95);
+        }
+
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; padding-bottom: 120px; overflow-x: hidden; }
-        header { background: var(--header-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; }
         
-        /* Stats & Progress */
-        .user-stats { display: flex; flex-direction: column; align-items: flex-end; cursor: pointer; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 12px; border: 1px solid var(--accent); min-width: 100px; }
-        .xp-container { width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin-top: 4px; overflow: hidden; }
-        #xpBar { height: 100%; background: var(--accent); width: 0%; transition: 0.5s; }
+        header { background: var(--header-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent); position: sticky; top: 0; z-index: 1000; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         
+        .user-stats { display: flex; flex-direction: column; align-items: flex-end; cursor: pointer; background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 12px; border: 1px solid var(--accent); }
+        .rank-name { font-size: 0.75rem; font-weight: 900; color: var(--accent); text-transform: uppercase; }
+        .level-text { font-size: 0.65rem; color: #fff; opacity: 0.9; }
+
         .container { max-width: 500px; margin: auto; padding: 15px; }
-        .timer-badge { font-size: 0.65rem; background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
 
-        /* Live Score Card */
-        .live-card { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-around; align-items: center; position: relative; overflow: hidden; }
-        .live-dot { position: absolute; top: 10px; left: 10px; width: 8px; height: 8px; background: #ff4757; border-radius: 50%; animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .timer-badge { font-size: 0.65rem; background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; margin-bottom: 5px; display: inline-block; }
 
-        /* News Slider */
-        .news-wrapper { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 5px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-        .news-wrapper::-webkit-scrollbar { display: none; }
-        .news-item { min-width: 85%; background: var(--card); border-left: 5px solid var(--accent); padding: 15px; border-radius: 15px; scroll-snap-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .news-box { background: var(--card); border-left: 5px solid var(--accent); padding: 15px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* Penalty Arena */
-        .penalty-arena { background: linear-gradient(#2ecc71, #27ae60); border: 4px solid white; border-radius: 15px; position: relative; height: 180px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; margin-top: 10px; box-shadow: inset 0 0 50px rgba(0,0,0,0.2); }
-        .goal-post { position: absolute; top: 10px; width: 75%; height: 100px; border: 4px solid white; border-bottom: none; z-index: 1; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 11px); }
-        .keeper { position: absolute; top: 40px; font-size: 3rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; }
-        .ball { font-size: 1.8rem; transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 3; position: absolute; bottom: 15px; filter: drop-shadow(0 5px 3px rgba(0,0,0,0.3)); }
-        
-        .kick-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; background: var(--header-bg); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #0f172a; }
-        .kick-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #0f172a; }
-        .kick-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .quiz-option { padding: 12px; margin: 8px 0; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; transition: 0.2s; font-weight: 600; text-align: center; }
+        .quiz-correct { background: #2ecc71 !important; color: white !important; }
+        .quiz-wrong { background: #e74c3c !important; color: white !important; }
 
-        .card { background: var(--card); border-radius: 20px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-        .quiz-option { padding: 12px; margin: 8px 0; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; text-align: center; font-weight: 600; transition: 0.2s; }
-        
-        #goalAlert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: var(--accent); color: #000; padding: 25px 50px; border-radius: 100px; font-size: 2.5rem; font-weight: 900; z-index: 9999; transition: 0.5s; border: 5px solid white; pointer-events: none; text-shadow: 2px 2px 0 white; }
-        
-        .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); display: flex; justify-content: space-around; padding: 15px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; backdrop-filter: blur(10px); }
-        .wp-btn { background: var(--whatsapp); color: white; text-decoration: none; padding: 15px; border-radius: 15px; display: block; font-weight: bold; text-align: center; margin-top: 10px; }
+        .footer-promo { background: var(--card); border-radius: 20px; padding: 20px; text-align: center; margin-top: 30px; border: 1px dashed var(--accent); }
+        .wp-btn { background: var(--whatsapp); color: white; text-decoration: none; padding: 12px 20px; border-radius: 30px; display: inline-block; font-weight: bold; margin: 10px 0; transition: 0.3s; }
+        .contact-box { font-size: 0.8rem; margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 10px; }
+
+        #levelModal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); width: 85%; max-width: 400px; background: var(--glass); border-radius: 25px; padding: 25px; z-index: 10001; color: var(--text); border: 2px solid var(--accent); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); backdrop-filter: blur(15px); }
+        #levelModal.active { transform: translate(-50%, -50%) scale(1); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 10000; }
+
+        .live-indicator { position: fixed; bottom: 85px; left: 15px; background: var(--header-bg); color: white; padding: 8px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-size: 0.7rem; z-index: 999; border: 1px solid var(--accent); }
+        .status-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+        .nav-bar { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: var(--glass); display: flex; justify-content: space-around; padding: 16px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); z-index: 1000; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body id="mainBody">
 
-<div id="goalAlert">QOL OLDU! ⚽</div>
-<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:10000;" id="overlay" onclick="closeModal()"></div>
+<div class="overlay" id="overlay" onclick="closeLevelModal()"></div>
 
-<div id="levelModal" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:85%;max-width:400px;background:var(--card);border-radius:25px;padding:25px;z-index:10001;border:2px solid var(--accent);transition:0.3s;">
-    <h2 style="text-align:center;color:var(--accent);margin-top:0;">🏆 Səviyyə Cədvəli</h2>
-    <div id="rankList" style="font-size:0.85rem;line-height:2.2;"></div>
-    <button onclick="closeModal()" style="width:100%;margin-top:20px;padding:12px;background:var(--header-bg);color:white;border:none;border-radius:12px;font-weight:bold;">ANLADIM</button>
+<div id="levelModal">
+    <h2 style="margin-top: 0; color: var(--accent); text-align: center;">🏆 Səviyyələr</h2>
+    <div id="rankList" style="font-size: 0.85rem; line-height: 2.2;"></div>
+    <button onclick="closeLevelModal()" style="width: 100%; margin-top: 20px; padding: 12px; background: var(--header-bg); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer;">MEYDANA QAYIT</button>
+</div>
+
+<div class="live-indicator">
+    <div class="status-dot"></div>
+    <span id="onlineCount">842 AKTİV</span>
 </div>
 
 <header>
-    <div>
-        <div style="font-size: 0.6rem; opacity: 0.8;">XOŞ GƏLDİN</div>
-        <div style="font-weight:900;font-size:0.9rem;">EVERYWHERE FUTBOL</div>
-    </div>
-    <div class="user-stats" onclick="openModal()">
+    <div style="font-weight: 900; font-size: 0.85rem; letter-spacing: 1px;">🌐 EVERYWHERE FUTBOL</div>
+    <div class="user-stats" onclick="openLevelModal()">
         <span class="rank-name" id="userRank">YAXŞI</span>
-        <div class="xp-container"><div id="xpBar"></div></div>
-        <span id="xpText" style="font-size:0.6rem; margin-top:3px;">0 / 150 XP</span>
+        <span class="level-text" id="userLevelXP">LVL 1 • 0 XP</span>
     </div>
 </header>
 
 <div class="container">
-    <div class="live-card">
-        <div class="live-dot"></div>
-        <div style="text-align:center;">🇦🇿<br><small>Qarabağ</small></div>
-        <div style="text-align:center;">
-            <div id="matchTime" style="font-size:0.7rem; background:rgba(255,0,0,0.6); padding:2px 6px; border-radius:5px; margin-bottom:5px;">24'</div>
-            <div style="font-size:1.8rem; font-weight:900; letter-spacing: 5px;">2-1</div>
-        </div>
-        <div style="text-align:center;">🇪🇸<br><small>R.Madrid</small></div>
-    </div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <b style="font-size:0.8rem;">🗞️ TRANSFER BOMBALARI (2026)</b>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="section-title" style="font-weight:900; font-size:0.8rem; margin:10px 0;">🗞️ TRANSFER BOMBALARI</div>
         <span class="timer-badge" id="newsTimer">00:00:00</span>
     </div>
-    <div class="news-wrapper" id="newsSection"></div>
+    <div id="newsSection"></div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 5px;">
-        <b style="font-size:0.8rem;">🥅 PENALTİ CHALLENGE (12H)</b>
-        <span class="timer-badge" id="shotTimer">HAZIR</span>
-    </div>
-    <div class="card" style="padding:10px;">
-        <div class="penalty-arena">
-            <div class="goal-post"></div>
-            <div class="keeper" id="keeper" style="left: 50%; transform: translateX(-50%);">🕴️</div>
-            <div class="ball" id="ball" style="left: 50%; transform: translateX(-50%);">⚽</div>
+    <div class="live-match-box" style="background: linear-gradient(135deg, #1e3a8a 0%, #000 100%); color: white; border-radius: 20px; padding: 25px; margin: 20px 0; text-align: center;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>🛡️<br><small>QARABAĞ</small></div>
+            <div>
+                <div style="font-size:2.2rem; font-weight:900; color:var(--accent);" id="liveScore">0-0</div>
+                <div style="background:red; padding:2px 10px; border-radius:15px; font-size:0.7rem; display:inline-block;" id="liveMin">12'</div>
+            </div>
+            <div>🦅<br><small>NEFTÇİ</small></div>
         </div>
-        <div style="display:flex;gap:10px;margin-top:15px;" id="shotControls">
-            <button class="kick-btn" onclick="shoot(0)">SOL</button>
-            <button class="kick-btn" onclick="shoot(1)">ORTA</button>
-            <button class="kick-btn" onclick="shoot(2)">SAĞ</button>
-        </div>
-        <p id="gameMsg" style="text-align:center;font-weight:bold;margin-top:10px;color:var(--accent);min-height:1.2em;"></p>
     </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0;">
-        <b style="font-size:0.8rem;">🧠 SUAL (2 SAAT)</b>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="section-title" style="font-weight:900; font-size:0.8rem; margin:10px 0;">🧠 FUTBOL BİLİGİSİ (2 SAAT)</div>
         <span class="timer-badge" id="quizTimer">AKTİVDİR</span>
     </div>
-    <div class="card" id="quizBox"><div id="quizIn"></div></div>
+    <div class="card" id="quizBox" style="background:var(--card); border-radius:20px; padding:20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <div id="quizIn"></div>
+    </div>
 
     <div class="footer-promo">
-        <h3 style="margin:0;font-size:1rem;">📢 Kanalımıza Qoşul</h3>
-        <p style="font-size:0.8rem; opacity:0.8;">Ən son transferləri ilk sən bil!</p>
-        <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H
-" target="_blank" class="wp-btn">WHATSAPP-A KEÇ</a>
-        <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--border); font-size:0.75rem;">
-            <p style="font-weight:bold;color:var(--accent);margin-bottom:5px;">✨ Reklam yerləşdirmək üçün:</p>
-            <small>Əlaqə: <b>055 843 05 05</b></small>
+        <h3 style="margin: 0; font-size: 1rem;">📢 Everywhere Futbol Kanala Qoşul</h3>
+        <p style="font-size: 0.8rem; opacity: 0.8;">Ən son xəbərlər və özəl analizlər burada!</p>
+        <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" target="_blank" class="wp-btn">WHATSAPP KANALINA KEÇ</a>
+        
+        <div style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 15px;">
+            <p style="font-weight: bold; color: var(--accent); margin-bottom: 5px;">✨ Burada sənin kanalın ola bilər</p>
+            <div class="contact-box">
+                📞 Əlaqə: <b>055 843 05 05</b><br>
+                <small>Reklam və iş birliyi üçün əlaqə saxla</small>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="nav-bar">
-    <div onclick="toggleTheme()" style="font-size:1.5rem;cursor:pointer;">🌓</div>
-    <div onclick="window.scrollTo({top:0, behavior:'smooth'})" style="font-size:1.5rem;cursor:pointer;">🏠</div>
-    <div onclick="alert('Market Tezliklə: Qazandığın XP-lərlə yeni toplar ala biləcəksən!')" style="font-size:1.5rem;cursor:pointer;">🏪</div>
+    <div class="nav-item" onclick="toggleTheme()" style="font-size:1.5rem; cursor:pointer;">🌓</div>
+    <div class="nav-item" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="font-size:1.5rem; cursor:pointer;">🏠</div>
+    <div class="nav-item" onclick="alert('Tezliklə: Market!')" style="font-size:1.5rem; cursor:pointer;">🏪</div>
 </div>
 
 <script>
     let userXP = parseInt(localStorage.getItem('ef_xp')) || 0;
-    const NEWS_INT = 14400000, QUIZ_INT = 7200000, SHOT_INT = 43200000;
-    const ranks = [{lvl:1,n:"Yaxşı",x:0},{lvl:2,n:"Azərkeş",x:150},{lvl:3,n:"Fanat",x:450},{lvl:4,n:"Taktik",x:1000},{lvl:5,n:"Pro",x:2000},{lvl:6,n:"Ulduz",x:3500},{lvl:7,n:"Rəhbər",x:5500},{lvl:8,n:"Analitik",x:8000},{lvl:9,n:"Çempion",x:11500},{lvl:10,n:"LEGEND",x:16000}];
+    const NEWS_INT = 4 * 60 * 60 * 1000;
+    const QUIZ_INT = 2 * 60 * 60 * 1000;
 
-    function updateStats(xp=0){
-        userXP+=xp; localStorage.setItem('ef_xp', userXP);
-        let curr = ranks[0], next = ranks[1];
-        ranks.forEach((r, i)=>{if(userXP>=r.x) { curr=r; next=ranks[i+1] || r; }});
-        
-        document.getElementById('userRank').innerText = curr.n;
-        let progress = next === curr ? 100 : ((userXP - curr.x) / (next.x - curr.x)) * 100;
-        document.getElementById('xpBar').style.width = progress + "%";
-        document.getElementById('xpText').innerText = `${userXP} / ${next.x} XP`;
+    const ranks = [
+        { lvl: 1, name: "Yaxşı", xp: 0 },
+        { lvl: 2, name: "Futbol Azərkeşi", xp: 150 },
+        { lvl: 3, name: "Sadiq Fanat", xp: 450 },
+        { lvl: 4, name: "Taktika Ustası", xp: 1000 },
+        { lvl: 5, name: "Professional", xp: 2000 },
+        { lvl: 6, name: "Ulduz Oyunçu", xp: 3500 },
+        { lvl: 7, name: "Klub Rəhbəri", xp: 5500 },
+        { lvl: 8, name: "Futbol Analitiki", xp: 8000 },
+        { lvl: 9, name: "Dünya Çempionu", xp: 11500 },
+        { lvl: 10, name: "EVERYWHERE LEGEND", xp: 16000 }
+    ];
+
+    function updateStats(xp = 0) {
+        userXP += xp;
+        localStorage.setItem('ef_xp', userXP);
+        let current = ranks[0];
+        ranks.forEach(r => { if(userXP >= r.xp) current = r; });
+        document.getElementById('userRank').innerText = current.name;
+        document.getElementById('userLevelXP').innerText = `LVL ${current.lvl} • ${userXP} XP`;
     }
 
-    function formatTime(ms){
-        if(ms<0) return "00:00:00";
-        let h=Math.floor(ms/3600000).toString().padStart(2,'0');
-        let m=Math.floor((ms%3600000)/60000).toString().padStart(2,'0');
-        let s=Math.floor((ms%60000)/1000).toString().padStart(2,'0');
+    function formatTime(ms) {
+        if (ms < 0) return "00:00:00";
+        const totalSec = Math.floor(ms / 1000);
+        const h = Math.floor(totalSec / 3600).toString().padStart(2, '0');
+        const m = Math.floor((totalSec % 3600) / 60).toString().padStart(2, '0');
+        const s = (totalSec % 60).toString().padStart(2, '0');
         return `${h}:${m}:${s}`;
     }
 
-    function handleNews(){
-        const now=Date.now(); let last=localStorage.getItem('news_t')||0;
-        let data=JSON.parse(localStorage.getItem('news_d'));
-        if(now-last>NEWS_INT || !data){
-            data=[
-                "DÇ-2026: Bakı Olimpiya Stadionu açılış üçün namizəddir!",
-                "Real Madrid Arda Güler üçün 80 milyonluq təklifi rədd etdi.",
-                "Qarabağ FK Çempionlar Liqasında yeni rekorda imza atdı!",
-                "Messi rəsmən açıqladı: 'DÇ-2026-da kapitan mənəm!'",
-                "Lamine Yamalın bazar dəyəri 200 milyon avronu keçdi."
-            ].sort(()=>.5-Math.random());
-            localStorage.setItem('news_d',JSON.stringify(data)); localStorage.setItem('news_t',now); last=now;
-        }
-        document.getElementById('newsSection').innerHTML=data.map(n=>`<div class="news-item"><b>TƏCİLİ:</b><br>${n}</div>`).join('');
-        setInterval(()=>{document.getElementById('newsTimer').innerText=formatTime(NEWS_INT-(Date.now()-last))},1000);
-    }
-
-    function shoot(p){
-        const last=localStorage.getItem('shot_t')||0;
-        if(Date.now()-last < SHOT_INT) return;
-        
-        const k=Math.floor(Math.random()*3), off=["-75px","0px","75px"];
-        const keeper = document.getElementById('keeper');
-        const ball = document.getElementById('ball');
-        
-        keeper.style.transform = `translateX(calc(-50% + ${off[k]}))`;
-        ball.style.transform = `translate(calc(-50% + ${off[p]}), -130px) scale(0.5)`;
-        
-        setTimeout(()=>{
-            if(p===k) {
-                document.getElementById('gameMsg').innerText="QAPICI TUTDU! 🕴️";
-            } else {
-                document.getElementById('gameMsg').innerText="MÜKƏMMƏL QOL! +100 XP";
-                updateStats(100);
-                let ga=document.getElementById('goalAlert');
-                ga.style.transform="translate(-50%,-50%) scale(1)";
-                setTimeout(()=>ga.style.transform="translate(-50%,-50%) scale(0)",1500);
-            }
-            localStorage.setItem('shot_t', Date.now());
-            handleShot();
-            setTimeout(resetArena, 2000);
-        },600);
-    }
-
-    function resetArena(){
-        document.getElementById('keeper').style.transform = "translateX(-50%)";
-        document.getElementById('ball').style.transform = "translateX(-50%)";
-    }
-
-    function handleShot(){
-        const last=localStorage.getItem('shot_t')||0, rem=SHOT_INT-(Date.now()-last);
-        const btns=document.querySelectorAll('#shotControls button');
-        if(rem>0){
-            btns.forEach(b=>b.disabled=true);
-            const itv=setInterval(()=>{
-                let r=SHOT_INT-(Date.now()-last);
-                document.getElementById('shotTimer').innerText=formatTime(r);
-                if(r<=0){clearInterval(itv); handleShot();}
-            },1000);
-        } else { btns.forEach(b=>b.disabled=false); document.getElementById('shotTimer').innerText="HAZIR"; }
-    }
-
-    function handleQuiz(){
-        const last=localStorage.getItem('quiz_t')||0, rem=QUIZ_INT-(Date.now()-last), b=document.getElementById('quizIn');
-        if(rem>0){
-            b.innerHTML=`<center style="padding:20px;opacity:0.5">Növbəti sual hazırlanır...</center>`;
-            setInterval(()=>document.getElementById('quizTimer').innerText=formatTime(QUIZ_INT-(Date.now()-last)),1000);
-        } else {
-            const pool=[
-                {q:"Dünya Çempionatını ən çox qazanan ölkə?", a:["Almaniya","Braziliya","İtaliya"], c:1},
-                {q:"2024-cü il Avropa Çempionu hansı ölkədir?", a:["İngiltərə","Fransa","İspaniya"], c:2},
-                {q:"Qızıl Topu ən çox qazanan oyunçu?", a:["C.Ronaldo","L.Messi","Zidan"], c:1}
-            ];
-            const q = pool[Math.floor(Math.random()*pool.length)];
-            b.innerHTML=`<div style="text-align:center;font-weight:bold;margin-bottom:12px">${q.q}</div>`+q.a.map((o,i)=>`<div class="quiz-option" onclick="checkQ(this,${i},${q.c})">${o}</div>`).join('');
-            document.getElementById('quizTimer').innerText="AKTİVDİR";
-        }
-    }
-
-    function checkQ(el,i,c){
-        const opts = document.querySelectorAll('.quiz-option');
-        opts.forEach(o => o.style.pointerEvents = 'none');
-        if(i===c){el.classList.add('quiz-correct'); updateStats(50);} else el.classList.add('quiz-wrong');
-        localStorage.setItem('quiz_t',Date.now()); setTimeout(handleQuiz,2000);
-    }
-
-    function openModal(){
-        document.getElementById('rankList').innerHTML=ranks.map(r=>`<div style="display:flex;justify-content:space-between;${userXP>=r.x?'color:var(--accent);font-weight:bold':'opacity:0.4'}"><span>LVL ${r.lvl} - ${r.n}</span><span>${r.x} XP</span></div>`).join('');
-        document.getElementById('levelModal').style.transform="translate(-50%,-50%) scale(1)"; document.getElementById('overlay').style.display='block';
-    }
-    function closeModal(){ document.getElementById('levelModal').style.transform="translate(-50%,-50%) scale(0)"; document.getElementById('overlay').style.display='none'; }
-    function toggleTheme(){ let b=document.body; b.hasAttribute('data-theme')?b.removeAttribute('data-theme'):b.setAttribute('data-theme','dark'); }
+    // News System
+    const newsPool = [
+        "Real Madrid Arda Güler üçün gələn 40 milyonluq təklifi rədd etdi!",
+        "Qarabağın ulduzu Juninho Avropa nəhənglərinin radarında.",
+        "Erling Haaland Man City-dən ayrılmaq istəyir? Şok iddia!",
+        "Premyer Liqada ilin transferi: Salah Səudiyyə yolunda!",
+        "Barcelona Neymarı geri qaytarmaq üçün sponsorlarla danışır."
+    ];
     
-    // Live Match Time Sim
-    setInterval(() => {
-        let m = document.getElementById('matchTime');
-        let current = parseInt(m.innerText);
-        if(current < 90) m.innerText = (current + 1) + "'";
-    }, 60000);
+    function handleNews() {
+        const now = Date.now();
+        let lastTime = localStorage.getItem('news_time');
+        let savedNews = JSON.parse(localStorage.getItem('news_data'));
 
-    window.onload=()=>{ updateStats(); handleNews(); handleShot(); handleQuiz(); };
+        if (!lastTime || (now - lastTime > NEWS_INT)) {
+            savedNews = newsPool.sort(() => 0.5 - Math.random()).slice(0, 2);
+            localStorage.setItem('news_data', JSON.stringify(savedNews));
+            localStorage.setItem('news_time', now);
+            lastTime = now;
+        }
+
+        document.getElementById('newsSection').innerHTML = savedNews.map(n => `
+            <div class="news-box">
+                <div style="font-weight:bold; font-size:0.85rem;">${n}</div>
+            </div>
+        `).join('');
+
+        const updateNewsTimer = () => {
+            const rem = NEWS_INT - (Date.now() - lastTime);
+            document.getElementById('newsTimer').innerText = "Yenilənir: " + formatTime(rem);
+            if(rem <= 0) location.reload();
+        };
+        updateNewsTimer();
+        setInterval(updateNewsTimer, 1000);
+    }
+
+    // Quiz System
+    const questions = [
+        { q: "Hansı futbolçu 'Pele' ləqəbi ilə tanınır?", a: ["Edson Arantes", "Ronaldo Nazario", "Zico"], c: 0 },
+        { q: "Dünya Çempionatını ən çox qazanan ölkə?", a: ["Almaniya", "İtaliya", "Braziliya"], c: 2 },
+        { q: "Qarabağ FK Çempionlar Liqası qrupuna hansı il düşüb?", a: ["2015", "2017", "2018"], c: 1 }
+    ];
+
+    function handleQuiz() {
+        const now = Date.now();
+        const lastQ = localStorage.getItem('quiz_time') || 0;
+        const box = document.getElementById('quizIn');
+        const remaining = QUIZ_INT - (now - lastQ);
+
+        if (remaining > 0) {
+            box.innerHTML = `<div style="text-align:center; font-weight:bold; opacity:0.6; padding: 20px;">Növbəti sual hazırlanır...</div>`;
+            const qTimer = setInterval(() => {
+                const rem = QUIZ_INT - (Date.now() - lastQ);
+                document.getElementById('quizTimer').innerText = formatTime(rem);
+                if(rem <= 0) { clearInterval(qTimer); handleQuiz(); }
+            }, 1000);
+        } else {
+            const q = questions[Math.floor(Math.random()*questions.length)];
+            box.innerHTML = `<div style="font-weight:bold; margin-bottom:15px; text-align:center;">${q.q}</div>
+                ${q.a.map((opt, i) => `<div class="quiz-option" onclick="checkAns(this, ${i}, ${q.c})">${opt}</div>`).join('')}`;
+            document.getElementById('quizTimer').innerText = "AKTİVDİR";
+        }
+    }
+
+    function checkAns(el, idx, correct) {
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.style.pointerEvents = 'none');
+
+        if(idx === correct) {
+            el.classList.add('quiz-correct');
+            updateStats(50);
+        } else {
+            el.classList.add('quiz-wrong');
+            options[correct].classList.add('quiz-correct');
+        }
+
+        localStorage.setItem('quiz_time', Date.now());
+        setTimeout(handleQuiz, 2000);
+    }
+
+    function openLevelModal() {
+        const list = document.getElementById('rankList');
+        list.innerHTML = ranks.map(r => `
+            <div style="display:flex; justify-content:space-between; ${userXP >= r.xp ? 'color:var(--accent); font-weight:bold;' : 'opacity:0.4;'}">
+                <span>LVL ${r.lvl} - ${r.name}</span>
+                <span>${r.xp} XP</span>
+            </div>
+        `).join('');
+        document.getElementById('levelModal').classList.add('active');
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function closeLevelModal() {
+        document.getElementById('levelModal').classList.remove('active');
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    function toggleTheme() {
+        const b = document.getElementById('mainBody');
+        b.hasAttribute('data-theme') ? b.removeAttribute('data-theme') : b.setAttribute('data-theme', 'dark');
+    }
+
+    window.onload = () => {
+        updateStats();
+        handleNews();
+        handleQuiz();
+        setInterval(() => {
+            document.getElementById('onlineCount').innerText = Math.floor(Math.random()*200 + 800) + " AKTİV";
+        }, 5000);
+    };
 </script>
 </body>
 </html>
