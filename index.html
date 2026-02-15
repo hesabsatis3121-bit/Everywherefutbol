@@ -3,268 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everywhere Futbol - Pro Max Arena 2026</title>
+    <title>Everywhere Futbol Pro</title>
     <style>
         :root { 
             --bg: #0f172a; --card: #1e293b; --accent: #fbbf24; --text: #f8fafc; 
-            --primary: #3b82f6; --success: #22c55e; --danger: #ef4444; --border: rgba(255,255,255,0.1);
-            --gold: linear-gradient(45deg, #ffd700, #ffae00);
+            --primary: #3b82f6; --border: rgba(255,255,255,0.1);
         }
-        [data-theme="light"] { 
-            --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; --accent: #d97706; --border: #e2e8f0;
-        }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); padding-bottom: 100px; overflow-x: hidden; }
         
-        body { font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.5s; padding-bottom: 150px; overflow-x: hidden; }
-        
-        /* Axtarış Sistemi */
-        .search-container { margin: 15px 0; position: relative; }
-        .search-input { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); outline: none; transition: 0.3s; }
-        .search-input:focus { border-color: var(--primary); }
-
-        header { 
-            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px); padding: 15px 20px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--accent);
-        }
-
-        .level-badge { position: absolute; top: -12px; left: 5px; background: var(--gold); color: #000; padding: 3px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3); }
-        .user-profile { display: flex; align-items: center; gap: 12px; position: relative; }
-        .avatar { width: 45px; height: 45px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 1.2rem; }
-
         .container { max-width: 500px; margin: auto; padding: 15px; }
 
-        /* Arena & PRO Qapıcı Animasiyası */
+        /* Axtarış */
+        .search-input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); margin-bottom: 15px; }
+
+        /* Arena və Penalti */
         .arena { 
-            background: #064e3b; border: 6px solid #fff; border-radius: 30px; height: 220px; 
-            position: relative; overflow: hidden; margin-top: 15px; display: flex; align-items: flex-end; justify-content: center;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+            background: #166534; border: 4px solid #fff; border-radius: 20px; height: 200px; 
+            position: relative; overflow: hidden; display: flex; align-items: flex-end; justify-content: center;
         }
-        .keeper-ai { position: absolute; top: 45px; font-size: 4rem; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2; }
-        .keeper-save-anim { transform: scale(1.3) rotate(15deg) translateX(-50%); filter: brightness(1.2) drop-shadow(0 0 15px gold); }
-        .save-shake { animation: shake 0.4s; }
-        @keyframes shake { 0%, 100% { margin-left: 0; } 25% { margin-left: -15px; } 75% { margin-left: 15px; } }
+        .keeper { position: absolute; top: 40px; font-size: 3.5rem; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .ball { position: absolute; bottom: 20px; font-size: 2rem; transition: 0.5s ease-in; }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .game-btn { flex: 1; padding: 15px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: bold; cursor: pointer; }
 
-        .ball-pro { position: absolute; bottom: 25px; font-size: 2.5rem; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); z-index: 3; }
-
-        .wa-btn { background: #25d366; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; margin: 20px 0; font-weight: bold; transition: 0.3s; }
-        .wa-btn:hover { transform: scale(1.02); }
-
-        .news-box, .quiz-box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin: 20px 0; border-left: 5px solid var(--primary); }
-        .quiz-option { padding: 12px; margin-top: 12px; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
-        .quiz-option:hover { border-color: var(--primary); }
-
-        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .item-card { background: var(--card); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid var(--border); }
-
-        .bottom-nav { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 85%; max-width: 400px; background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(25px);
-            display: flex; justify-content: space-around; padding: 18px; border-radius: 35px; z-index: 2000; border: 1px solid var(--border);
+        /* Komandalar Carousel */
+        .team-carousel { display: flex; overflow-x: auto; gap: 15px; padding: 10px 0; scroll-snap-type: x mandatory; }
+        .team-card { 
+            min-width: 140px; background: var(--card); padding: 15px; border-radius: 15px; 
+            text-align: center; border: 1px solid var(--border); scroll-snap-align: start;
         }
-        .nav-item { font-size: 1.8rem; cursor: pointer; opacity: 0.5; transition: 0.3s; }
-        .nav-item.active { opacity: 1; color: var(--accent); transform: scale(1.2); }
+        .team-logo { font-size: 2rem; margin-bottom: 5px; }
 
-        .footer-ads { text-align: center; padding: 30px; border-top: 1px solid var(--border); margin-top: 40px; }
+        /* Sual Bölməsi */
+        .quiz-box { background: var(--card); padding: 20px; border-radius: 20px; margin: 20px 0; border-left: 5px solid var(--accent); }
+        .quiz-opt { background: rgba(255,255,255,0.05); padding: 10px; margin-top: 10px; border-radius: 8px; cursor: pointer; }
+
+        /* Market */
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .item { background: var(--card); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid var(--border); }
+
+        .wa-btn { background: #22c55e; color: white; text-decoration: none; display: block; text-align: center; padding: 12px; border-radius: 10px; margin: 15px 0; font-weight: bold; }
+        
+        .footer-contact { text-align: center; font-size: 0.9rem; opacity: 0.7; margin-top: 20px; padding: 20px; border-top: 1px solid var(--border); }
+        
         .hidden { display: none !important; }
     </style>
 </head>
-<body id="mainBody">
+<body>
 
-<header>
-    <div class="user-profile">
-        <div class="level-badge" id="lvlDisp">LVL 1</div>
-        <div class="avatar">⚽</div>
-        <div>
-            <div id="uName" style="font-weight:900; font-size:0.95rem;">PLAYER PRO</div>
-            <div id="uRank" style="font-size:0.65rem; color:var(--accent); font-weight: bold;">YÜKLƏNİR...</div>
-        </div>
-    </div>
-    <div style="text-align:right;">
-        <div style="font-weight:900; color:var(--accent); font-size:1.1rem;"><span id="efCoins">100</span> 🪙</div>
-        <div style="width: 80px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 5px; overflow: hidden;">
-            <div id="xpBarInner" style="height:100%; width:0%; background: var(--accent); transition: 1s;"></div>
-        </div>
-    </div>
-</header>
-
-<div class="container" id="homePage">
-    <div class="search-container">
-        <input type="text" class="search-input" placeholder="Xəbər və ya sual axtar..." onkeyup="searchContent(this.value)">
-    </div>
+<div class="container">
+    <input type="text" class="search-input" placeholder="Xəbər və ya sual axtar...">
 
     <div class="arena">
-        <div class="keeper-ai" id="keeper" style="left: 50%; transform: translateX(-50%);">✨🧤✨</div>
-        <div class="ball-pro" id="ball" style="left: 50%; transform: translateX(-50%);">⚽</div>
+        <div class="keeper" id="keeper" style="left: 50%; transform: translateX(-50%);">🧤</div>
+        <div class="ball" id="ball" style="left: 50%; transform: translateX(-50%);">⚽</div>
+    </div>
+    <div class="btn-group">
+        <button class="game-btn" onclick="play(0)">SOL</button>
+        <button class="game-btn" onclick="play(1)">ORTA</button>
+        <button class="game-btn" onclick="play(2)">SAĞ</button>
     </div>
 
-    <div style="display:flex; gap:12px; margin-top:20px;">
-        <button onclick="shoot(0)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">SOL</button>
-        <button onclick="shoot(1)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">ORTA</button>
-        <button onclick="shoot(2)" style="flex:1; padding:18px; border-radius:15px; background:var(--card); color:var(--text); font-weight:900; border:none; cursor:pointer;">SAĞ</button>
+    <h3 style="margin-top:25px;">🇦🇿 Klublarımız</h3>
+    <div class="team-carousel">
+        <div class="team-card"><div class="team-logo">🐎</div><b>Qarabağ</b><br><small>"Köhlən Atlar"</small></div>
+        <div class="team-card"><div class="team-logo">⚓</div><b>Neftçi</b><br><small>"Ağ-qaralar"</small></div>
+        <div class="team-card"><div class="team-logo">🦅</div><b>Zirə</b><br><small>"Qartallar"</small></div>
+        <div class="team-card"><div class="team-logo">🌲</div><b>Turan Tovuz</b><br><small>"Boz qurdlar"</small></div>
+        <div class="team-card"><div class="team-logo">🏠</div><b>Sabah</b><br><small>"Bayquşlar"</small></div>
     </div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn" target="_blank">📲 BİZƏ QOŞUL (WHATSAPP)</a>
-
-    <div class="news-box" id="newsBox">
-        <div style="display:flex; justify-content:space-between; font-size: 0.8rem; font-weight: bold;">
-            <span>📰 FLAŞ XƏBƏRLƏR</span>
-            <span id="newsTimer" style="color:var(--primary)">02:00:00</span>
-        </div>
-        <div id="newsContent" style="margin-top:10px; font-weight: 500;">Xəbərlər yüklənir...</div>
-    </div>
+    <a href="https://whatsapp.com" class="wa-btn">📲 WHATSAPP KANALI</a>
 
     <div class="quiz-box" id="quizBox">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; justify-content:space-between;">
             <b>🧠 GÜNÜN SUALI</b>
-            <span id="quizTimer" style="font-size:0.8rem; font-weight:900; color:var(--primary);">00:00:00</span>
+            <span id="qTimer" style="color:var(--accent)">Hazır</span>
         </div>
-        <p id="qText" style="margin-top:15px; font-weight: 500;">Sual yüklənir...</p>
-        <div id="qOptions"></div>
+        <div id="quizContent">
+            <p id="question">Azərbaycanın ən titullu klubu hansıdır?</p>
+            <div id="options">
+                <div class="quiz-opt" onclick="answer(0)">Qarabağ</div>
+                <div class="quiz-opt" onclick="answer(1)">Neftçi</div>
+            </div>
+        </div>
     </div>
 
-    <div class="footer-ads">
-        <div style="font-weight: 900;">📞 Əlaqə: 0558430505</div>
-        <div style="border:2px dashed var(--accent); padding:15px; margin-top:20px; color:var(--accent); font-weight: 900; border-radius: 15px;">ADREKLAM: SƏNİN REKLAMIN</div>
-    </div>
-</div>
-
-<div class="container hidden" id="marketPage">
-    <h2 style="color:var(--accent); text-align: center;">🏪 MEGA MARKET</h2>
+    <h3>🏪 Market</h3>
     <div class="market-grid">
-        <div class="item-card">
-            <div style="font-size:3rem;">🏀</div>
-            <b>Basketbol Topu</b><br>
-            <span style="color:var(--accent); font-weight:900;">500 🪙</span>
-            <button onclick="buyItem('basketball', 'ball', '🏀', 500)" style="width:100%; margin-top:10px; padding:10px; background:var(--primary); color:white; border:none; border-radius:10px; font-weight:900;">AL</button>
-        </div>
-        <div class="item-card">
-            <div style="font-size:3rem;">✨</div>
-            <b>Qızıl Əlcəklər</b><br>
-            <span style="color:var(--accent); font-weight:900;">1500 🪙</span>
-            <button onclick="buyItem('gold_glv', 'keeper', '✨🧤✨', 1500)" style="width:100%; margin-top:10px; padding:10px; background:var(--primary); color:white; border:none; border-radius:10px; font-weight:900;">AL</button>
-        </div>
+        <div class="item">⚽<br>Qızıl Top<br><b>500 🪙</b></div>
+        <div class="item">🧤<br>Polad Əlcək<br><b>800 🪙</b></div>
     </div>
-</div>
 
-<div class="bottom-nav">
-    <div class="nav-item active" onclick="showPage('home')" id="nav-home">🏠</div>
-    <div class="nav-item" onclick="showPage('market')" id="nav-market">🏪</div>
-    <div class="nav-item" onclick="toggleTheme()">🌓</div>
+    <div class="footer-contact">
+        <p>📞 Əlaqə: +994 55 843 05 05</p>
+        <p>📧 everywherefutbol@gmail.com</p>
+    </div>
 </div>
 
 <script>
-    let db = {
-        xp: parseInt(localStorage.getItem('mega_xp')) || 0,
-        coins: parseInt(localStorage.getItem('mega_coins')) || 100,
-        lastShotDay: localStorage.getItem('mega_shot_day') || "",
-        lastQuizTime: parseInt(localStorage.getItem('mega_quiz_t')) || 0,
-        lastNewsTime: parseInt(localStorage.getItem('mega_news_t')) || 0,
-        currentNewsIdx: parseInt(localStorage.getItem('mega_news_idx')) || 0,
-        rentals: JSON.parse(localStorage.getItem('mega_rentals')) || {}
-    };
+    let lastQuiz = localStorage.getItem('lastQuiz') || 0;
+    
+    function play(playerDir) {
+        const k = document.getElementById('keeper');
+        const b = document.getElementById('ball');
+        const dirs = ["calc(50% - 80px)", "50%", "calc(50% + 80px)"];
+        const keeperDir = Math.floor(Math.random() * 3);
 
-    const RANKS = [{n: "BÜRÜNC", m: 0}, {n: "GÜMÜŞ", m: 2500}, {n: "QIZIL", m: 6000}, {n: "PLATİN", m: 12000}];
-    const newsList = ["Qarabağ FK Real Madridlə oyuna hazırlaşır!", "Messi 2026 DÇ üçün qərarını verdi!", "Arda Güler Realın əsas heyətində!"];
-    const quizData = [
-        {q: "Futbolun vətəni haradır?", a: ["İngiltərə", "Braziliya", "Fransa"], c: 0},
-        {q: "Qızıl topu 8 dəfə kim qazanıb?", a: ["Ronaldo", "Messi", "Pele"], c: 1},
-        {q: "2022 Dünya Çempionu hansı ölkədir?", a: ["Fransa", "Argentina", "Xorvatiya"], c: 1}
-    ];
-
-    function save() { for(let k in db) localStorage.setItem('mega_'+k, typeof db[k]==='object'?JSON.stringify(db[k]):db[k]); }
-
-    function updateStats() {
-        document.getElementById('efCoins').innerText = db.coins;
-        let lvl = Math.floor(db.xp / 1000) + 1;
-        document.getElementById('lvlDisp').innerText = "LVL " + lvl;
-        let r = RANKS[0]; RANKS.forEach(x => { if(db.xp >= x.m) r = x; });
-        document.getElementById('uRank').innerText = r.n + " LİQA";
-        document.getElementById('xpBarInner').style.width = (db.xp % 1000 / 10) + "%";
-        
-        let now = Date.now(), b = "⚽", k = "✨🧤✨";
-        for(let id in db.rentals) if(now < db.rentals[id].expiry) {
-            if(db.rentals[id].type === 'ball') b = db.rentals[id].skin;
-            if(db.rentals[id].type === 'keeper') k = db.rentals[id].skin;
-        }
-        document.getElementById('ball').innerText = b;
-        document.getElementById('keeper').innerText = k;
-    }
-
-    function shoot(dir) {
-        let today = new Date().toDateString();
-        if(db.lastShotDay === today) { alert("Bu günlük haqqın bitib! Gecə qayıt."); return; }
-        const b = document.getElementById('ball'), k = document.getElementById('keeper');
-        const kDir = Math.floor(Math.random() * 3), pos = ["-90px", "0px", "90px"];
-        
-        k.style.left = `calc(50% + ${pos[kDir]})`;
-        b.style.transform = `translate(calc(-50% + ${pos[dir]}), -145px) scale(0.6)`;
+        // Animasiyalar
+        k.style.left = dirs[keeperDir];
+        b.style.left = dirs[playerDir];
+        b.style.bottom = "150px";
+        b.style.transform = "translateX(-50%) scale(0.7)";
 
         setTimeout(() => {
-            if(dir === kDir) {
-                k.classList.add('keeper-save-anim', 'save-shake');
-                alert("MÖHTƏŞƏM SEYV! 🧤");
-                setTimeout(() => k.classList.remove('keeper-save-anim', 'save-shake'), 600);
+            if(playerDir === keeperDir) {
+                alert("SEYV! Qapıcı topu tutdu! 🧤");
             } else {
-                db.xp += 200; db.coins += 50;
-                alert("QOOOOL! ⚽ +50 Coin");
+                alert("QOOOL! ⚽");
             }
-            db.lastShotDay = today; save(); updateStats();
-            setTimeout(() => { b.style.transform = "translateX(-50%)"; k.style.left = "50%"; }, 2000);
-        }, 700);
+            // Sıfırla
+            b.style.bottom = "20px";
+            b.style.left = "50%";
+            b.style.transform = "translateX(-50%)";
+            k.style.left = "50%";
+        }, 600);
     }
 
-    function loadQuiz() {
-        let qDiff = (2*60*60*1000) - (Date.now() - db.lastQuizTime);
-        if(qDiff > 0) {
-            document.getElementById('qOptions').innerHTML = "<p style='opacity:0.5'>Növbəti sual hazırlanır...</p>";
+    function answer(idx) {
+        let now = Date.now();
+        if(now - lastQuiz < 7200000) {
+            alert("Yeni sual üçün 2 saat gözləməlisən!");
             return;
         }
-        let q = quizData[Math.floor(Math.random()*quizData.length)];
-        document.getElementById('qText').innerText = q.q;
-        document.getElementById('qOptions').innerHTML = q.a.map((o,i) => `<div class="quiz-option" onclick="checkQuiz(${i}, ${q.c}, this)">${o}</div>`).join('');
+        alert(idx === 0 ? "Doğrudur!" : "Səhvdir!");
+        lastQuiz = Date.now();
+        localStorage.setItem('lastQuiz', lastQuiz);
+        startTimer();
     }
 
-    function checkQuiz(idx, correct, el) {
-        if(idx === correct) {
-            el.style.background = "var(--success)";
-            db.coins += 20; alert("DOĞRUDUR! +20 Coin");
-        } else {
-            el.style.background = "var(--danger)";
-            alert("SƏHV!");
-        }
-        db.lastQuizTime = Date.now(); save(); updateStats(); setTimeout(loadQuiz, 2000);
+    function startTimer() {
+        setInterval(() => {
+            let passed = Date.now() - lastQuiz;
+            let left = 7200000 - passed;
+            if(left > 0) {
+                let h = Math.floor(left/3600000);
+                let m = Math.floor((left%3600000)/60000);
+                let s = Math.floor((left%60000)/1000);
+                document.getElementById('qTimer').innerText = `${h}:${m}:${s}`;
+                document.getElementById('quizContent').classList.add('hidden');
+            } else {
+                document.getElementById('qTimer').innerText = "Hazır";
+                document.getElementById('quizContent').classList.remove('hidden');
+            }
+        }, 1000);
     }
 
-    function searchContent(val) {
-        let t = val.toLowerCase();
-        document.getElementById('newsBox').style.display = newsList[db.currentNewsIdx].toLowerCase().includes(t) ? "block" : "none";
-        document.getElementById('quizBox').style.display = document.getElementById('qText').innerText.toLowerCase().includes(t) ? "block" : "none";
-    }
-
-    function buyItem(id, type, skin, price) {
-        if(db.coins >= price) {
-            db.coins -= price; db.rentals[id] = { type, skin, expiry: Date.now() + (3*24*60*60*1000) };
-            save(); updateStats(); alert("Uğurla alındı!");
-        } else alert("Coin kifayət deyil!");
-    }
-
-    function toggleTheme() { document.body.getAttribute('data-theme') === 'light' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'light'); }
-    function showPage(p) { document.getElementById('homePage').classList.toggle('hidden', p !== 'home'); document.getElementById('marketPage').classList.toggle('hidden', p !== 'market'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById('nav-'+p).classList.add('active'); }
-
-    setInterval(() => {
-        let diff = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1) - new Date();
-        document.getElementById('shotTimer').innerText = `${Math.floor(diff/3600000)}:${Math.floor((diff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((diff%60000)/1000).toString().padStart(2,'0')}`;
-        
-        let qDiff = (2*60*60*1000) - (Date.now() - db.lastQuizTime);
-        if(qDiff > 0) document.getElementById('quizTimer').innerText = `${Math.floor(qDiff/3600000).toString().padStart(2,'0')}:${Math.floor((qDiff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((qDiff%60000)/1000).toString().padStart(2,'0')}`;
-        else document.getElementById('quizTimer').innerText = "HAZIR";
-
-        let nDiff = (2*60*60*1000) - (Date.now() - db.lastNewsTime);
-        document.getElementById('newsTimer').innerText = `${Math.floor(nDiff/3600000).toString().padStart(2,'0')}:${Math.floor((nDiff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((nDiff%60000)/1000).toString().padStart(2,'0')}`;
-        if(nDiff <= 0) { db.currentNewsIdx = (db.currentNewsIdx + 1) % newsList.length; db.lastNewsTime = Date.now(); save(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx]; }
-    }, 1000);
-
-    window.onload = () => { updateStats(); loadQuiz(); document.getElementById('newsContent').innerText = newsList[db.currentNewsIdx]; };
+    window.onload = startTimer;
 </script>
+
 </body>
 </html>
