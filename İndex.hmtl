@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everywhere Football - Live</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-navy: #0f172a;
+            --accent-yellow: #facc15;
+            --card-bg: #1e293b;
+        }
+        body { background-color: var(--dark-navy); color: white; }
+        .gold-border { border: 2px solid var(--accent-yellow); }
+        .accent-text { color: var(--accent-yellow); }
+        .custom-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        input::placeholder { color: #94a3b8; }
+    </style>
+</head>
+<body class="p-2 sm:p-4">
+
+    <header class="flex justify-between items-center mb-6 px-2">
+        <div class="flex items-center gap-2">
+            <div class="bg-yellow-500 p-2 rounded-full text-black">
+                <i class="fas fa-globe"></i>
+            </div>
+            <div>
+                <h1 class="font-black text-xl leading-none">EVERYWHERE</h1>
+                <span class="accent-text font-bold tracking-widest text-sm italic">FOOTBALL</span>
+            </div>
+        </div>
+        <button onclick="toggleMode()" class="bg-gray-800 border border-gray-600 px-4 py-2 rounded-full text-xs font-bold hover:bg-yellow-500 hover:text-black transition">
+            Gecə/Gündüz Modu
+        </button>
+    </header>
+
+    <div class="mb-6">
+        <div class="relative">
+            <input type="text" placeholder="Search team, player or news..." 
+                   class="w-full p-4 bg-gray-800 border border-gray-700 rounded-xl focus:gold-border outline-none transition">
+            <i class="fas fa-search absolute right-4 top-4 text-gray-500"></i>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        
+        <div class="custom-card gold-border">
+            <h2 class="font-bold mb-4 flex items-center gap-2 italic">
+                <i class="fas fa-robot text-blue-400"></i> AI MATCH PREDICTION
+            </h2>
+            <div class="flex justify-between gap-2 text-center mb-4">
+                <div class="bg-green-600 w-full p-3 rounded-lg">
+                    <div class="text-xs uppercase opacity-80">Home</div>
+                    <div class="text-xl font-bold">60%</div>
+                </div>
+                <div class="bg-gray-700 w-full p-3 rounded-lg">
+                    <div class="text-xs uppercase opacity-80">Draw</div>
+                    <div class="text-xl font-bold">25%</div>
+                </div>
+                <div class="bg-red-600 w-full p-3 rounded-lg">
+                    <div class="text-xs uppercase opacity-80">Away</div>
+                    <div class="text-xl font-bold">15%</div>
+                </div>
+            </div>
+            <p class="text-[11px] text-gray-400 italic">"AI predicts based on last 5 matches and current team condition."</p>
+        </div>
+
+        <div class="custom-card">
+            <h2 class="accent-text font-bold mb-4 uppercase tracking-tighter">🏆 Weekly Quiz</h2>
+            <div class="bg-white text-black p-4 rounded-lg">
+                <p class="font-semibold mb-4">Which club has won the most Azerbaijan League titles?</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="checkQuiz(this)" class="bg-gray-200 p-2 rounded font-bold hover:bg-yellow-400">Neftçi</button>
+                    <button onclick="checkQuiz(this, true)" class="bg-gray-200 p-2 rounded font-bold hover:bg-yellow-400">Qarabağ</button>
+                    <button onclick="checkQuiz(this)" class="bg-gray-200 p-2 rounded font-bold hover:bg-yellow-400">Kəpəz</button>
+                    <button onclick="checkQuiz(this)" class="bg-gray-200 p-2 rounded font-bold hover:bg-yellow-400">Şamaxı</button>
+                </div>
+                <div id="quiz-res" class="mt-2 text-xs font-bold text-blue-600 hidden italic underline">Cavab yoxlanılır...</div>
+            </div>
+        </div>
+
+        <div class="custom-card gold-border flex flex-col justify-center items-center text-center py-10">
+            <span class="text-gray-400 uppercase text-xs tracking-widest mb-2">Champions League - Play-off</span>
+            <h3 class="text-xl font-bold mb-4">Qarabağ FK - Newcastle United</h3>
+            <div id="timer" class="text-4xl md:text-5xl font-black accent-text tabular-nums">
+                3d 09h 07m 12s
+            </div>
+        </div>
+
+        <div class="custom-card">
+            <h2 class="font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-list-ol accent-text"></i> LEAGUE TABLE (2025/26)
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-[12px]">
+                    <thead>
+                        <tr class="text-gray-400 border-b border-gray-700">
+                            <th class="pb-2 text-left">#</th>
+                            <th class="pb-2 text-left">Team</th>
+                            <th class="pb-2">O</th>
+                            <th class="pb-2">X</th>
+                            <th class="pb-2">Form</th>
+                        </tr>
+                    </thead>
+                    <tbody id="league-data">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="mt-12 text-center text-gray-500 text-[10px] border-t border-gray-800 pt-6 pb-10 uppercase tracking-widest">
+        © 2026 Everywhere Football - All for reserved
+    </footer>
+
+    <script>
+        // COUNTDOWN SCRIPT
+        let days = 3, hours = 9, mins = 7, secs = 12;
+        setInterval(() => {
+            secs--;
+            if(secs < 0) { secs = 59; mins--; }
+            document.getElementById('timer').innerText = `${days}d ${hours}h ${mins}m ${secs}s`;
+        }, 1000);
+
+        // TABLE SCRIPT
+        const teams = [
+            { pos: 1, name: "Sabah FK", o: 19, x: 46, form: "WWWWW" },
+            { pos: 2, name: "Qarabağ FK", o: 19, x: 42, form: "WWLWW" },
+            { pos: 3, name: "Turan Tovuz", o: 18, x: 33, form: "WLWDW" },
+            { pos: 4, name: "Zira FK", o: 19, x: 32, form: "LDWWW" }
+        ];
+
+        const tableBody = document.getElementById('league-data');
+        tableBody.innerHTML = teams.map(t => `
+            <tr class="border-b border-gray-800">
+                <td class="py-3 font-bold">${t.pos}</td>
+                <td class="py-3 font-bold">${t.name}</td>
+                <td class="py-3 text-center">${t.o}</td>
+                <td class="py-3 text-center font-bold accent-text">${t.x}</td>
+                <td class="py-3 text-center">
+                    ${t.form.split('').map(f => `
+                        <span class="inline-block w-2 h-2 rounded-full ${f==='W'?'bg-green-500':f==='L'?'bg-red-500':'bg-gray-400'}"></span>
+                    `).join('')}
+                </td>
+            </tr>
+        `).join('');
+
+        // QUIZ SCRIPT
+        function checkQuiz(btn, isCorrect) {
+            const res = document.getElementById('quiz-res');
+            res.classList.remove('hidden');
+            if(isCorrect) {
+                res.innerText = "Düzdür! Qarabağ 11 qat çempiondur.";
+                res.style.color = "green";
+            } else {
+                res.innerText = "Səhvdir, yenidən yoxla.";
+                res.style.color = "red";
+            }
+        }
+
+        // THEME TOGGLE (SIMPLE)
+        function toggleMode() {
+            document.body.classList.toggle('bg-white');
+            document.body.classList.toggle('text-black');
+        }
+    </script>
+</body>
+</html>
