@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⚽️EVERYWHERE FUTBOL 2026 - OFFICIAL</title>
+    <title>⚽️EVERYWHERE FUTBOL 2026 - OFFICIAL ULTRA</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
@@ -15,6 +15,7 @@
             --primary-blue: #3b82f6;
             --success-green: #22c55e;
             --danger-red: #ef4444;
+            --basket-orange: #ea580c;
             --vip-gold: linear-gradient(135deg, #ffd700 0%, #b8860b 100%, #ffd700 100%);
             --glass: rgba(255, 255, 255, 0.05);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -27,7 +28,6 @@
             --text-main: #0f172a;
             --accent: #d97706;
             --glass: rgba(0, 0, 0, 0.05);
-            --neon-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
@@ -42,7 +42,7 @@
             transition: var(--transition);
         }
 
-        /* --- VIP EXCLUSIVE ANIMATIONS --- */
+        /* --- VIP EFFECTS --- */
         @keyframes goldGlow {
             0% { border-color: #ffd700; box-shadow: 0 0 5px #ffd700; }
             50% { border-color: #fff; box-shadow: 0 0 25px #ffd700; }
@@ -50,7 +50,7 @@
         }
         .vip-active { border: 4px solid #ffd700 !important; animation: goldGlow 3s infinite; }
 
-        /* --- HEADER & NEON TICKER --- */
+        /* --- HEADER & TICKER --- */
         header {
             background: var(--card-dark);
             padding: 18px 25px;
@@ -79,501 +79,548 @@
             padding: 8px 18px;
             border-radius: 50px;
             font-weight: 900;
-            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
         }
 
-        /* Hərəkətli Xəbər Paneli */
+        /* Xəbər Paneli */
         .news-marquee {
             background: #000;
             color: #fff;
-            padding: 8px 0;
-            margin-top: 10px;
-            border-radius: 4px;
+            padding: 10px 0;
+            margin-top: 12px;
+            border-radius: 8px;
             overflow: hidden;
             border: 1px solid var(--glass);
         }
         .marquee-content {
             display: inline-block;
             white-space: nowrap;
-            animation: marquee 40s linear infinite;
+            animation: marquee 50s linear infinite;
             font-weight: 700;
             text-transform: uppercase;
             font-family: 'JetBrains Mono', monospace;
         }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* --- SEARCH & CLUB DATABASE --- */
-        .search-section { padding: 20px; }
+        /* --- SEARCH SECTION --- */
+        .search-section { padding: 25px; }
         .search-bar {
             width: 100%;
-            padding: 15px 25px;
+            padding: 18px 25px;
             background: var(--card-dark);
             border: 2px solid var(--glass);
-            border-radius: 15px;
+            border-radius: 18px;
             color: var(--text-main);
             font-size: 1.1rem;
             outline: none;
             transition: 0.3s;
         }
-        .search-bar:focus { border-color: var(--primary-blue); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .search-bar:focus { border-color: var(--primary-blue); box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
 
         .club-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            padding: 10px 0;
-            margin-top: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            padding: 15px 0;
         }
         .club-card {
             background: var(--card-dark);
-            padding: 12px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 15px;
             text-align: center;
             border: 1px solid var(--glass);
             cursor: pointer;
             transition: 0.3s;
         }
-        .club-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .club-card b { display: block; margin-top: 5px; font-size: 0.9rem; }
+        .club-card:hover { transform: translateY(-5px); border-color: var(--accent); background: rgba(251, 191, 36, 0.05); }
+        .club-card b { display: block; margin-top: 8px; color: var(--accent); }
 
-        /* --- GAME ARENAS (FOOTBALL & BASKETBALL) --- */
+        /* --- GAME ARENAS --- */
         .arena-wrapper { padding: 0 20px; }
-        .game-title { font-weight: 900; margin: 20px 0 10px; display: flex; justify-content: space-between; align-items: center; }
+        .game-title { font-weight: 900; margin: 25px 0 12px; display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem; }
         
         .football-arena {
             background: linear-gradient(to bottom, #166534, #14532d);
-            height: 250px;
-            border-radius: 25px;
+            height: 260px;
+            border-radius: 30px;
             position: relative;
             overflow: hidden;
-            border: 5px solid #fff;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+            border: 6px solid #fff;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
         }
         .basketball-arena {
             background: linear-gradient(to bottom, #9a3412, #7c2d12);
-            height: 250px;
-            border-radius: 25px;
+            height: 260px;
+            border-radius: 30px;
             position: relative;
             overflow: hidden;
-            border: 5px solid #fb923c;
-            display: none; /* Initially hidden until item is bought */
-            margin-top: 20px;
+            border: 6px solid #fb923c;
+            display: none;
+            margin-top: 25px;
         }
 
-        .goal-post { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 160px; height: 80px; border: 4px solid white; border-bottom: none; }
-        .hoop { position: absolute; top: 30px; right: 40px; width: 60px; height: 60px; border: 5px solid #e65100; border-radius: 50%; }
+        .goal-post { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 170px; height: 85px; border: 5px solid white; border-bottom: none; }
+        .hoop { position: absolute; top: 35px; right: 45px; width: 65px; height: 65px; border: 6px solid #e65100; border-radius: 50%; }
 
         .ball {
             position: absolute;
-            bottom: 30px;
+            bottom: 35px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 3rem;
+            font-size: 3.5rem;
             cursor: pointer;
-            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 10;
         }
 
-        .keeper { position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 4rem; transition: 0.4s; }
+        .keeper { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 4.5rem; transition: 0.4s; }
 
-        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .btn-game { padding: 15px; border-radius: 12px; border: none; background: var(--card-dark); color: #fff; font-weight: 900; cursor: pointer; box-shadow: 0 4px 0 #000; }
-        .btn-game:active { transform: translateY(4px); box-shadow: none; }
+        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .btn-game { padding: 18px; border-radius: 15px; border: none; background: var(--card-dark); color: #fff; font-weight: 900; cursor: pointer; box-shadow: 0 5px 0 #000; transition: 0.2s; }
+        .btn-game:active { transform: translateY(5px); box-shadow: none; }
 
-        /* --- SHOP & ITEMS WITH TIMERS --- */
-        .shop-container { padding: 20px; }
-        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        /* --- SHOP & PROMO --- */
+        .shop-container { padding: 25px; }
+        .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .shop-card {
             background: var(--card-dark);
-            padding: 20px;
-            border-radius: 20px;
+            padding: 25px;
+            border-radius: 25px;
             text-align: center;
             border: 2px solid var(--glass);
             position: relative;
+            overflow: hidden;
         }
-        .timer-label {
+        .timer-badge {
             position: absolute;
             top: 10px;
-            left: 10px;
+            right: 10px;
             background: var(--danger-red);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 5px;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
             font-weight: 900;
             display: none;
         }
-        .item-owned .timer-label { display: block; }
+        .item-active .timer-badge { display: block; }
 
-        /* --- POPUPS & NOTIFICATIONS --- */
-        .goal-popup {
+        .promo-box {
+            background: var(--card-dark);
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 25px;
+            border: 2px dashed var(--accent);
+            text-align: center;
+        }
+        .promo-input {
+            width: 70%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--glass);
+            background: #000;
+            color: var(--accent);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* --- POPUPS --- */
+        .mega-popup {
             position: fixed;
             top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
-            background: rgba(0,0,0,0.95);
-            padding: 40px;
-            border-radius: 30px;
+            background: rgba(10, 15, 28, 0.98);
+            padding: 45px;
+            border-radius: 35px;
             text-align: center;
-            z-index: 2000;
-            border: 3px solid var(--accent);
-            transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 3000;
+            border: 4px solid var(--accent);
+            width: 85%;
+            max-width: 450px;
+            transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        .goal-popup.active { transform: translate(-50%, -50%) scale(1); }
+        .mega-popup.active { transform: translate(-50%, -50%) scale(1); }
+        .mega-popup h2 { font-family: 'Orbitron'; margin-bottom: 15px; }
 
-        /* --- FOOTER & CONTACT --- */
-        .wa-link {
+        /* --- MISC --- */
+        .wa-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             background: #25d366;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 20px;
+            margin: 25px;
+            padding: 22px;
+            border-radius: 22px;
             text-decoration: none;
             color: white;
             font-weight: 900;
-            font-size: 1.2rem;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+            font-size: 1.3rem;
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.3);
         }
 
-        .theme-btn {
-            position: fixed; bottom: 25px; right: 25px;
-            width: 60px; height: 60px; border-radius: 50%;
-            background: var(--accent); border: none; font-size: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 1000;
+        .theme-toggle {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 65px; height: 65px; border-radius: 50%;
+            background: var(--accent); border: none; font-size: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4); cursor: pointer; z-index: 2000;
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 500px) {
             .shop-grid { grid-template-columns: 1fr; }
             .logo-text { font-size: 1.1rem; }
         }
     </style>
 </head>
-<body id="masterBody">
+<body id="app">
 
-    <div class="goal-popup" id="globalPopup">
-        <h1 id="popupTitle" style="color: var(--accent); font-family: 'Orbitron';">QOOOOOL!</h1>
-        <p id="popupText" style="font-size: 1.2rem; margin: 15px 0;">Mükəmməl zərbə! +50 Coin</p>
-        <button class="btn-game" onclick="closePopup()" style="width: 100%;">DAVAM ET</button>
+    <div class="mega-popup" id="alertPopup">
+        <h2 id="popupTitle" style="color: var(--accent);">MESAJ</h2>
+        <p id="popupMsg" style="font-size: 1.2rem; line-height: 1.6;">Xəbərdarlıq mətni bura gələcək.</p>
+        <button class="btn-game" onclick="closeAlert()" style="width: 100%; margin-top: 20px; background: var(--accent); color: #000;">ANLADIM</button>
     </div>
 
     <header>
         <div class="header-top">
             <div class="logo-area">
-                <span style="font-size: 1.8rem;">⚽️</span>
+                <span style="font-size: 2rem;">⚽️</span>
                 <div class="logo-text">EVERYWHERE FUTBOL</div>
             </div>
-            <div class="coin-display" id="coinUI">
-                🪙 <span id="userCoins">0</span>
+            <div class="coin-display">
+                🪙 <span id="coinVal">0</span>
             </div>
         </div>
         <div class="news-marquee">
-            <div class="marquee-content" id="newsFeed">
-                YÜKLƏNİR: AZERBAIJAN PREMIER LEAGUE 2026 SEASON IS LIVE! | QARABAĞ FK REACHED EUROPA LEAGUE QUARTER FINALS! | NEW BASKETBALL MODE ADDED TO EVERYWHERE FUTBOL! | STAY TUNED FOR MORE UPDATES!
+            <div class="marquee-content" id="newsTicker">
+                FLAŞ XƏBƏR: Azərbaycan Premyer Liqasında 2026-cı il mövsümü rekord azarkeşlə başladı! | Everywhere Futbol tətbiqi 1.000.000 istifadəçini keçdi! | Mağazada yeni Promo Kod sistemi aktiv edildi! | Qarabağ FK Çempionlar Liqasında yeni tarix yazır! | Sabah FK infrastruktur işlərini yekunlaşdırır!
             </div>
         </div>
     </header>
 
     <section class="search-section">
-        <input type="text" class="search-bar" id="clubSearch" placeholder="Klub və ya məlumat axtar..." onkeyup="runClubSearch()">
-        <div class="club-list" id="clubDisplay">
+        <input type="text" class="search-bar" id="searchInp" placeholder="Klub, futbolçu və ya məlumat axtar..." onkeyup="filterClubs()">
+        <div class="club-list" id="clubBox">
             </div>
     </section>
 
-    <section class="arena-wrapper">
+    <div class="arena-wrapper">
         <div class="game-title">
-            <span>🏟️ FUTBOL ARENASI</span>
-            <small id="shotTimer" style="color: var(--accent);">00:00:00</small>
+            <span>🏟️ FUTBOL STADİONU</span>
+            <small id="penaltyTimer" style="color: var(--accent);">YÜKLƏNİR...</small>
         </div>
-        <div class="football-arena" id="fArena">
+        <div class="football-arena" id="footArena">
             <div class="goal-post"></div>
-            <div class="keeper" id="fKeeper">🧤</div>
-            <div class="ball" id="fBall" style="bottom: 20px; left: 50%; transform: translateX(-50%);">⚽</div>
+            <div class="keeper" id="gk">🧤</div>
+            <div class="ball" id="footBall" style="bottom: 25px; left: 50%; transform: translateX(-50%);">⚽</div>
         </div>
-        <div class="controls" id="fControls">
-            <button class="btn-game" onclick="shootFootball('left')">SOL</button>
-            <button class="btn-game" onclick="shootFootball('center')">ORTA</button>
-            <button class="btn-game" onclick="shootFootball('right')">SAĞ</button>
+        <div class="controls" id="footControls">
+            <button class="btn-game" onclick="playFoot('left')">SOL</button>
+            <button class="btn-game" onclick="playFoot('center')">ORTA</button>
+            <button class="btn-game" onclick="playFoot('right')">SAĞ</button>
         </div>
 
-        <div id="basketSection" style="display: none;">
+        <div id="basketZone" style="display: none;">
             <div class="game-title">
                 <span>🏀 BASKETBOL MEYDANÇASI</span>
-                <small id="basketTimer" style="color: #fb923c;">00:00:00</small>
+                <small id="hoopTimer" style="color: var(--basket-orange);">HAZIRDIR</small>
             </div>
-            <div class="basketball-arena" id="bArena" style="display: block;">
+            <div class="basketball-arena">
                 <div class="hoop"></div>
-                <div class="ball" id="bBall" style="bottom: 20px; left: 50%; transform: translateX(-50%);">🏀</div>
+                <div class="ball" id="basketBall" style="bottom: 25px; left: 50%; transform: translateX(-50%);">🏀</div>
             </div>
             <div class="controls">
-                <button class="btn-game" onclick="shootBasket()" style="grid-column: span 3; background: #ea580c;">BASKET AT! (+30 Coin)</button>
+                <button class="btn-game" onclick="playBasket()" style="grid-column: span 3; background: var(--basket-orange);">SƏBƏTƏ AT! (+40 Coin)</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <section class="shop-container">
         <h2 class="game-title">🏪 EF PREMİUM MAĞAZA</h2>
         <div class="shop-grid">
-            <div class="shop-card" id="item_basket" onclick="purchase('basket', 1000)">
-                <span class="timer-label" id="timer_basket">10 GÜN</span>
-                <span style="font-size: 2.5rem;">🏀</span><br>
+            <div class="shop-card" id="shop_basket" onclick="buyItem('basket', 1500)">
+                <span class="timer-badge" id="time_basket">00d 00s</span>
+                <span style="font-size: 3rem;">🏀</span><br>
                 <b>Basketbol Topu</b><br>
-                <small style="color: var(--accent);">1,000 Coin</small>
+                <small>Basket rejimi açır</small><br>
+                <span style="color: var(--accent); font-weight: 900;">1,500 🪙</span>
             </div>
-            <div class="shop-card" id="item_glove" onclick="purchase('glove', 2500)">
-                <span class="timer-label" id="timer_glove">10 GÜN</span>
-                <span style="font-size: 2.5rem;">🧤</span><br>
+            <div class="shop-card" id="shop_glove" onclick="buyItem('glove', 3000)">
+                <span class="timer-badge" id="time_glove">00d 00s</span>
+                <span style="font-size: 3rem;">🧤</span><br>
                 <b>Qızıl Əlcək</b><br>
-                <small style="color: var(--accent);">2,500 Coin</small>
+                <small>+20% Qol şansı</small><br>
+                <span style="color: var(--accent); font-weight: 900;">3,000 🪙</span>
             </div>
-            <div class="shop-card" id="item_vip" onclick="purchase('vip', 15000)">
-                <span class="timer-label" id="timer_vip">10 GÜN</span>
-                <span style="font-size: 2.5rem;">🌟</span><br>
+            <div class="shop-card" id="shop_vip" onclick="buyItem('vip', 20000)">
+                <span class="timer-badge" id="time_vip">00d 00s</span>
+                <span style="font-size: 3rem;">🌟</span><br>
                 <b>VIP GİRİŞ</b><br>
-                <small style="color: var(--accent);">15,000 Coin</small>
+                <small>Qızılı Dizayn & Prestij</small><br>
+                <span style="color: var(--accent); font-weight: 900;">20,000 🪙</span>
             </div>
-            <div class="shop-card" id="item_kit" onclick="purchase('kit', 2000)">
-                <span class="timer-label" id="timer_kit">10 GÜN</span>
-                <span style="font-size: 2.5rem;">👕</span><br>
+            <div class="shop-card" id="shop_kit" onclick="buyItem('kit', 2500)">
+                <span class="timer-badge" id="time_kit">00d 00s</span>
+                <span style="font-size: 3rem;">👕</span><br>
                 <b>Milli Forma</b><br>
-                <small style="color: var(--accent);">2,000 Coin</small>
+                <small>Hər qola +15 Bonus</small><br>
+                <span style="color: var(--accent); font-weight: 900;">2,500 🪙</span>
             </div>
+        </div>
+
+        <div class="promo-box">
+            <h3>🎁 PROMO KOD DAXİL ET</h3>
+            <input type="text" id="promoInput" class="promo-input" placeholder="Kodu yazın...">
+            <button class="btn-game" onclick="claimPromo()" style="width: 100%; background: #fff; color: #000;">KODU AKTİV ET</button>
         </div>
     </section>
 
-    <div class="quiz-card" id="quizBox" style="margin: 20px; background: var(--card-dark); padding: 25px; border-radius: 20px; border-left: 5px solid var(--primary-blue);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <b style="color: var(--accent);">🧠 GÜNÜN SUALI (+100 Coin)</b>
-            <span id="quizTimer" style="font-weight: 800; opacity: 0.6;">02:00:00</span>
+    <div class="quiz-card" id="quizSection" style="margin: 25px; background: var(--card-dark); padding: 30px; border-radius: 25px; border-left: 6px solid var(--primary-blue);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <b style="color: var(--accent);">🧠 GÜNÜN SUALI (+150 Coin)</b>
+            <span id="quizTimer" style="font-family: 'JetBrains Mono'; opacity: 0.7;">00:00:00</span>
         </div>
-        <p id="qText" style="font-weight: 700; margin-bottom: 20px;">Yüklənir...</p>
-        <div id="qOptions" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        <p id="questionDisplay" style="font-weight: 700; font-size: 1.1rem; line-height: 1.5;">Suallar yüklənir...</p>
+        <div id="optionBox" style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;"></div>
     </div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-link" target="_blank">
+    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-button" target="_blank">
         <span>📲</span> RƏSMİ WHATSAPP KANALI
     </a>
 
-    <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+    <div style="text-align: center; padding: 40px; opacity: 0.4; font-size: 0.9rem;">
+        ⚽️ EVERYWHERE FUTBOL MEDIA GROUP<br>
+        ULTRA EDITION 2026 | VERSION 8.0.0
+    </div>
+
+    <button class="theme-toggle" onclick="swapTheme()">🌓</button>
 
     <script>
-        /* AZERBAIJAN FOOTBALL ENCYCLOPEDIA & LOGIC ENGINE
-           Contains data for: Qarabağ, Neftçi, Sabah, Zirə, etc.
+        /* ================================================================
+           EVERYWHERE FUTBOL 2026 - LOGIC ENGINE
+           ================================================================
         */
 
-        const CLUB_DB = [
-            { name: "Qarabağ FK", icon: "🐎", desc: "Ağdam təmsilçisi. 1951-ci ildə yaranıb. 'Köhlən Atlar'. Azərbaycanın ən uğurlu klubu.", tags: "qarabağ qarabag agdam" },
-            { name: "Neftçi PFK", icon: "⚓", desc: "Bakı təmsilçisi. 1937-ci ildə yaranıb. 'Ağ-qaralar'. SSRİ dövrünün ən güclü Azərbaycan klubu.", tags: "neftçi neftci baki" },
-            { name: "Sabah FK", icon: "🦉", desc: "Masazır təmsilçisi. 2017-ci ildə yaranıb. Müasir infrastrukturu ilə tanınır.", tags: "sabah masazir" },
-            { name: "Kəpəz PFK", icon: "🏔️", desc: "Gəncə təmsilçisi. 1959-cu ildə yaranıb. Azərbaycan futbolunun ən qədim qalalarından biri.", tags: "kəpəz kepez gence" },
-            { name: "Qəbələ FK", icon: "🦅", desc: "Qəbələ təmsilçisi. 2005-ci ildə yaranıb. Avropa Liqasında qrup mərhələsinə yüksəlmiş klubdur.", tags: "qəbələ qebele" },
-            { name: "Zirə FK", icon: "🦅", desc: "Bakı (Zirə) təmsilçisi. 2014-cü ildə yaranıb. 'Qartallar'.", tags: "zirə zire" },
-            { name: "Turan Tovuz", icon: "🐺", desc: "Tovuz təmsilçisi. 1992-ci ildə yaranıb. Tovuz futbol məktəbinin incisidir.", tags: "turan tovuz" },
-            { name: "Araz-Naxçıvan", icon: "🏛️", desc: "Naxçıvan təmsilçisi. Naxçıvan Muxtar Respublikasının ən böyük futbol klubu.", tags: "araz naxcivan" },
-            { name: "Səbail FK", icon: "⚓", desc: "Bakı (Səbail) təmsilçisi. 2016-cı ildə yaranıb. Bayıl stadionunda çıxış edir.", tags: "səbail sebail" },
-            { name: "Shamakhi FK", icon: "🏰", desc: "Şamaxı təmsilçisi. Keçmiş Keşlə və İnter Bakı klublarının varisidir.", tags: "shamakhi samaxi kesle inter" },
-            { name: "İmişli FK", icon: "🚜", desc: "İmişli təmsilçisi. Region futbolunun inkişafında mühüm rol oynayır.", tags: "imişli imisli" },
-            { name: "Karvan FK", icon: "🐪", desc: "Yevlax təmsilçisi. Bir dövr Avrokuboklarda Azərbaycanı uğurla təmsil etmişdir.", tags: "karvan yevlax" }
+        // KLUB BAZASI (İstədiyiniz bütün komandalar və məlumatlar)
+        const CLUBS = [
+            { name: "Qarabağ FK", icon: "🐎", info: "Ağdam təmsilçisi. 1951-ci ildə yaranıb. 'Köhlən Atlar'. Azərbaycanın ən çox çempion olan və Avropada ən uğurlu klubudur.", tags: "qarabag agdam qurban qurbanov" },
+            { name: "Sabah FK", icon: "🦉", info: "2017-ci ildə yaranıb. Masazır təmsilçisi. Qısa müddətdə ölkənin ən güclü klublarından birinə çevrilib.", tags: "sabah masazir" },
+            { name: "Kəpəz PFK", icon: "🏔️", info: "Gəncə təmsilçisi. 1959-cu ildə yaranıb. Azərbaycan futbolunun ən qədim və köklü klublarından biridir.", tags: "kepez gence" },
+            { name: "Qəbələ FK", icon: "🦅", info: "2005-ci ildə yaranıb. Avropa Liqasında iki dəfə ardıcıl qrup mərhələsində oynamış bölgə klubudur.", tags: "qebele gabala" },
+            { name: "Səbail FK", icon: "⚓", info: "2016-cı ildə yaranıb. Bakının Bayıl qəsəbəsini təmsil edir. 'Dənizçilər' ləqəbi ilə tanınır.", tags: "sebail bayil" },
+            { name: "Turan Tovuz", icon: "🐺", info: "1992-ci ildə yaranıb. Tovuz futbol məktəbinin varisidir. Azarkeş dəstəyi ilə məşhurdur.", tags: "turan tovuz ayxan" },
+            { name: "Zirə FK", icon: "🦅", info: "2014-cü ildə yaranıb. Bakının Zirə qəsəbəsini təmsil edir. 'Qartallar' ləqəbi daşıyır.", tags: "zire qartal" },
+            { name: "Neftçi PFK", icon: "⚓", info: "1937-ci ildə yaranıb. 'Xalq komandası'. SSRİ dövründə Azərbaycanın ən uğurlu təmsilçisi olub.", tags: "neftci baki ag qaralar" },
+            { name: "Karvan FK", icon: "🐪", info: "Yevlax təmsilçisi. 2004-cü ildə yaranıb. Avrokuboklarda mərhələ adlayan ilk Azərbaycan klublarından biridir.", tags: "karvan yevlax" },
+            { name: "İmişli FK", icon: "🚜", info: "İmişli rayonunu təmsil edir. Region futbolunun inkişafında mühüm rola malikdir.", tags: "imisli" },
+            { name: "Shamakhi FK", icon: "🏰", info: "Şamaxı şəhərini təmsil edir. Keçmiş Keşlə və İnter Bakı klublarının hüquqi varisidir.", tags: "samaxi kesle inter" },
+            { name: "Araz-Naxçıvan", icon: "🏛️", info: "Naxçıvan Muxtar Respublikasının ən böyük klubudur. Köklü tarixə malikdir.", tags: "araz naxcivan" }
         ];
 
-        const QUIZ_DB = [
-            { q: "Azərbaycanın ilk Çempionlar Liqası qrup iştirakçısı hansı klubdur?", o: ["Neftçi", "Qarabağ", "Qəbələ"], c: 1 },
-            { q: "Qarabağ FK neçənci ildə yaranıb?", o: ["1951", "1987", "1993"], c: 0 },
-            { q: "Milli komandamızın ən çox qol vuran futbolçusu?", o: ["Qurban Qurbanov", "Emin Mahmudov", "Vaqif Cavadov"], c: 0 },
-            { q: "Azərbaycan futbolunun tarixi hansı ildən başlayır?", o: ["1911", "1922", "1937"], c: 0 }
+        const QUESTIONS = [
+            { q: "Azərbaycanın ilk Çempionlar Liqası qrup iştirakçısı hansıdır?", o: ["Neftçi", "Qarabağ", "Qəbələ"], c: 1 },
+            { q: "Qarabağ FK-nın baş məşqçisi kimdir?", o: ["Qurban Qurbanov", "Rəşad Sadıqov", "Ayxan Abbasov"], c: 0 },
+            { q: "Neftçi FK neçənci ildə yaradılıb?", o: ["1937", "1951", "1966"], c: 0 },
+            { q: "2026 Dünya Çempionatı harada keçiriləcək?", o: ["Türkiyə", "ABŞ/Kanada/Meksika", "Braziliya"], c: 1 }
         ];
 
+        // SYSTEM STATE
         let state = {
-            coins: parseInt(localStorage.getItem('ef_coins')) || 1000,
-            inv: JSON.parse(localStorage.getItem('ef_inv')) || {},
-            lastShot: localStorage.getItem('ef_last_shot') || "",
-            lastBasket: parseInt(localStorage.getItem('ef_last_basket')) || 0,
+            coins: parseInt(localStorage.getItem('ef_coins')) || 500,
+            inv: JSON.parse(localStorage.getItem('ef_inv')) || {}, // Item: ExpiryTimestamp
+            lastFoot: localStorage.getItem('ef_last_foot') || "",
+            lastHoop: parseInt(localStorage.getItem('ef_last_hoop')) || 0,
             lastQuiz: parseInt(localStorage.getItem('ef_last_quiz')) || 0,
+            promoUsed: JSON.parse(localStorage.getItem('ef_promos')) || [],
             theme: localStorage.getItem('ef_theme') || 'dark'
         };
 
-        // --- CORE ENGINE ---
-
+        // INITIALIZE
         function init() {
+            renderClubs();
             updateUI();
-            runClubSearch();
-            setupQuiz();
-            startTickers();
+            startGlobalTimers();
+            renderQuiz();
             applyTheme();
         }
 
         function updateUI() {
-            document.getElementById('userCoins').innerText = state.coins.toLocaleString();
+            document.getElementById('coinVal').innerText = state.coins.toLocaleString();
             
-            // Item Expirations (10 Days)
+            // Item Expiry Logic (10 Days = 864,000,000 ms)
             const now = Date.now();
             for (let item in state.inv) {
-                const expiry = state.inv[item];
-                const timeLeft = expiry - now;
-                if (timeLeft <= 0) {
+                if (now > state.inv[item]) {
                     delete state.inv[item];
-                    saveState();
+                    save();
                 } else {
-                    const el = document.getElementById(`item_${item}`);
-                    const timerEl = document.getElementById(`timer_${item}`);
-                    if(el) el.classList.add('item-owned');
-                    if(timerEl) timerEl.innerText = Math.ceil(timeLeft / (1000*60*60*24)) + " GÜN";
+                    const card = document.getElementById(`shop_${item}`);
+                    if(card) card.classList.add('item-active');
                 }
             }
 
-            if (state.inv['basket']) document.getElementById('basketSection').style.display = 'block';
-            if (state.inv['vip']) document.body.classList.add('vip-active');
+            if(state.inv['basket']) document.getElementById('basketZone').style.display = 'block';
+            if(state.inv['vip']) document.body.classList.add('vip-active');
 
-            // Penalty Limit
+            // Penalty Limit Check
             const today = new Date().toDateString();
-            if (state.lastShot === today) {
-                const btns = document.querySelectorAll('#fControls button');
+            if (state.lastFoot === today) {
+                const btns = document.querySelectorAll('#footControls button');
                 btns.forEach(b => { b.disabled = true; b.style.opacity = '0.4'; });
             }
         }
 
-        function purchase(item, price) {
-            if (state.inv[item]) return showPopup("MƏHSUL AKTİVDİR", "Siz artıq bu məhsula sahibsiniz.");
-            if (state.coins < price) return showPopup("COIN ÇATMIR", "Daha çox oyun oynayaraq qazanın.");
+        // GAMES LOGIC
+        function playFoot(side) {
+            if (state.lastFoot === new Date().toDateString()) return;
 
-            state.coins -= price;
-            state.inv[item] = Date.now() + (10 * 24 * 60 * 60 * 1000); // 10 Days
-            saveState();
-            updateUI();
-            showPopup("UĞURLU SATIŞ!", `${item.toUpperCase()} 10 günlük aktiv edildi.`);
-        }
-
-        function shootFootball(side) {
-            if (state.lastShot === new Date().toDateString()) return;
-
-            const keeper = document.getElementById('fKeeper');
-            const ball = document.getElementById('fBall');
+            const gk = document.getElementById('gk');
+            const ball = document.getElementById('footBall');
             const aiSides = ['left', 'center', 'right'];
             const aiMove = aiSides[Math.floor(Math.random() * 3)];
-            const pos = { 'left': '-100px', 'center': '0', 'right': '100px' };
+            const posMap = { 'left': '-100px', 'center': '0', 'right': '100px' };
 
-            keeper.style.transform = `translateX(calc(-50% + ${pos[aiMove]}))`;
+            gk.style.transform = `translateX(calc(-50% + ${posMap[aiMove]}))`;
             ball.style.bottom = '180px';
-            ball.style.transform = `translateX(calc(-50% + ${pos[side]})) scale(0.6) rotate(360deg)`;
+            ball.style.transform = `translateX(calc(-50% + ${posMap[side]})) scale(0.6) rotate(360deg)`;
 
             setTimeout(() => {
                 let win = (side !== aiMove);
-                if (state.inv['glove'] && !win && Math.random() > 0.7) {
-                    win = true; // Glove Bonus
-                }
+                if (state.inv['glove'] && !win && Math.random() > 0.75) win = true; // Glove Bonus
 
                 if (win) {
-                    let reward = state.inv['kit'] ? 70 : 50;
+                    let reward = state.inv['kit'] ? 65 : 50;
                     addCoins(reward);
-                    showPopup("QOOOOOL! ⚽", `Mükəmməl zərbə! +${reward} Coin qazandınız.`);
+                    showAlert("QOOOOOL! ⚽️", `Mükəmməl zərbə! Hesabınıza ${reward} Coin əlavə edildi.`);
                 } else {
-                    showPopup("SEYV! 🧤", "Qapıçı topu dəf etdi. Növbəti dəfə daha diqqətli ol!");
+                    showAlert("SEYV! 🧤", "Qapıçı topu dəf etdi. Növbəti dəfə daha diqqətli ol!");
                 }
 
-                state.lastShot = new Date().toDateString();
-                saveState();
-                setTimeout(resetFootball, 2000);
+                state.lastFoot = new Date().toDateString();
+                save();
+                setTimeout(resetFoot, 2000);
             }, 600);
         }
 
-        function shootBasket() {
+        function playBasket() {
             const now = Date.now();
-            if (now - state.lastBasket < 3600000) return; // 1 Hour
+            if (now - state.lastHoop < 3600000) return; // 1 Hour
 
-            const ball = document.getElementById('bBall');
-            ball.style.bottom = '200px';
-            ball.style.left = 'calc(100% - 70px)';
+            const ball = document.getElementById('basketBall');
+            ball.style.bottom = '210px';
+            ball.style.left = 'calc(100% - 75px)';
             ball.style.transform = 'scale(0.5)';
 
             setTimeout(() => {
-                if (Math.random() > 0.4) {
-                    addCoins(30);
-                    showPopup("BASKET! 🏀", "Dəqiq atış! +30 Coin qazandınız.");
+                if (Math.random() > 0.45) {
+                    addCoins(40);
+                    showAlert("BASKET OLDU! 🏀", "Dəqiq atış! Səbətdən keçdi. +40 Coin qazandınız.");
                 } else {
-                    showPopup("MİSS! ⭕", "Top halqadan kənara getdi...");
+                    showAlert("MİSS! ⭕️", "Top halqadan kənara getdi...");
                 }
-                state.lastBasket = Date.now();
-                saveState();
+                state.lastHoop = Date.now();
+                save();
                 setTimeout(resetBasket, 1500);
-            }, 600);
+            }, 700);
         }
 
-        function resetFootball() {
-            const ball = document.getElementById('fBall');
-            ball.style.bottom = '20px'; ball.style.left = '50%';
+        function resetFoot() {
+            const ball = document.getElementById('footBall');
+            ball.style.bottom = '25px'; ball.style.left = '50%';
             ball.style.transform = 'translateX(-50%) scale(1) rotate(0deg)';
             updateUI();
         }
 
         function resetBasket() {
-            const ball = document.getElementById('bBall');
-            ball.style.bottom = '20px'; ball.style.left = '50%';
+            const ball = document.getElementById('basketBall');
+            ball.style.bottom = '25px'; ball.style.left = '50%';
             ball.style.transform = 'translateX(-50%) scale(1)';
             updateUI();
         }
 
-        function runClubSearch() {
-            const query = document.getElementById('clubSearch').value.toLowerCase();
-            const container = document.getElementById('clubDisplay');
-            container.innerHTML = "";
-            
-            CLUB_DB.filter(c => c.tags.includes(query)).forEach(c => {
-                const card = document.createElement('div');
-                card.className = "club-card";
-                card.onclick = () => showPopup(c.name, c.desc);
-                card.innerHTML = `<span>${c.icon}</span><b>${c.name}</b>`;
-                container.appendChild(card);
-            });
+        // SHOP & PROMO
+        function buyItem(item, price) {
+            if (state.inv[item]) return showAlert("MƏLUMAT", "Bu əşya artıq aktivdir.");
+            if (state.coins < price) return showAlert("XƏTA", "Kifayət qədər Coininiz yoxdur.");
+
+            state.coins -= price;
+            state.inv[item] = Date.now() + (10 * 24 * 60 * 60 * 1000); // 10 Days from now
+            save();
+            updateUI();
+            showAlert("TƏBRİKLƏR!", `${item.toUpperCase()} 10 günlük aktiv edildi!`);
         }
 
-        function setupQuiz() {
+        function claimPromo() {
+            const code = document.getElementById('promoInput').value.trim();
+            if (code === "2011b") {
+                if (state.promoUsed.includes("2011b")) {
+                    showAlert("XƏTA", "Bu promo kodu artıq istifadə etmisiniz.");
+                } else {
+                    addCoins(20000);
+                    state.promoUsed.push("2011b");
+                    save();
+                    showAlert("SUPER! 🎁", "Promo kod qəbul edildi! Hesabınıza 20,000 Coin əlavə olundu.");
+                    document.getElementById('promoInput').value = "";
+                }
+            } else {
+                showAlert("XƏTA", "Yanlış və ya keçərsiz promo kod.");
+            }
+        }
+
+        // QUIZ SYSTEM
+        function renderQuiz() {
             const now = Date.now();
-            const qBox = document.getElementById('quizBox');
-            if (now - state.lastQuiz < 7200000) {
-                qBox.style.opacity = '0.5';
-                document.getElementById('qText').innerText = "Növbəti sual hazırlanır...";
-                document.getElementById('qOptions').innerHTML = "";
+            const box = document.getElementById('optionBox');
+            if (now - state.lastQuiz < 7200000) { // 2 Hours
+                document.getElementById('quizSection').style.opacity = "0.6";
+                document.getElementById('questionDisplay').innerText = "Yeni sual hazırlanır...";
+                box.innerHTML = "";
                 return;
             }
-            qBox.style.opacity = '1';
-            const rnd = QUIZ_DB[Math.floor(Math.random() * QUIZ_DB.length)];
-            document.getElementById('qText').innerText = rnd.q;
-            const optCont = document.getElementById('qOptions');
-            optCont.innerHTML = "";
-            rnd.o.forEach((o, i) => {
+            document.getElementById('quizSection').style.opacity = "1";
+            const q = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
+            document.getElementById('questionDisplay').innerText = q.q;
+            box.innerHTML = "";
+            q.o.forEach((opt, idx) => {
                 const b = document.createElement('button');
                 b.className = "btn-game";
-                b.innerText = o;
+                b.innerText = opt;
                 b.onclick = () => {
-                    if(i === rnd.c) { addCoins(100); showPopup("DÜZGÜN!", "+100 Coin qazandınız!"); }
-                    else { showPopup("SƏHV!", "Düzgün cavab: " + rnd.o[rnd.c]); }
+                    if(idx === q.c) { addCoins(150); showAlert("DÜZGÜN! ✅", "Futbol biliyiniz əladır! +150 Coin."); }
+                    else { showAlert("SƏHV! ❌", "Təəssüf, doğru cavab: " + q.o[q.c]); }
                     state.lastQuiz = Date.now();
-                    saveState();
-                    setupQuiz();
+                    save();
+                    renderQuiz();
                 };
-                optCont.appendChild(b);
+                box.appendChild(b);
             });
         }
 
-        function startTickers() {
+        // TIMERS
+        function startGlobalTimers() {
             setInterval(() => {
-                // Football Shot Timer (Daily)
-                const now = new Date();
+                const now = Date.now();
+                // Penalty
                 const night = new Date(); night.setHours(24, 0, 0, 0);
-                document.getElementById('shotTimer').innerText = formatMs(night - now);
+                document.getElementById('penaltyTimer').innerText = formatMs(night - now);
 
-                // Basket Timer (1 Hour)
-                const bDiff = 3600000 - (Date.now() - state.lastBasket);
-                document.getElementById('basketTimer').innerText = bDiff > 0 ? formatMs(bDiff) : "HAZIR";
+                // Hoop (1h)
+                const hDiff = 3600000 - (now - state.lastHoop);
+                document.getElementById('hoopTimer').innerText = hDiff > 0 ? formatMs(hDiff) : "HAZIRDIR";
 
-                // Quiz Timer (2 Hours)
-                const qDiff = 7200000 - (Date.now() - state.lastQuiz);
+                // Quiz (2h)
+                const qDiff = 7200000 - (now - state.lastQuiz);
                 document.getElementById('quizTimer').innerText = qDiff > 0 ? formatMs(qDiff) : "HAZIR";
+
+                // Item Timers
+                for (let item in state.inv) {
+                    const timerEl = document.getElementById(`time_${item}`);
+                    if (timerEl) {
+                        const remaining = state.inv[item] - now;
+                        timerEl.innerText = formatDays(remaining);
+                    }
+                }
             }, 1000);
         }
 
@@ -584,23 +631,52 @@
             return `${h}:${m}:${s}`;
         }
 
-        function addCoins(v) { state.coins += v; saveState(); updateUI(); }
-        function saveState() { 
+        function formatDays(ms) {
+            const d = Math.floor(ms / (1000*60*60*24));
+            const h = Math.floor((ms % (1000*60*60*24)) / (1000*60*60));
+            return `${d}g ${h}s`;
+        }
+
+        // SEARCH & UI TOOLS
+        function renderClubs() {
+            const box = document.getElementById('clubBox');
+            box.innerHTML = "";
+            CLUBS.forEach(c => {
+                const div = document.createElement('div');
+                div.className = "club-card";
+                div.innerHTML = `<span>${c.icon}</span><b>${c.name}</b>`;
+                div.onclick = () => showAlert(c.name, c.info);
+                box.appendChild(div);
+            });
+        }
+
+        function filterClubs() {
+            const q = document.getElementById('searchInp').value.toLowerCase();
+            const cards = document.querySelectorAll('.club-card');
+            CLUBS.forEach((c, i) => {
+                const match = c.name.toLowerCase().includes(q) || c.tags.includes(q);
+                cards[i].style.display = match ? "block" : "none";
+            });
+        }
+
+        function addCoins(n) { state.coins += n; save(); updateUI(); }
+        function save() {
             localStorage.setItem('ef_coins', state.coins);
             localStorage.setItem('ef_inv', JSON.stringify(state.inv));
-            localStorage.setItem('ef_last_shot', state.lastShot);
-            localStorage.setItem('ef_last_basket', state.lastBasket);
+            localStorage.setItem('ef_last_foot', state.lastFoot);
+            localStorage.setItem('ef_last_hoop', state.lastHoop);
             localStorage.setItem('ef_last_quiz', state.lastQuiz);
+            localStorage.setItem('ef_promos', JSON.stringify(state.promoUsed));
         }
 
-        function showPopup(t, m) {
+        function showAlert(t, m) {
             document.getElementById('popupTitle').innerText = t;
-            document.getElementById('popupText').innerText = m;
-            document.getElementById('globalPopup').classList.add('active');
+            document.getElementById('popupMsg').innerText = m;
+            document.getElementById('alertPopup').classList.add('active');
         }
-        function closePopup() { document.getElementById('globalPopup').classList.remove('active'); }
+        function closeAlert() { document.getElementById('alertPopup').classList.remove('active'); }
 
-        function toggleTheme() {
+        function swapTheme() {
             state.theme = state.theme === 'dark' ? 'light' : 'dark';
             localStorage.setItem('ef_theme', state.theme);
             applyTheme();
@@ -611,24 +687,14 @@
     </script>
 
     <footer style="display:none">
-        <article>
-            Azərbaycan futbolunun tarixi 1911-ci ildən, Britaniya dənizçilərinin Bakıya gəlişi ilə başlayır.
-            İlk klublar: "İdmançı", "Tərəqqi", "Britaniya Klubu".
-            1937-ci ildə Neftçi (keçmiş Neftyanik) yaradılmış və SSRİ çempionatında 1966-cı ildə bürünc medal qazanmışdır.
-            Qarabağ FK 1993-cü ildə Ağdamın işğalından sonra "qaçqın klub" adını alsa da, 
-            Qurban Qurbanovun rəhbərliyi altında Avropada tarix yazmışdır.
-            Tofiq Bəhramov - 1966 Dünya Çempionatının finalındakı məşhur qərarı ilə dünya futbol tarixinə keçmişdir.
-            2026-cı il futbol dünyasında Everywhere Futbol platforması ən interaktiv tətbiq kimi tanınır.
-            (Burada minlərlə sətirlik süni mətn və futbol tarixi faktları mövcuddur ki, sistemin 
-            məlumat bazasını və fayl ölçüsünü stabil saxlasın.)
-            ... [DATA PADDING ACTIVE] ...
-            AZERBAIJAN CLUBS HISTORY LOGS: 
-            GENCE KAPAZ: 3 TIMES CHAMPION. 
-            NEFTCHI: 9 TIMES CHAMPION. 
-            QARABAG: 10+ TIMES CHAMPION.
-            STADIUMS: BAKU OLYMPIC STADIUM (68k), TOFIQ BAHRAMOV (31k).
-            ... [END OF LOGS] ...
-        </article>
+        <p>
+            Azərbaycan futbolu 100 ildən artıq tarixə malikdir. Bakı, Gəncə, Lənkəran, Tovuz və digər şəhərlərimizdə
+            futbol hər zaman ən sevilən idman növü olub. Everywhere Futbol layihəsi bu sevgini rəqəmsal dünyaya
+            daşımaq məqsədi güdür. 2026-cı il versiyasında biz istifadəçilərə daha interaktiv oyunlar,
+            genişləndirilmiş mağaza məhsulları və real vaxt rejimli xəbərlər təqdim edirik.
+            Promo kod sistemi ("2011b") azarkeşlərimiz üçün xüsusi hədiyyədir. 
+            Milli komandamızın uğurları hər birimizi qürurlandırır.
+        </p>
     </footer>
 
 </body>
