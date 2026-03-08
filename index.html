@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⚽️ EVERYWHERE FUTBOL 2026 - OMNI EDITION</title>
+    <title>⚽️ EVERYWHERE FUTBOL 2026 - OMNI PRO MAX</title>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
@@ -17,16 +18,18 @@
             --glass: rgba(255, 255, 255, 0.05);
             --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             
-            /* Klub Rəngləri (Dinamik Dəyişəcək) */
+            /* Klub Rəngləri - Dinamik Dəyişən */
             --club-primary: #fbbf24;
             --club-secondary: #000000;
         }
 
-        /* KLUB TEMALARI */
-        .theme-qarabag { --club-primary: #ffffff; --club-secondary: #000000; --accent: #ffd700; }
+        /* KLUB TEMALARI (ROOT OVERRIDE) */
+        .theme-qarabag { --club-primary: #ffffff; --club-secondary: #0c0c0c; --accent: #ffd700; --bg-dark: #000; }
         .theme-neftci { --club-primary: #ffffff; --club-secondary: #000000; --accent: #3b82f6; }
         .theme-sabah { --club-primary: #3b82f6; --club-secondary: #f43f5e; --accent: #3b82f6; }
         .theme-kepez { --club-primary: #facc15; --club-secondary: #1e40af; --accent: #facc15; }
+        .theme-gabala { --club-primary: #ef4444; --club-secondary: #000000; --accent: #ef4444; }
+        .theme-zire { --club-primary: #10b981; --club-secondary: #064e3b; --accent: #10b981; }
 
         [data-theme="light"] {
             --bg-dark: #f1f5f9;
@@ -42,12 +45,12 @@
             background: var(--bg-dark);
             color: var(--text-main);
             margin: 0;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
             overflow-x: hidden;
             transition: var(--transition);
         }
 
-        /* VIP & DYNAMIC GLOW */
+        /* VIP EFFECT */
         @keyframes goldGlow {
             0% { border-color: #ffd700; box-shadow: 0 0 10px #ffd700; }
             50% { border-color: #fff; box-shadow: 0 0 30px #ffd700; }
@@ -55,10 +58,10 @@
         }
         .vip-active { border: 5px solid #ffd700 !important; animation: goldGlow 2s infinite; }
 
-        /* HEADER */
+        /* HEADER & MENU */
         header {
             background: var(--card-dark);
-            padding: 20px;
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -67,25 +70,26 @@
         }
 
         .header-top { display: flex; justify-content: space-between; align-items: center; }
-        .logo-text { font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem; color: var(--club-primary); }
+        .logo-text { font-family: 'Orbitron'; font-weight: 900; font-size: 1rem; color: var(--club-primary); }
 
         .coin-box {
             background: var(--club-primary);
             color: var(--club-secondary);
-            padding: 10px 18px;
+            padding: 8px 15px;
             border-radius: 50px;
             font-weight: 900;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             font-family: 'Orbitron';
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+
+        .menu-dots { font-size: 1.5rem; cursor: pointer; color: var(--text-main); }
 
         /* MARQUEE */
         .marquee-container {
             background: var(--club-secondary);
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 8px 0;
             border-radius: 8px;
             overflow: hidden;
@@ -94,14 +98,14 @@
         .marquee-text {
             display: inline-block;
             white-space: nowrap;
-            animation: scroll 40s linear infinite;
+            animation: scroll 35s linear infinite;
             font-family: 'JetBrains Mono';
             color: #fff;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* SEARCH & CLUBS */
+        /* SEARCH AREA */
         .search-area { padding: 20px; }
         .search-input {
             width: 100%;
@@ -112,28 +116,30 @@
             color: var(--text-main);
             font-weight: 700;
             margin-bottom: 15px;
+            font-family: 'Rajdhani';
         }
 
         .club-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             gap: 10px;
         }
         .club-card {
             background: var(--card-dark);
-            padding: 15px;
+            padding: 12px;
             border-radius: 12px;
             text-align: center;
             border: 1px solid var(--glass);
             cursor: pointer;
-            font-size: 0.8rem;
+            transition: 0.3s;
         }
-        .club-card span { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .club-card:hover { transform: scale(1.05); border-color: var(--club-primary); }
+        .club-card span { font-size: 1.8rem; display: block; margin-bottom: 5px; }
 
         /* ARENAS */
         .arena-box { padding: 0 20px; }
         .field {
-            height: 250px;
+            height: 220px;
             border-radius: 20px;
             position: relative;
             overflow: hidden;
@@ -141,43 +147,20 @@
             border: 4px solid #fff;
         }
         .football-field { background: linear-gradient(180deg, #166534 0%, #064e3b 100%); }
-        .basketball-field { 
-            background: radial-gradient(circle, #c2410c 0%, #7c2d12 100%); 
-            border-color: #fb923c;
-            display: none; /* Only show if item owned */
-        }
+        .basketball-field { background: radial-gradient(circle, #c2410c 0%, #7c2d12 100%); border-color: #fb923c; }
 
-        .goal-post { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 150px; height: 70px; border: 3px solid #fff; border-bottom: none; }
-        .pota { 
-            position: absolute; top: 30px; left: 50%; transform: translateX(-50%); 
-            width: 60px; height: 60px; border: 5px solid #ff4500; border-radius: 50%; 
-        }
-        .pota-back {
-            position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-            width: 100px; height: 80px; background: rgba(255,255,255,0.2); border: 2px solid #fff;
-        }
+        .goal-post { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 140px; height: 60px; border: 3px solid #fff; border-bottom: none; }
+        
+        /* POTA ANIMATION */
+        .pota-system { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); text-align: center; }
+        .pota-backboard { width: 80px; height: 60px; background: rgba(255,255,255,0.2); border: 2px solid #fff; }
+        .pota-rim { width: 45px; height: 45px; border: 4px solid #ff4500; border-radius: 50%; margin: -20px auto 0; position: relative; }
 
-        .keeper { position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 3.5rem; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .game-ball {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3rem;
-            cursor: pointer;
-            z-index: 100;
-        }
+        .game-ball { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2.8rem; z-index: 100; cursor: pointer; }
 
-        /* BUTTONS */
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .btn-action { 
-            padding: 15px; border-radius: 12px; border: none; 
-            background: var(--card-dark); color: #fff; font-weight: 900; 
-            font-family: 'Orbitron'; cursor: pointer; border-bottom: 4px solid #000;
-        }
-        .btn-action:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .keeper { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); font-size: 3rem; transition: 0.4s; }
 
-        /* SHOP */
+        /* SHOP ITEMS WITH TIMERS */
         .shop-section { padding: 20px; }
         .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .shop-item {
@@ -187,299 +170,371 @@
             text-align: center;
             border: 2px solid var(--glass);
             position: relative;
+            transition: 0.3s;
         }
-        .expiry-timer {
-            position: absolute; top: 5px; right: 5px;
-            background: #ef4444; color: #fff; font-size: 0.6rem;
-            padding: 2px 6px; border-radius: 4px; font-weight: bold;
+        .item-timer {
+            position: absolute; top: -10px; right: -5px;
+            background: #ef4444; color: #fff; font-size: 0.65rem;
+            padding: 4px 8px; border-radius: 20px; font-weight: bold;
             font-family: 'JetBrains Mono';
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: none;
         }
 
-        /* GACHA CARDS */
+        /* GACHA & CARDS */
         .card-container {
             margin: 20px; padding: 20px; background: var(--card-dark);
             border-radius: 20px; border: 2px solid var(--accent);
+            text-align: center;
         }
         .player-card {
-            width: 150px; height: 210px; background: #222; margin: 10px auto;
-            border-radius: 10px; position: relative; padding: 10px;
-            border: 4px solid #ccc; text-align: center;
-            transition: 0.5s; transform-style: preserve-3d;
+            width: 160px; height: 230px; margin: 15px auto;
+            border-radius: 15px; border: 5px solid #64748b;
+            background: #1e293b; color: #fff;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center;
+            transition: transform 0.6s ease;
         }
-        .card-gold { border-color: #ffd700; background: linear-gradient(135deg, #ffd700, #b8860b); color: #000; }
-        .card-legend { border-color: #ff00ff; background: linear-gradient(135deg, #ff00ff, #3b82f6); color: #fff; animation: goldGlow 1s infinite; }
+        .rarity-bronze { border-color: #b45309; background: linear-gradient(135deg, #451a03, #b45309); }
+        .rarity-rare { border-color: #3b82f6; background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+        .rarity-epic { border-color: #a855f7; background: linear-gradient(135deg, #581c87, #a855f7); }
+        .rarity-legend { border-color: #fbbf24; background: linear-gradient(135deg, #78350f, #fbbf24); color: #000; animation: goldGlow 1.5s infinite; }
 
-        /* COUNTDOWN */
-        .final-countdown {
-            background: var(--card-dark); margin: 20px; padding: 20px;
-            border-radius: 20px; text-align: center; border: 1px solid var(--primary);
+        /* SQUAD VIEW (KADRO) */
+        #squadView {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-dark); z-index: 2000; padding: 20px; overflow-y: auto;
         }
-        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 10px; }
-        .timer-unit b { font-size: 1.2rem; color: var(--primary); display: block; }
-        .timer-unit span { font-size: 0.6rem; opacity: 0.7; }
+        .squad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* NAVIGATION BAR */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--card-dark); display: flex; justify-content: space-around;
+            padding: 15px; border-top: 2px solid var(--club-primary); z-index: 1500;
+        }
+        .nav-item { text-align: center; font-size: 0.8rem; font-weight: 700; color: #94a3b8; cursor: pointer; }
+        .nav-item.active { color: var(--club-primary); }
 
         /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: none; justify-content: center;
-            align-items: center; z-index: 10000; backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.92); display: none; justify-content: center;
+            align-items: center; z-index: 10000; backdrop-filter: blur(10px);
         }
         .modal-content {
             background: var(--card-dark); padding: 30px; border-radius: 25px;
             width: 85%; max-width: 400px; text-align: center; border: 2px solid var(--primary);
         }
 
-        .wa-link {
+        .btn-action {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            background: var(--primary); color: #000; font-family: 'Orbitron';
+            font-weight: 900; cursor: pointer; transition: 0.2s;
+            box-shadow: 0 4px 0 #b45309; margin-top: 10px;
+        }
+        .btn-action:active { transform: translateY(4px); box-shadow: none; }
+
+        /* QUIZ TIMER */
+        .quiz-timer-bar { height: 5px; background: var(--primary); width: 100%; margin-bottom: 15px; transition: linear; }
+
+        /* JUNE 14 COUNTDOWN */
+        .june-countdown {
+            background: linear-gradient(45deg, #1e3a8a, #1e40af);
+            margin: 20px; padding: 20px; border-radius: 20px; text-align: center;
+            border: 2px solid #3b82f6;
+        }
+        .j-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .j-unit b { font-size: 1.5rem; display: block; }
+        .j-unit span { font-size: 0.7rem; text-transform: uppercase; }
+
+        .wa-btn {
             display: block; background: #25d366; color: #fff; text-align: center;
             padding: 15px; margin: 20px; border-radius: 12px; text-decoration: none;
-            font-weight: 900;
+            font-weight: 900; font-family: 'Orbitron';
         }
 
-        .theme-btn {
-            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
-            border-radius: 50%; background: var(--primary); border: none;
-            font-size: 1.5rem; z-index: 5000;
+        .theme-toggle {
+            position: fixed; top: 80px; right: 20px; width: 45px; height: 45px;
+            border-radius: 50%; background: var(--glass); border: 1px solid var(--glass);
+            color: var(--text-main); font-size: 1.2rem; z-index: 100;
         }
     </style>
 </head>
-<body id="masterBody">
+<body id="appBody">
 
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
-            <h2 id="modalTitle" style="font-family: 'Orbitron'; color: var(--primary);">MESAJ</h2>
-            <p id="modalBody" style="font-size: 1.1rem; margin: 20px 0;"></p>
-            <button class="btn-action" onclick="closeModal()" style="width: 100%;">ANLADIM</button>
+            <h2 id="modalTitle" style="font-family: 'Orbitron'; color: var(--primary);">BİLDİRİŞ</h2>
+            <p id="modalBody"></p>
+            <button class="btn-action" onclick="closeModal()">BAĞLA</button>
         </div>
+    </div>
+
+    <div id="squadView">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="font-family: 'Orbitron'; margin: 0;">📋 SƏNİN KADRON</h2>
+            <button onclick="toggleSquad()" style="background:none; border:none; color:#fff; font-size:2rem;">✕</button>
+        </div>
+        <div class="squad-grid" id="squadGrid">
+            </div>
     </div>
 
     <header>
         <div class="header-top">
             <div class="logo-area">
-                <span style="font-size: 2rem;">⚽️</span>
-                <span class="logo-text">EVERYWHERE FUTBOL</span>
+                <span class="logo-text">⚽️ EVERYWHERE FUTBOL</span>
             </div>
-            <div class="coin-box">
-                🪙 <span id="coinText">0</span>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="coin-box">🪙 <span id="coinDisplay">0</span></div>
+                <div class="menu-dots" onclick="showModal('MENYU', 'Tezliklə yeni tənzimləmələr əlavə ediləcək!')">⋮</div>
             </div>
         </div>
         <div class="marquee-container">
-            <div class="marquee-text">
+            <div class="marquee-text" id="newsBar">
                 XƏBƏR: Azərbaycan Premyer Liqasında həyəcan! | Gəncənin Kəpəz klubu azarkeşlərini sevindirməyə davam edir. | Qarabağ FK beynəlxalq arenada! | "every222" kodu ilə 200,000 Coin qazan! | Basketbol rejimi mağazada aktivdir.
             </div>
         </div>
     </header>
 
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
     <div class="search-area">
-        <input type="text" class="search-input" id="clubSearch" placeholder="Klub və ya məlumat axtar..." onkeyup="filterClubs()">
-        <div class="club-grid" id="clubGrid">
-            </div>
+        <input type="text" class="search-input" id="clubSearch" placeholder="Klub axtar (Qarabağ, Neftçi...)" onkeyup="filterClubs()">
+        <div class="club-grid" id="clubGrid"></div>
     </div>
 
     <div class="arena-box">
         <div style="display: flex; justify-content: space-between; margin: 10px 0;">
-            <b style="font-family: 'Orbitron'; font-size: 0.8rem;">🏟️ FUTBOL ARENASI</b>
-            <small id="penaltyTime" style="color: var(--primary);">--:--:--</small>
+            <b style="font-family: 'Orbitron'; font-size: 0.8rem;">🏟️ PENALTI SERİYASI</b>
+            <small id="penaltyCD" style="color: var(--primary);">HAZIR</small>
         </div>
         <div class="field football-field">
             <div class="goal-post"></div>
             <div class="keeper" id="gk">🧤</div>
-            <div class="game-ball" id="fBall">⚽</div>
+            <div class="game-ball" id="fBall" onclick="showModal('MƏLUMAT', 'Aşağıdakı düymələrlə vuruş seçin!')">⚽</div>
         </div>
-        <div class="btn-group" id="fBtns">
-            <button class="btn-action" onclick="shoot('left')">SOL</button>
-            <button class="btn-action" onclick="shoot('center')">ORTA</button>
-            <button class="btn-action" onclick="shoot('right')">SAĞ</button>
+        <div class="btn-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 25px;">
+            <button class="btn-action" onclick="shootPenalty('left')">SOL</button>
+            <button class="btn-action" onclick="shootPenalty('center')">ORTA</button>
+            <button class="btn-action" onclick="shootPenalty('right')">SAĞ</button>
         </div>
 
-        <div id="basketArena" style="display: none;">
+        <div id="basketSection" style="display: none;">
             <div style="display: flex; justify-content: space-between; margin: 10px 0;">
                 <b style="font-family: 'Orbitron'; font-size: 0.8rem; color: #f97316;">🏀 BASKETBOL MEYDANI</b>
-                <small id="basketCooldown" style="color: #f97316;">HAZIR</small>
+                <small id="basketCD" style="color: #f97316;">HAZIR</small>
             </div>
-            <div class="field basketball-field" style="display: block;">
-                <div class="pota-back"></div>
-                <div class="pota"></div>
+            <div class="field basketball-field">
+                <div class="pota-system">
+                    <div class="pota-backboard"></div>
+                    <div class="pota-rim"></div>
+                </div>
                 <div class="game-ball" id="bBall">🏀</div>
             </div>
-            <button class="btn-action" onclick="throwHoop()" style="width: 100%; background: #f97316; border-bottom-color: #7c2d12; margin-bottom: 20px;">SƏBƏTƏ AT! (+150 COIN)</button>
+            <button class="btn-action" id="btnBasket" onclick="throwBasket()" style="background: #f97316; box-shadow: 0 4px 0 #7c2d12;">SƏBƏTƏ AT (+250 Coin)</button>
         </div>
     </div>
 
     <div class="card-container">
-        <h3 style="font-family: 'Orbitron'; text-align: center; margin-top: 0;">🃏 KART KOLLEKSİYASI</h3>
-        <div id="openedCard">
-            <div class="player-card" id="cardVisual">
-                <div style="font-size: 4rem; margin-top: 20px;">❓</div>
-                <p>Paket Aç</p>
+        <h3 style="font-family: 'Orbitron'; margin: 0 0 15px 0;">🃏 OYUNÇU PAKETİ</h3>
+        <div id="cardDisplay">
+            <div class="player-card">
+                <span style="font-size: 3.5rem;">📦</span>
+                <p>Paket Açmağa Hazır</p>
             </div>
         </div>
-        <button class="btn-action" onclick="openPack()" style="width: 100%; margin-top: 15px; background: #8b5cf6;">PAKET AÇ (10,000 Coin)</button>
+        <button class="btn-action" onclick="openPack()" style="background: #a855f7; box-shadow: 0 4px 0 #6b21a8;">PAKET AÇ (10,000 Coin)</button>
     </div>
 
-    <div class="final-countdown" style="border-color: #3b82f6;">
-        <h3 style="font-family: 'Orbitron'; margin: 0; font-size: 0.9rem;">📊 GÜNÜN MATÇI SİMULYASİYASI</h3>
+    <div class="june-countdown" style="background: var(--card-dark); border-color: var(--primary);">
+        <h3 style="font-family: 'Orbitron'; margin-top: 0; font-size: 0.9rem;">📊 GÜNÜN MATÇI PROQNOZU</h3>
         <div style="display: flex; justify-content: space-around; align-items: center; margin: 15px 0;">
-            <div><b>Qarabağ</b><br><span style="font-size: 2rem;">🐎</span></div>
-            <div style="font-family: 'Orbitron'; font-size: 1.5rem;">VS</div>
-            <div><b>Neftçi</b><br><span style="font-size: 2rem;">⚓</span></div>
+            <div><span style="font-size: 2rem;">🐎</span><br><b>Qarabağ</b></div>
+            <div style="font-family: 'Orbitron'; font-size: 1.2rem;">VS</div>
+            <div><span style="font-size: 2rem;">⚓</span><br><b>Neftçi</b></div>
         </div>
-        <div class="btn-group">
-            <button class="btn-action" onclick="predict('1')">1</button>
-            <button class="btn-action" onclick="predict('X')">X</button>
-            <button class="btn-action" onclick="predict('2')">2</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+            <button class="btn-action" onclick="predictMatch('1')">1</button>
+            <button class="btn-action" onclick="predictMatch('X')">X</button>
+            <button class="btn-action" onclick="predictMatch('2')">2</button>
         </div>
     </div>
 
     <div class="shop-section">
-        <h3 style="font-family: 'Orbitron'; border-bottom: 2px solid var(--glass); padding-bottom: 10px;">🏪 EF PREMİUM MAĞAZA</h3>
+        <h3 style="font-family: 'Orbitron'; border-bottom: 2px solid var(--glass); padding-bottom: 10px;">🏪 EF MAĞAZA (10 GÜNLÜK)</h3>
         <div class="shop-grid">
-            <div class="shop-item" id="shop_basket" onclick="buyItem('basket', 5000)">
-                <span class="expiry-timer" id="timer_basket"></span>
-                <span style="font-size: 2.5rem;">🏀</span><br>
-                <b>Basketbol Topu</b><br>
-                <small>5,000 Coin</small>
+            <div class="shop-item" onclick="buyShopItem('basket', 5000)">
+                <span class="item-timer" id="t_basket">00d 00:00</span>
+                <span style="font-size: 2.5rem;">🏀</span><br><b>Basketbol</b><br><small>5,000 Coin</small>
             </div>
-            <div class="shop-item" id="shop_glove" onclick="buyItem('glove', 7000)">
-                <span class="expiry-timer" id="timer_glove"></span>
-                <span style="font-size: 2.5rem;">🧤</span><br>
-                <b>Qızıl Əlcək</b><br>
-                <small>7,000 Coin</small>
+            <div class="shop-item" onclick="buyShopItem('glove', 7000)">
+                <span class="item-timer" id="t_glove">00d 00:00</span>
+                <span style="font-size: 2.5rem;">🧤</span><br><b>Qızıl Əlcək</b><br><small>7,000 Coin</small>
             </div>
-            <div class="shop-item" id="shop_kit" onclick="buyItem('kit', 4000)">
-                <span class="expiry-timer" id="timer_kit"></span>
-                <span style="font-size: 2.5rem;">👕</span><br>
-                <b>Milli Forma</b><br>
-                <small>4,000 Coin</small>
+            <div class="shop-item" onclick="buyShopItem('kit', 4000)">
+                <span class="item-timer" id="t_kit">00d 00:00</span>
+                <span style="font-size: 2.5rem;">👕</span><br><b>Milli Forma</b><br><small>4,000 Coin</small>
             </div>
-            <div class="shop-item" id="shop_vip" onclick="buyItem('vip', 50000)">
-                <span class="expiry-timer" id="timer_vip"></span>
-                <span style="font-size: 2.5rem;">🌟</span><br>
-                <b>VIP GİRİŞ</b><br>
-                <small>50,000 Coin</small>
+            <div class="shop-item" onclick="buyShopItem('vip', 50000)">
+                <span class="item-timer" id="t_vip">00d 00:00</span>
+                <span style="font-size: 2.5rem;">🌟</span><br><b>VIP STATUS</b><br><small>50,000 Coin</small>
             </div>
         </div>
 
         <div style="margin-top: 25px;">
-            <input type="text" id="promoInput" class="search-input" placeholder="Promo kod daxil et..." style="text-align: center; text-transform: lowercase;">
-            <button class="btn-action" onclick="useCode()" style="width: 100%; background: #fff; color: #000;">KODU AKTİVLƏŞDİR</button>
+            <input type="text" id="promoCode" class="search-input" placeholder="Promo kod..." style="text-align: center;">
+            <button class="btn-action" onclick="redeemCode()" style="background: #fff; color: #000; box-shadow: 0 4px 0 #94a3b8;">KODU AKTİVLƏŞDİR</button>
         </div>
     </div>
 
-    <div class="final-countdown" id="quizZone">
-        <b style="color: var(--primary);">🧠 GÜNÜN SUALI (+300 Coin)</b>
-        <p id="qText" style="font-weight: bold; margin: 15px 0;">Sual yüklənir...</p>
-        <div id="qOptions" style="display: flex; flex-direction: column; gap: 10px;"></div>
+    <div class="card-container" id="quizZone">
+        <div class="quiz-timer-bar" id="qTimer"></div>
+        <b style="color: var(--primary);">🧠 FUTBOL BİLİCİSİ (+300 Coin)</b>
+        <p id="qText" style="margin: 15px 0; font-weight: bold;">Sual yüklənir...</p>
+        <div id="qOptions" style="display: flex; flex-direction: column; gap: 8px;"></div>
     </div>
 
-    <div class="final-countdown">
-        <h3 style="font-family: 'Orbitron'; margin: 0; font-size: 0.8rem;">⚽️ BÖYÜK FİNALA QALAN VAXT</h3>
-        <div class="timer-grid">
-            <div class="timer-unit"><b id="d14">00</b><span>Gün</span></div>
-            <div class="timer-unit"><b id="h14">00</b><span>Saat</span></div>
-            <div class="timer-unit"><b id="m14">00</b><span>Dəq</span></div>
-            <div class="timer-unit"><b id="s14">00</b><span>San</span></div>
+    <div class="june-countdown">
+        <h3 style="font-family: 'Orbitron'; margin: 0 0 15px 0;">⚽️ BÖYÜK FİNALA QALAN VAXT</h3>
+        <div class="j-grid">
+            <div class="j-unit"><b id="jd">00</b><span>Gün</span></div>
+            <div class="j-unit"><b id="jh">00</b><span>Saat</span></div>
+            <div class="j-unit"><b id="jm">00</b><span>Dəq</span></div>
+            <div class="j-unit"><b id="js">00</b><span>San</span></div>
         </div>
+        <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.8;">14 İyun 2026</p>
     </div>
 
-    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-link">📲 RƏSMİ WHATSAPP KANALI</a>
+    <a href="https://whatsapp.com/channel/0029VbBcLFD11ulP6FxiLf0H" class="wa-btn">📲 WHATSAPP KANALI</a>
 
-    <button class="theme-btn" onclick="toggleMode()">🌓</button>
+    <nav class="nav-bar">
+        <div class="nav-item active" onclick="location.reload()">🏠<br>Ana Səhifə</div>
+        <div class="nav-item" onclick="toggleSquad()">📋<br>Kadrom</div>
+        <div class="nav-item" onclick="showModal('LİQA', 'Azərbaycan Liqası Cədvəli Tezliklə!')">🏆<br>Liqa</div>
+    </nav>
 
     <script>
         /***********************************************************
-         * EVERYWHERE FUTBOL 2026 - OMNI ENGINE
+         * EVERYWHERE FUTBOL 2026 - OMNI ENGINE CORE
          ***********************************************************/
 
-        // DATABASE
+        // 1. DATA BAZASI (Klublar, Oyunçular, Suallar)
         const CLUBS = [
-            { id: "qarabag", n: "Qarabağ FK", i: "🐎", d: "1951-ci ildə Ağdamda yaradılıb. Azərbaycanın ən uğurlu klubudur.", theme: "theme-qarabag" },
-            { id: "neftci", n: "Neftçi PFK", i: "⚓", d: "1937-ci ildə yaradılıb. 'Xalq komandası' kimi tanınır.", theme: "theme-neftci" },
-            { id: "sabah", n: "Sabah FK", i: "🦉", d: "2017-ci ildə yaradılıb. Müasir infrastrukturu ilə seçilir.", theme: "theme-sabah" },
-            { id: "kepez", n: "Kəpəz PFK", i: "🏔️", d: "Gəncənin tarixi klubu. 3 dəfə ölkə çempionu olub.", theme: "theme-kepez" },
-            { id: "gabala", n: "Qəbələ FK", i: "🦅", d: "Region futbolunun inkişafında böyük rol oynayır.", theme: "" },
-            { id: "turan", n: "Turan Tovuz", i: "🐺", d: "Tovuzun döyüşkən klubu. İlk müstəqil çempiondur.", theme: "" },
-            { id: "zire", n: "Zirə FK", i: "🦅", d: "2014-cü ildə yaradılıb. Qartallar ləqəbi ilə tanınır.", theme: "" },
-            { id: "karvan", n: "Karvan FK", i: "🐪", d: "Yevlaxın fəxri. Avrokubokda mərhələ keçən ilk klubdur.", theme: "" },
-            { id: "imisli", n: "İmişli FK", i: "🚜", d: "Rayon futbolunun yeni ümidi.", theme: "" },
-            { id: "shamakhi", n: "Shamakhi FK", i: "🏰", d: "Şamaxı şəhərini təmsil edən iddialı klub.", theme: "" },
-            { id: "araz", n: "Araz Naxçıvan", i: "🏛️", d: "Naxçıvanın əsas futbol komandası.", theme: "" }
+            { id: "qarabag", n: "Qarabağ FK", i: "🐎", d: "Ağdam təmsilçisi. Azərbaycanın ən uğurlu klubudur.", t: "theme-qarabag" },
+            { id: "neftci", n: "Neftçi PFK", i: "⚓", d: "Bakı təmsilçisi. Azərbaycan futbolunun flaqmanı.", t: "theme-neftci" },
+            { id: "sabah", n: "Sabah FK", i: "🦉", d: "Müasir infrastrukturu olan sürətlə inkişaf edən klub.", t: "theme-sabah" },
+            { id: "kepez", n: "Kəpəz PFK", i: "🏔️", d: "Gəncənin tarixi klubu. Böyük azarkeş ordusuna malikdir.", t: "theme-kepez" },
+            { id: "gabala", n: "Qəbələ FK", i: "🦅", d: "Regionun iddialı klubu. Akademiyası ilə tanınır.", t: "theme-gabala" },
+            { id: "zire", n: "Zirə FK", i: "🦅", d: "Qartallar ləqəbli iddialı Bakı klubu.", t: "theme-zire" },
+            { id: "turantovuz", n: "Turan Tovuz", i: "🐺", d: "Tovuzun döyüşkən və ənənəvi klubu.", t: "" },
+            { id: "sabail", n: "Səbail FK", i: "⛵", d: "Dənizçilər ləqəbli paytaxt klubu.", t: "" },
+            { id: "karvan", n: "Karvan FK", i: "🐪", d: "Yevlaxın fəxri. Tarixi uğurları var.", t: "" },
+            { id: "imisli", n: "İmişli FK", i: "🚜", d: "Rayon futbolunun yeni ümidi.", t: "" },
+            { id: "shamakhi", n: "Shamakhi FK", i: "🏰", d: "Şirvanın futbol mərkəzi.", t: "" },
+            { id: "araz", n: "Araz Naxçıvan", i: "🏛️", d: "Naxçıvan Muxtar Respublikasının əsas klubu.", t: "" }
         ];
 
-        const PLAYERS = [
-            { n: "Mahir Emreli", r: "Gold", i: "⚽" },
-            { n: "Emin Mahmudov", r: "Gold", i: "🎯" },
-            { n: "Tofiq Bəhramov", r: "Legend", i: "🏁" },
-            { n: "Rəşad Sadıqov", r: "Legend", i: "🛡️" },
-            { n: "Abdellah Zoubir", r: "Gold", i: "🪄" },
-            { n: "Bahlul Mustafazade", r: "Bronze", i: "🧱" },
-            { n: "Coşqun Diniyev", r: "Bronze", i: "🏃" }
+        const PLAYER_POOL = [
+            // Legend
+            { n: "Cristiano Ronaldo", r: "legend", i: "🐐" },
+            { n: "Lionel Messi", r: "legend", i: "👽" },
+            { n: "Pelé", r: "legend", i: "👑" },
+            { n: "Maradona", r: "legend", i: "🔟" },
+            { n: "Anatoli Banişevski", r: "legend", i: "🇦🇿" },
+            { n: "Tofiq Bəhramov", r: "legend", i: "🏁" },
+            // Epic
+            { n: "Neymar Jr", r: "epic", i: "🇧🇷" },
+            { n: "Kylian Mbappé", r: "epic", i: "⚡" },
+            { n: "Qurban Qurbanov", r: "epic", i: "🧠" },
+            { n: "Arda Güler", r: "epic", i: "💎" },
+            { n: "Ronaldinho", r: "epic", i: "🤙" },
+            // Rare
+            { n: "Mahir Emreli", r: "rare", i: "⚽" },
+            { n: "Emin Mahmudov", r: "rare", i: "🎯" },
+            { n: "Muslera", r: "rare", i: "🧤" },
+            { n: "Mauro Icardi", r: "rare", i: "🦁" },
+            // Bronze
+            { n: "Bəhlul Mustafazadə", r: "bronze", i: "🧱" },
+            { n: "Toral Bayramov", r: "bronze", i: "🏃" },
+            { n: "Renat Dadaşov", r: "bronze", i: "💪" }
         ];
 
         const QUIZZES = [
-            { q: "Azərbaycan millisinin ən çox qol vuran oyunçusu?", o: ["Qurban Qurbanov", "Vaqif Cavadov", "Rauf Əliyev"], c: 0 },
-            { q: "Qarabağ FK-nın baş məşqçisi?", o: ["Rəşad Sadıqov", "Qurban Qurbanov", "Ayxan Abbasov"], c: 1 }
+            { q: "Qarabağ FK hansı rayonda yaranıb?", o: ["Ağdam", "Şuşa", "Füzuli"], c: 0 },
+            { q: "Azərbaycan millisinin ən çox qol vuran oyunçusu?", o: ["Nazim Süleymanov", "Qurban Qurbanov", "Vaqif Cavadov"], c: 1 },
+            { q: "2024 Avropa Çempionu hansı ölkədir?", o: ["İngiltərə", "İspaniya", "Fransa"], c: 1 }
         ];
 
-        // STATE MANAGEMENT
+        // 2. STATE (Yaddaş sistemi)
         let state = {
-            coins: parseInt(localStorage.getItem('ef_coins')) || 2000,
-            inventory: JSON.parse(localStorage.getItem('ef_inv')) || {},
+            coins: parseInt(localStorage.getItem('ef_coins')) || 5000,
+            inv: JSON.parse(localStorage.getItem('ef_inv')) || {},
+            cards: JSON.parse(localStorage.getItem('ef_cards')) || [],
             lastPenalty: localStorage.getItem('ef_lp') || "",
             lastBasket: parseInt(localStorage.getItem('ef_lb')) || 0,
             lastQuiz: parseInt(localStorage.getItem('ef_lq')) || 0,
             theme: localStorage.getItem('ef_mode') || 'dark'
         };
 
+        // 3. INITIALIZATION
         function init() {
             renderClubs();
             updateUI();
-            setupQuiz();
-            setInterval(tick, 1000);
-            update14June();
+            startQuiz();
+            setInterval(gameLoop, 1000);
+        }
+
+        function save() {
+            localStorage.setItem('ef_coins', state.coins);
+            localStorage.setItem('ef_inv', JSON.stringify(state.inv));
+            localStorage.setItem('ef_cards', JSON.stringify(state.cards));
+            localStorage.setItem('ef_lp', state.lastPenalty);
+            localStorage.setItem('ef_lb', state.lastBasket);
+            localStorage.setItem('ef_mode', state.theme);
         }
 
         function updateUI() {
-            document.getElementById('coinText').innerText = state.coins.toLocaleString();
+            document.getElementById('coinDisplay').innerText = state.coins.toLocaleString();
             document.body.setAttribute('data-theme', state.theme);
             
             const now = Date.now();
-            const basketOwned = state.inventory['basket'] && state.inventory['basket'] > now;
-            document.getElementById('basketArena').style.display = basketOwned ? 'block' : 'none';
+            
+            // Check Items
+            if (state.inv.basket && state.inv.basket > now) {
+                document.getElementById('basketSection').style.display = 'block';
+            } else {
+                document.getElementById('basketSection').style.display = 'none';
+            }
 
-            if (state.inventory['vip'] && state.inventory['vip'] > now) {
+            if (state.inv.vip && state.inv.vip > now) {
                 document.body.classList.add('vip-active');
             } else {
                 document.body.classList.remove('vip-active');
             }
 
-            // Penalty Button lock
-            const today = new Date().toDateString();
-            const btns = document.querySelectorAll('#fBtns button');
-            btns.forEach(b => b.disabled = (state.lastPenalty === today));
-
             save();
         }
 
-        function tick() {
+        // 4. TİMER VƏ LOOPS
+        function gameLoop() {
             const now = Date.now();
             
-            // Timers for Shop Items
+            // Shop Timers (10 days = 864,000,000 ms)
             ['basket', 'glove', 'kit', 'vip'].forEach(id => {
-                const el = document.getElementById(`timer_${id}`);
-                const shopItem = document.getElementById(`shop_${id}`);
-                if (state.inventory[id]) {
-                    const diff = state.inventory[id] - now;
+                const timerEl = document.getElementById(`t_${id}`);
+                if (state.inv[id]) {
+                    const diff = state.inv[id] - now;
                     if (diff > 0) {
-                        const days = Math.floor(diff / (1000*60*60*24));
-                        const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-                        const mins = Math.floor((diff % (1000*60*60)) / 60000);
-                        const secs = Math.floor((diff % 60000) / 1000);
-                        el.innerText = `${days}G ${hours}:${mins}:${secs}`;
-                        shopItem.style.borderColor = "#22c55e";
+                        const d = Math.floor(diff / 86400000);
+                        const h = Math.floor((diff % 86400000) / 3600000);
+                        const m = Math.floor((diff % 3600000) / 60000);
+                        const s = Math.floor((diff % 60000) / 1000);
+                        timerEl.innerText = `${d}g ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                        timerEl.style.display = 'block';
                     } else {
-                        delete state.inventory[id];
-                        el.innerText = "";
-                        shopItem.style.borderColor = "var(--glass)";
+                        delete state.inv[id];
+                        timerEl.style.display = 'none';
                         updateUI();
                     }
                 }
@@ -487,139 +542,166 @@
 
             // Cooldowns
             const bDiff = 3600000 - (now - state.lastBasket);
-            document.getElementById('basketCooldown').innerText = bDiff > 0 ? formatMs(bDiff) : "HAZIR";
+            document.getElementById('basketCD').innerText = bDiff > 0 ? formatCD(bDiff) : "HAZIR";
+            
+            const pNow = new Date();
+            const pTarget = new Date(); pTarget.setHours(24,0,0,0);
+            document.getElementById('penaltyCD').innerText = formatCD(pTarget - pNow);
 
-            const tom = new Date(); tom.setHours(24,0,0,0);
-            document.getElementById('penaltyTime').innerText = formatMs(tom - now);
-
-            update14June();
+            // June 14 Countdown
+            const target = new Date("June 14, 2026 00:00:00").getTime();
+            const jDiff = target - now;
+            if (jDiff > 0) {
+                document.getElementById('jd').innerText = Math.floor(jDiff / 86400000);
+                document.getElementById('jh').innerText = Math.floor((jDiff % 86400000) / 3600000);
+                document.getElementById('jm').innerText = Math.floor((jDiff % 3600000) / 60000);
+                document.getElementById('js').innerText = Math.floor((jDiff % 60000) / 1000);
+            }
         }
 
-        function formatMs(ms) {
-            const h = Math.floor(ms/3600000).toString().padStart(2,'0');
-            const m = Math.floor((ms%3600000)/60000).toString().padStart(2,'0');
-            const s = Math.floor((ms%60000)/1000).toString().padStart(2,'0');
+        function formatCD(ms) {
+            const h = Math.floor(ms / 3600000).toString().padStart(2,'0');
+            const m = Math.floor((ms % 3600000) / 60000).toString().padStart(2,'0');
+            const s = Math.floor((ms % 60000) / 1000).toString().padStart(2,'0');
             return `${h}:${m}:${s}`;
         }
 
-        // --- GAMES ---
-
-        function shoot(side) {
+        // 5. OYUN MƏNTİQİ
+        function shootPenalty(side) {
             const today = new Date().toDateString();
-            if (state.lastPenalty === today) return;
+            if (state.lastPenalty === today) return showModal("GÖZLƏ", "Gündə yalnız 1 dəfə penalti vura bilərsən!");
 
             const ball = document.getElementById('fBall');
             const gk = document.getElementById('gk');
-            const ai = ['left', 'center', 'right'][Math.floor(Math.random()*3)];
-            const pos = { left: '-100px', center: '0px', right: '100px' };
+            const aiPos = ['left', 'center', 'right'][Math.floor(Math.random() * 3)];
+            const posMap = { left: '-80px', center: '0px', right: '80px' };
 
-            gk.style.transform = `translateX(calc(-50% + ${pos[ai]}))`;
+            // Animation
+            gk.style.transform = `translateX(calc(-50% + ${posMap[aiPos]}))`;
             ball.style.transition = "0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-            ball.style.bottom = "180px";
-            ball.style.transform = `translateX(calc(-50% + ${pos[side]})) scale(0.6) rotate(360deg)`;
+            ball.style.bottom = "160px";
+            ball.style.transform = `translateX(calc(-50% + ${posMap[side]})) scale(0.5) rotate(720deg)`;
 
             setTimeout(() => {
-                let isGoal = (side !== ai);
-                if (state.inventory['glove'] && !isGoal && Math.random() > 0.6) isGoal = true;
+                let isGoal = (side !== aiPos);
+                // Glove logic
+                if (state.inv.glove && !isGoal && Math.random() > 0.7) isGoal = true;
 
                 if (isGoal) {
-                    const prize = state.inventory['kit'] ? 200 : 100;
+                    const prize = state.inv.kit ? 400 : 200;
                     state.coins += prize;
-                    showModal("QOL! ⚽", `Əla vuruş! +${prize} Coin qazandın.`);
+                    showModal("QOL! ⚽", `Möhtəşəm vuruş! +${prize} Coin hesabına əlavə edildi.`);
                 } else {
-                    showModal("SEYV! 🧤", "Qapıçı topu dəf etdi. Sabah yenidən yoxla.");
+                    showModal("SEYV! 🧤", "Təəssüf, qapıçı topu çıxardı.");
                 }
+
                 state.lastPenalty = today;
                 updateUI();
-                setTimeout(resetPenalty, 2000);
+                setTimeout(resetBall, 2000);
             }, 600);
         }
 
-        function resetPenalty() {
+        function resetBall() {
             const ball = document.getElementById('fBall');
-            ball.style.transition = "0s"; ball.style.bottom = "20px"; ball.style.left = "50%"; ball.style.transform = "translateX(-50%) scale(1)";
+            ball.style.transition = "0s";
+            ball.style.bottom = "20px";
+            ball.style.transform = "translateX(-50%) scale(1)";
             document.getElementById('gk').style.transform = "translateX(-50%)";
         }
 
-        function throwHoop() {
+        function throwBasket() {
             const now = Date.now();
-            if (now - state.lastBasket < 3600000) return showModal("GÖZLƏ", "Növbəti atış üçün 1 saat gözləməlisən.");
+            if (now - state.lastBasket < 3600000) return showModal("SƏBR", "Basketbol üçün 1 saat gözləməlisən.");
 
             const ball = document.getElementById('bBall');
-            ball.style.transition = "bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), left 0.8s linear, transform 0.8s linear";
-            ball.style.bottom = "180px";
-            ball.style.left = "50%";
-            ball.style.transform = "translateX(-50%) scale(0.4) rotate(720deg)";
+            ball.style.transition = "0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+            ball.style.bottom = "150px";
+            ball.style.transform = "translateX(-50%) scale(0.4) rotate(1080deg)";
 
             setTimeout(() => {
-                const win = Math.random() > 0.4;
+                const win = Math.random() > 0.45;
                 if (win) {
-                    state.coins += 150;
-                    showModal("BASKET! 🏀", "Dəqiq atış! +150 Coin.");
+                    state.coins += 250;
+                    showModal("BASKET! 🏀", "Dəqiq atış! +250 Coin qazandın.");
                 } else {
-                    showModal("MİSS! ⭕", "Top halqadan döndü.");
+                    showModal("MİSS! ⭕", "Top halqadan kənara düşdü.");
                 }
                 state.lastBasket = Date.now();
                 updateUI();
                 setTimeout(() => {
-                    ball.style.transition = "0s"; ball.style.bottom = "20px"; ball.style.left = "50%"; ball.style.transform = "translateX(-50%) scale(1)";
+                    ball.style.transition = "0s";
+                    ball.style.bottom = "20px";
+                    ball.style.transform = "translateX(-50%) scale(1)";
                 }, 1000);
             }, 800);
         }
 
-        // --- SHOP & CODES ---
+        // 6. GACHA & SHOP
+        function openPack() {
+            if (state.coins < 10000) return showModal("BALANS", "Paket açmaq üçün 10,000 Coinin olmalıdır.");
+            state.coins -= 10000;
 
-        function buyItem(id, price) {
-            if (state.inventory[id]) return showModal("MƏLUMAT", "Bu əşya artıq aktivdir.");
-            if (state.coins < price) return showModal("KASIBLIQ", "Kifayət qədər Coinin yoxdur.");
+            const rand = Math.random() * 100;
+            let rarity = "bronze";
+            if (rand > 98) rarity = "legend";
+            else if (rand > 90) rarity = "epic";
+            else if (rand > 70) rarity = "rare";
 
-            state.coins -= price;
-            state.inventory[id] = Date.now() + (10 * 24 * 60 * 60 * 1000); // 10 days
+            const pool = PLAYER_POOL.filter(p => p.r === rarity);
+            const player = pool[Math.floor(Math.random() * pool.length)];
+            
+            // UI
+            const display = document.getElementById('cardDisplay');
+            display.innerHTML = `
+                <div class="player-card rarity-${player.r}">
+                    <span style="font-size:3rem">${player.i}</span>
+                    <h3 style="margin:10px 0">${player.n}</h3>
+                    <small>${player.r.toUpperCase()}</small>
+                </div>
+            `;
+
+            state.cards.push(player);
             updateUI();
-            showModal("TƏBRİKLƏR!", "Məhsul 10 gün müddətinə alındı!");
         }
 
-        function useCode() {
-            const code = document.getElementById('promoInput').value.trim().toLowerCase();
+        function buyShopItem(id, price) {
+            if (state.inv[id]) return showModal("MƏLUMAT", "Bu əşya səndə artıq aktivdir.");
+            if (state.coins < price) return showModal("BALANS", "Kifayət qədər Coinin yoxdur.");
+
+            state.coins -= price;
+            // Set 10 days expiry
+            state.inv[id] = Date.now() + (10 * 24 * 60 * 60 * 1000);
+            updateUI();
+            showModal("UĞURLU!", "Əşya 10 gün müddətinə aktiv edildi!");
+        }
+
+        function redeemCode() {
+            const code = document.getElementById('promoCode').value.trim().toLowerCase();
             if (code === "every222") {
                 state.coins += 200000;
-                showModal("VİP KOD!", "200,000 Coin hesabına köçürüldü!");
-                document.getElementById('promoInput').value = "";
-            } else if (code === "everysite2") {
-                state.coins += 30000;
-                showModal("BRAVO!", "30,000 Coin qazandın!");
+                showModal("HƏDİYYƏ!", "Təbriklər! 200,000 Coin hesabına köçürüldü.");
+                document.getElementById('promoCode').value = "";
+            } else if (code === "vusal2026") {
+                state.coins += 50000;
+                showModal("ADMİN KODU", "50,000 Coin qazandın!");
             } else {
-                showModal("XƏTA", "Yanlış kod.");
+                showModal("XƏTA", "Yanlış və ya istifadə olunmuş kod.");
             }
             updateUI();
         }
 
-        // --- GACHA ---
-        function openPack() {
-            if (state.coins < 10000) return showModal("YOXDUR", "10,000 Coinin yoxdur.");
-            state.coins -= 10000;
-            
-            const card = PLAYERS[Math.floor(Math.random()*PLAYERS.length)];
-            const visual = document.getElementById('cardVisual');
-            visual.className = `player-card card-${card.r.toLowerCase()}`;
-            visual.innerHTML = `<div style="font-size:3rem">${card.i}</div><h3>${card.n}</h3><small>${card.r}</small>`;
-            
-            updateUI();
-        }
-
-        // --- HELPERS ---
-
+        // 7. KLUB & TEMALAR
         function renderClubs() {
             const grid = document.getElementById('clubGrid');
             CLUBS.forEach(c => {
-                const div = document.createElement('div');
-                div.className = "club-card";
-                div.innerHTML = `<span>${c.i}</span><b>${c.n}</b>`;
-                div.onclick = () => {
+                const card = document.createElement('div');
+                card.className = "club-card";
+                card.innerHTML = `<span>${c.i}</span><b>${c.n}</b>`;
+                card.onclick = () => {
                     showModal(c.n, c.d);
-                    if (c.theme) document.body.className = c.theme;
+                    if (c.t) document.body.className = c.t;
                 };
-                grid.appendChild(div);
+                grid.appendChild(card);
             });
         }
 
@@ -631,55 +713,71 @@
             });
         }
 
-        function setupQuiz() {
-            const q = QUIZZES[Math.floor(Math.random()*QUIZZES.length)];
-            document.getElementById('qText').innerText = q.q;
-            const optDiv = document.getElementById('qOptions');
-            optDiv.innerHTML = "";
-            q.o.forEach((opt, i) => {
-                const b = document.createElement('button');
-                b.className = "btn-action";
-                b.innerText = opt;
-                b.onclick = () => {
-                    if (i === q.c) {
-                        state.coins += 300;
-                        showModal("DÜZ!", "+300 Coin!");
-                    } else {
-                        showModal("SƏHV!", "Doğru cavab: " + q.o[q.c]);
-                    }
-                    state.lastQuiz = Date.now();
-                    updateUI();
-                };
-                optDiv.appendChild(b);
+        // 8. KADRO (SQUAD)
+        function toggleSquad() {
+            const view = document.getElementById('squadView');
+            if (view.style.display === 'block') {
+                view.style.display = 'none';
+            } else {
+                renderSquad();
+                view.style.display = 'block';
+            }
+        }
+
+        function renderSquad() {
+            const grid = document.getElementById('squadGrid');
+            grid.innerHTML = "";
+            if (state.cards.length === 0) {
+                grid.innerHTML = "<p style='grid-column: 1/3; text-align:center;'>Hələ heç bir oyunçun yoxdur.</p>";
+                return;
+            }
+            state.cards.forEach(p => {
+                const card = document.createElement('div');
+                card.className = `player-card rarity-${p.r}`;
+                card.style.width = "100%";
+                card.style.height = "180px";
+                card.innerHTML = `<span>${p.i}</span><b>${p.n}</b><br><small>${p.r}</small>`;
+                grid.appendChild(card);
             });
         }
 
-        function update14June() {
-            const target = new Date("June 14, 2026 00:00:00").getTime();
-            const diff = target - Date.now();
-            if (diff < 0) return;
-            document.getElementById('d14').innerText = Math.floor(diff/(1000*60*60*24));
-            document.getElementById('h14').innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-            document.getElementById('m14').innerText = Math.floor((diff%(1000*60*60))/(60000));
-            document.getElementById('s14').innerText = Math.floor((diff%60000)/1000);
+        // 9. QUIZ
+        function startQuiz() {
+            const quiz = QUIZZES[Math.floor(Math.random() * QUIZZES.length)];
+            document.getElementById('qText').innerText = quiz.q;
+            const optDiv = document.getElementById('qOptions');
+            optDiv.innerHTML = "";
+            
+            quiz.o.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-action";
+                btn.style.background = "var(--card-dark)";
+                btn.style.color = "var(--text-main)";
+                btn.style.boxShadow = "none";
+                btn.style.border = "1px solid var(--glass)";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (i === quiz.c) {
+                        state.coins += 300;
+                        showModal("DÜZGÜN! ✅", "+300 Coin qazandın!");
+                    } else {
+                        showModal("SƏHV! ❌", "Doğru cavab: " + quiz.o[quiz.c]);
+                    }
+                    setTimeout(startQuiz, 3000);
+                };
+                optDiv.appendChild(btn);
+            });
         }
 
-        function save() {
-            localStorage.setItem('ef_coins', state.coins);
-            localStorage.setItem('ef_inv', JSON.stringify(state.inventory));
-            localStorage.setItem('ef_lp', state.lastPenalty);
-            localStorage.setItem('ef_lb', state.lastBasket);
-            localStorage.setItem('ef_mode', state.theme);
-        }
-
-        function showModal(t, b) {
-            document.getElementById('modalTitle').innerText = t;
-            document.getElementById('modalBody').innerText = b;
+        // 10. DİGƏR
+        function showModal(title, body) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = body;
             document.getElementById('modal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
-        function toggleMode() { state.theme = state.theme === 'dark' ? 'light' : 'dark'; updateUI(); }
-        function predict(v) { showModal("TƏBRİKLƏR!", "Proqnozunuz qeydə alındı. Nəticəni gözləyin!"); }
+        function toggleTheme() { state.theme = state.theme === 'dark' ? 'light' : 'dark'; updateUI(); }
+        function predictMatch(v) { showModal("TƏBRİKLƏR", "Proqnozunuz qeydə alındı. Günün sonunda nəticələrə baxın!"); }
 
         window.onload = init;
     </script>
